@@ -1,0 +1,143 @@
+<include file="public/header" title="我的收藏" body=""/>
+<include file="public/header_nav" title="我的收藏" href="javascript:history.back(-1)"/>
+<style>
+    body{
+        background-color: #f0f2f5;
+    }
+    .similer-product{
+        display: flex;
+        justify-content: space-between;
+    }
+    .similar-product-price .big-price {
+        font-size: .64rem;
+        display: inline-block;
+        width: 2.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+    }
+    #goods_list li img{
+        height: 3.84rem;
+        width: 3.84rem;
+    }
+    #goods_list li{
+        height: 3.84rem;
+        margin: 0.4267rem 0.4267rem 0 0.4267rem;
+        margin-bottom: 0;
+        background-color: #ffffff;
+        border-radius: 0.2133rem;
+        overflow: hidden;
+    }
+    .guesslike .likeshop ul li .similer-product .similar-product-text{
+        width: 11.3rem;
+        height: auto;
+        float: left;
+        margin-top: 0.4267rem;
+        padding: 0 0.4267rem;
+        font-size: 0.55rem;
+        color: #333;
+    }
+    .similar-product-price{
+        position: absolute;
+        bottom: 0.4267rem;
+        width: 100%;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        line-height: unset;
+        padding: 0 0.4267rem;
+    }
+    .nas_1{
+        position: relative;
+    }
+    #goods_list li .similer-product .similar-product-price a{
+        width: 2.13rem;
+        height: 0.9rem;
+        display: inline-block;
+        margin-right: 0.2133rem;
+    }
+    #goods_list li .similer-product .similar-product-price a:last-child{
+        margin-right: 0;
+    }
+    .similar-product-price .big-price em{
+        font-size: 0.47rem;
+        margin-right: 0.08rem;
+    }
+    .similar-product-price .guess-button{
+        width: 2.13rem;
+        height: 0.9rem;
+        border-radius: 0.45rem;
+        border: solid 0.02rem #e6e6e6;
+        line-height: 0.9rem;
+        font-size: 0.47rem;
+        top: -0.23rem;
+        position: unset;
+    }
+</style>
+
+<if condition="empty($goods_list)" >
+    <!--没有收藏-s-->
+    <div class="comment_con p">
+        <div class="none"><img src="__STATIC__/images/none.png"><br><br>亲，此处还没有收藏哦~</div>
+    </div>
+    <!--没有收藏-e-->
+<else/>
+    <div class="floor guesslike">
+        <div class="likeshop">
+            <ul id="goods_list">
+                <foreach name="goods_list" item="good">
+                    <li>
+                        <div class="similer-product">
+                            <a class="simidibl" href="{:url('Goods/goodsInfo',array('id'=>$good['goods_id']))}">
+                                <img src="{$good.goods_id|goods_thum_images=400,400}"/>
+                            </a>
+                            <div class="nas_1">
+                                <span class="similar-product-text">{$good['goods_name']|getSubstr=0,20}</span>
+                                <span class="similar-product-price">
+                                    <span class="big-price"><em>¥</em>{$good['shop_price']|explode_price=0}<em>.{$good['shop_price']|explode_price=1}</em></span>
+                                    <div>
+                                        <a href="{:url('Goods/goodsList',['id'=>$good.cat_id])}"><span class="guess-button dele-button J_ping">看相似</span></a>
+                                        <a href="{:url('Mobile/User/cancel_collect', ['collect_id'=>$good['collect_id']])}"><span class="guess-button  J_ping">删除</span></a>
+                                    </div>
+                                   
+                                </span>
+                            </div>
+                           
+                        </div>
+                    </li>
+                </foreach>
+            </ul>
+        </div>
+    </div>
+</if>
+<!--底部导航-start-->
+<include file="public/footer_nav"/>
+<!--底部导航-end-->
+<script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
+<script  type="text/javascript" charset="utf-8">
+    /**
+     * ajax加载更多
+     * */
+    var page = 1;
+    function ajax_sourch_submit()
+    {
+        page += 1;
+        $.ajax({
+            type : "GET",
+            url:"/index.php/Mobile/User/collect_list?is_ajax=1&p="+page,//+tab,
+            success: function(data)
+            {
+                if($.trim(data) != '')
+                {
+                    $("#goods_list").append(data);
+                }
+            }
+        });
+    }
+    console.log(parseFloat({$good['shop_price']}).toFixed(2).split('.'))
+
+</script>
+</body>
+</html>

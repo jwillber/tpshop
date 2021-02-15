@@ -1,0 +1,184 @@
+<include file="public/header" title="绑定登录"  body="menu-hide"/>
+<include file="public/header_nav" title="绑定登录"  href="javascript:history.back(-1);"/>
+<link rel="stylesheet" href="__STATIC__/css/user.css">
+<div class="login-c qq-binding">
+    <div class="bing-tit">
+        <div class="bing-img">
+            <if condition="$Request.param.oauth eq 'qq'">
+                <img src="__STATIC__/images/qq_bind.png" alt="">
+                <else/>
+                <img src="__STATIC__/images/wx_bind.png" alt="">
+            </if>
+            <img src="__STATIC__/images/qq_binding.png" alt="">
+            <img src="{$tpshop_config.shop_info_wap_home_logo|default='__STATIC__/images/default_logo.png'}" alt="">
+        </div>
+
+        <div class="bind-c mian_flex_3">绑定后，您可用<span><if condition="$Request.param.oauth eq 'qq'">QQ账号<else/>微信</if> </span>或<span>手机号</span>登录商城</div>
+    </div>
+    <!--登录表单-s-->   
+    <form id="loginform" method="post">
+        <!--手机号登录-s -->
+        <div class="account verify-login send-code"> 
+            <input  class="inputccc input-none login-input account-phone" v-model="mobile"  maxlength="11" placeholder="请输入手机号码" type="text" onInput="onInput();">
+            <img class="gray_close" src="/template/mobile/rainbow/static/images/gray_close.png" alt="">
+            <input class="inputccc input-none login-input account-pwd mt30" v-model="code" placeholder="请输入验证码" type="password" onInput="onInput1()">
+            <div class="get-code1">
+                <span></span>
+                <a class="code-a color333" onClick="getCode(this)"><span class="send-text">立即发送</span> <span class="countdown">(60s)</span></a>
+            </div>
+        </div>
+        <div class="agreement mt30">
+            <div class="mian_flex_2"> 
+                <div class="cut">
+                    <div data-xy="1" class="xy-cut image"></div>
+                    <img data-xy="2" class="xy-cut image1" src="__STATIC__/images/agree_t.png" alt="">
+                </div>
+                <div>同意<a href="/Mobile/Article/agreement/doc_code/agreement"><span> 《登录注册协议》</span></a></div>
+            </div>
+        </div>
+        <div disabled class="get-code bingccc" onclick="reg_submit()">完成绑定</div>
+    </form>
+
+</div>
+<script src="__PUBLIC__/static/js/vue.js"></script>
+<script src="__PUBLIC__/static/js/jquery.cookie.js"></script>
+<script>
+    var vm = new Vue({
+        el: '.qq-binding',
+        data: {
+            mobile: '',
+            code: '',
+            data_xy:2,
+        }
+    })
+    //手机号输入监听
+    function onInput() {
+        var val=$(".qq-binding .account-phone").val();
+        if(val.length>0){
+           $(".qq-binding .gray_close").addClass("grap-show");
+        }else{
+            $(".qq-binding .gray_close").removeClass("grap-show");
+        }
+        onInput1();
+    }
+    // 账号密码输入监听
+    function onInput1() {
+        var val1=$(".qq-binding .account-phone").val();
+        var val2=$(".qq-binding .account-pwd").val();
+        if(val1.length>0 && val2.length>0){
+            $(".qq-binding .get-code").addClass("bth-bind");
+           $(".qq-binding .get-code").prop('disabled',true);
+        }else{
+            $(".qq-binding .get-code").removeClass("bth-bind");
+            $(".qq-binding .get-code").prop('disabled',false);
+        }
+    }
+    // 清楚输入手机号
+    $(document).on('click','.gray_close',function(){
+        $(".account-phone").val("");
+        onInput();
+    })
+    // 同意协议
+    $(document).on("click",".xy-cut",function(){
+        var xy=$(this).data(xy);
+        if(xy.xy==1){
+            vm.data_xy=2;
+            $(".agreement .image").hide(1,function(){
+                $(".agreement .image1").show(100);
+            });
+        }else{
+            vm.data_xy=1;
+            $(".agreement .image1").hide(1,function(){
+                $(".agreement .image").show(100);
+            });
+        }
+    });
+    // 发送验证码
+    var code_flag=false;
+    function sendcode(){
+        if(code_flag){ return false; }
+        $(".send-text").text("重新发送");
+        var time="{$tpshop_config.sms_sms_time_out|default=60}";
+        $(".get-code1").addClass("code-h");
+         //改变按钮状态
+        code_flag=true;
+        callback();
+        //循环定时器
+        var T = window.setInterval(callback,1000);
+        function callback()
+        {
+            if(time == 1){
+                //移除定时器
+                window.clearInterval(T);
+                code_flag=false;
+                $(".get-code1").removeClass("code-h");
+            }else{
+                time--;
+                if(time<=9){
+                    $(".countdown").text("(0"+ time+"s)");
+                }else{
+                    $(".countdown").text("("+time+")");
+                }
+            }
+        }
+    }
+
+    function getCode(){
+        if(code_flag == true ){
+            return false;
+        }
+        code_flag = true;
+        if(vm.mobile.length != 11){
+            white_hint('请输入正确的手机号码！');   //提示弹窗
+            return false;
+        }
+        on_going('正在获取验证码')
+        request('/index.php?m=Home&c=Api&a=send_validate_code&scene=6&type=mobile',{mobile:vm.mobile},function(data){
+            on_going_hide()
+            code_flag = false;
+            if(data.status == 1){
+                sendcode();
+                white_hint(data.msg,true,3000);   //提示弹窗
+            }else{
+                white_hint(data.msg,false,3000);   //提示弹窗
+            }
+        },'POST')
+    }
+
+    //注册提交
+    function reg_submit(){
+        if (vm.mobile.length  != 11 || !checkMobile(vm.mobile) ) {
+            white_hint('手机号码格式不正确！',false,3000);   //提示弹窗
+            return;
+        }
+        if (vm.code == '') {
+            white_hint('请输入验证码！',false,3000);   //提示弹窗
+            return;
+        }
+        if (vm.code.length  != 4) {
+            white_hint('验证码不正确！',false,3000);   //提示弹窗
+            return;
+        }
+        if (vm.data_xy == 1) {
+            white_hint('未阅读登录注册协议！',false,3000);   //提示弹窗
+            return;
+        }
+        on_going('')
+        request('/index.php/Mobile/User/bind_reg',{mobile:vm.mobile,verify_code:vm.code},function(data){
+            on_going_hide()
+            code_flag = false;
+            if(data.status == 1){
+                if(!data.result.password  ){
+                    window.location.href = "{:U('Mobile/User/reset_password')}";
+                }else {
+                    window.location.href = data.redirect_url;
+                }
+            }else{
+                white_hint(data.msg,false,3000);   //提示弹窗
+            }
+        },'POST')
+    }
+
+</script>
+</body>
+</html>

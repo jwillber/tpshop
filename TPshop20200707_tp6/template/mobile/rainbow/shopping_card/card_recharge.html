@@ -1,0 +1,227 @@
+<include file="public/header" title="购物卡-充值"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/card_recharge.css">
+<form method="post"  id="recharge_form" action="{:url('Mobile/Payment/getPay')}">
+    <input type="hidden" id="account" name="account" value="0">
+    <input type="hidden" name="card_id" value="{$card.id}">
+    <input type="hidden" name="order_id" value="">
+<div class="containter">
+    <div class="card_photo">
+        <img src="{$card.shopping_card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">{$card.name}</div>
+    </div>
+    <div class="car_balance">
+        <div class="balance">购物卡余额：<span>￥{$card.balance}</span></div>
+    </div>
+    <div class="border"></div>
+<!--    <foreach name="paymentList" item="v"  key="k">-->
+<!--        {$v['code']}-->
+<!--        {$v['name']}-->
+<!--        <img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}">-->
+<!--    </foreach>-->
+    <div class="money">
+        <if condition="count($card['discount']) gt 1">
+            <p>请选择充值金额</p>
+        </if>
+        <div class="money_list">
+            <volist name="$card.discount" id="vo" offset="1">
+                <div class="item" data-id="{$vo.id}" data-val="{$vo.selling}">
+                    <p>{$vo.balance}元</p>
+                    <p class="item_price">售价:{$vo.selling}元</p>
+                </div>
+            </volist>
+        <if condition="$card.shopping_card.custom eq 1">
+        <div class="custom">
+            <span class="card_span">
+                 <i>
+                     <input name="checkItem" type="checkbox" value="">
+                 </i>
+            </span>
+            自定义充值金额:
+            &nbsp;&nbsp;￥<input onclick="checkcard(this)" type="number">
+        </div>
+        </if>
+    </div>
+    <div class="border"></div>
+    <div class="notice">
+        <p class="title">购买须知：</p>
+        <div class="content">
+            <ul>
+                <li>购物卡一经购买不支持退款；</li>
+            </ul>
+        </div>
+        <div class="query">
+            <div class="left">有其他疑问？</div>
+            <div class="right">
+                <img src="__STATIC__/images/shopping_card/service.png" alt="">
+                联系客服
+            </div>
+        </div>
+    </div>
+    <!--<div style="height: 3rem;opacity: 0;" class="containter_bottom"></div>-->
+</div>
+    <div class="recharge_record"><a href="{:url('ShoppingCard/recharge_list',array('id'=>$card.id))}" style="color:#666">查看充值记录</a></div>
+    <div class="bottom_recharge">
+        <div class="recharge">立即充值</div>
+    </div>
+</div>
+<!--弹窗-->
+<div class="mask-filter-div" style="display: none;"></div>
+<div class="phone">
+    <div class="service_phone">客服电话：{$tpshop_config['shop_info_phone']}</div>
+    <div class="call"><a href="tel:{$tpshop_config['shop_info_phone']}" style="color:#fff">立即拨打</a></div>
+</div>
+<!--充值方式-s-->
+<div class="chooseebitcard" style="display: none; height:100%; background-color:rgba(0,0,0,0.5);">
+    <div class="maleri30" style="width:100%; position:absolute; left:0; bottom:0; background-color:#fff; margin:0; padding:0 0.64rem;">
+        <div class="choose-titr" style="margin-top:0.64rem; border-bottom:1px solid #dedede;">
+            <span>确认充值</span>
+            <em><i id="price"></i></em>
+            <i class="gb-close"></i>
+        </div>
+        <h3 style="font-size:0.64rem; color:#333; margin-bottom:0.64rem; margin-top:1.28rem; font-weight:normal;">选择充值方式：</h3>
+        <div class="pay_way">
+            <foreach name="paymentList" item="v"  key="k">
+                <div class="card">
+                    <div class="card-list">
+                        <input type="radio" style="display: none;" value="pay_code={$v['code']}" name="pay_radio" <if condition="$k eq $alipay">checked</if> >
+                        <div class="radio fl radioixy">
+                            <span name="{$v['name']}"  class="che  <if condition="$k eq $alipay">check_t</if>" >
+                            <i></i>
+                            </span>
+                        </div>
+                        <p class="fl">&nbsp;&nbsp;<span><img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" style="width:1.45rem;height:1.45rem" /></span></p>
+                    </div>
+                </div>
+            </foreach>
+
+        </div>
+        <div class="teuse"><input type="button" class="xyz" value="确认充值" ></div>
+    </div>
+	</div>
+    <input type="hidden" name="shopping_card_discount_id" value="">
+</form>
+<!--充值方式-e-->
+<div class="activate_prompt succeed">
+    <img src="__STATIC__/images/shopping_card/activate_prompt.png" alt="">
+    <div class="order_information">
+        <p>充值成功！</p>
+        <p><span>余额：</span><span class="balance">230元</span></p>
+    </div>
+    <div class="prompt_button">查看卡详情</div>
+    <img class="succeed_close" src="__STATIC__/images/shopping_card/close.png" alt="">
+</div>
+<div class="close">
+    <img class="close_img" src="__STATIC__/images/shopping_card/close.png" alt="">
+</div>
+<script>
+//    联系客服
+    $(".query .right").click(function(){
+        $(".mask-filter-div").show();
+        $(".phone").show();
+        $(".close").show();
+    })
+    $(".close .close_img").click(function(){
+        $(".mask-filter-div").hide();
+        $(".phone").hide();
+        $(".close").hide();
+    })
+//    选择充值功能
+    $(".money .item").click(function(){
+        $(".money .choose").removeClass("choose");
+        $(this).addClass("choose");
+        $(".custom").find('input').attr('checked',false);
+        $(".custom input").removeClass("check");
+    })
+//    立即充值
+    $(".recharge").click(function(){
+        if($(".choose").find("p").length>0){  //非自定义充值
+            var value=$(".choose").attr('data-val');
+            var valuee='￥'+$(".choose").attr('data-val');;
+        }else{
+            var value=$(".choose").val();
+            var valuee='￥'+$(".choose").val();
+        }
+
+        if(value=="" || value==undefined){
+            layer.open({content: '请输入正确的充值金额',time:1});
+            submit_status =1;
+            return false;
+        }
+
+        $("#price").text(valuee);
+        $(".mask-filter-div").show();
+        var add_money = $('#add_money').val();
+        $('.choose-titr').children('em').children('i').text(add_money)
+        $('.chooseebitcard').show();
+        $('.submit').hide();
+    })
+    $('.gb-close').click(function(){
+        $('.chooseebitcard').hide();
+        $(".mask-filter-div").hide();
+    })
+    // 点确定充值
+    $('.teuse').click(function(){
+        $('.chooseebitcard').hide();
+        $(".mask-filter-div").hide();
+        $('.submit').show();
+        if($(".choose").find("p").length>0) {  //非自定义充值
+            var choose_id=$(".choose").attr("data-id");
+            $("input[name='shopping_card_discount_id']").attr("value",choose_id);
+        }
+        recharge_submit();        //提交表单
+    })
+    //    选择支付方式
+    $('.card-list').click(function(){
+        $(this).parent().siblings().find(".che").removeClass("check_t");
+        $(this).find(".che").addClass("check_t");
+        // $(".money_list .item").removeClass("choose");
+        // $(this).addClass("choose");
+        $(".custom").find('input').attr('checked',false);
+        $(".custom input").removeClass("check");
+        // 支付方式切换
+        $(this).parent().siblings().find('input').attr('checked',false)
+        $(this).find('input').attr('checked',true)
+    })
+    //提交表单
+    var submit_status=1;
+    function recharge_submit(){
+        var check_t=$(".check_t").parent().siblings('input').val();
+        if(!check_t){
+            layer.open({content: '请选择充值方式',time:2});
+            submit_status =1;
+            return false;
+        }
+
+        if($(".choose").find("p").length>0){  //非自定义充值
+            var val=$(".choose").attr('data-val');
+        }else{
+            var val=$(".choose").val();
+        }
+        if (submit_status == 0){
+            return false;
+        }
+        submit_status = 0;
+        if(val==""){
+            layer.open({content: '请输入正确的充值金额',time:2});
+            submit_status =1;
+            return false;
+        }
+
+        $('#account').attr('value',val)
+        $('#recharge_form').submit();
+        submit_status=1;
+    }
+    $(".succeed_close").click(function(){
+        $(".mask-filter-div").hide();
+        $(".succeed").hide();
+    })
+    //    自定义充值金额
+    function checkcard(obj){
+        $(".money_list .choose").removeClass("choose");
+        $(obj).addClass("choose");
+    }
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡首页</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__PUBLIC__/js/global.js"></script>
+</head>
+<body>
+<include file="public/header" w='w1224'/>
+<div id="hot_card" class="search-box p card_index">
+    <div class="w1224">
+        <if condition="$hot_card">
+            <div class="hotcard">
+            <div class="hot_card">
+                <div class="hot_title">
+                    <span>热销卡</span>
+                    <span>[最高赠送{$max_money}元]</span>
+                </div>
+                <div class="hot_more">
+                    <span class="move">更多</span>
+                    <img src="__STATIC__/images/arrow_two.png" alt="">
+                </div>
+            </div>
+            <div class="hot_content">
+                <volist name="hot_card" id="vo" length="4">
+                    <div class="hot_item">
+                        <div class="hot_img">
+                            <a href="{:url('ShoppingCard/card_goodsInfo',array('id'=>$vo.id))}">
+                                <img src="{$vo.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                            </a>
+                        </div>
+                        <div class="hot_bottom">
+                            <div class="hot_name">{$vo.name}</div>
+                            <p>适用范围：{$vo.use_range}</p>
+                            <p>已售：<if condition="$vo.repertory gt 0">{$vo.sell}</if></p>
+                            <div class="hot_bar">
+                                <p class="one"></p>
+                                <p class="two" style="width: {$vo.percent}%"></p>
+                            </div>
+                            <div class="purchase" data-id="{$vo.discount[0]['id']}">立即抢购</div>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+        </div>
+        </if>
+        <if condition="$recommend_card">
+            <div class="balance_card">
+            <div class="hot_card">
+                <div class="hot_title">
+                    <span>购物余额卡</span>
+                    <span>[用户推荐]</span>
+                </div>
+                <div class="hot_more">
+                    <span class="move">更多</span>
+                    <img src="__STATIC__/images/arrow_two.png" alt="">
+                </div>
+            </div>
+            <div class="balance_content">
+                <volist name="recommend_card" id="vo" length="10">
+                    <a href="{:url('ShoppingCard/card_goodsInfo',array('id'=>$vo.id))}">
+                    <div class="balance_item">
+                        <div class="balance_img">
+                            <img src="{$vo.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                        </div>
+                        <div class="balance_bottom">
+                            <div class="balance_name">{$vo.name}</div>
+                            <div class="balance_price">
+                                <span class="s_price">售价：</span><span class="min">￥</span>
+                                <span class="max">{$vo.price[0]}</span>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </volist>
+            </div>
+        </div>
+        </if>
+    </div>
+</div>
+
+
+<!--footer-s-->
+<div class="footer p">
+    <include file="public/footer" />
+    <include file="public/sidebar_cart" />
+</div>
+<script>
+    $('.purchase').click(function () {
+        var id=$(this).attr('data-id')
+        window.location.href='{:url('home/ShoppingCard/oder_des')}?num=1&id='+id;
+    })
+    $('.move').click(function(){
+        window.location.href='{:url('home/ShoppingCard/move')}'
+    })
+</script>
+<!--footer-e-->
+<script src="__STATIC__/js/lazyload.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/headerfooter.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

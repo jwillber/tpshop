@@ -1,0 +1,268 @@
+<include file="public/layout"/>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i
+                class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>该提问评论列表</h3>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation"
+         style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+        <div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+            <h4 title="提问详情">提问详情</h4>
+            <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+        </div>
+        <ul>
+            <li>发表时间：{$vo.createtime|date="Y-m-d H:i"}</li>
+            <li>所属商品 ：<a target="_blank" href="{:url('Home/Goods/goodsInfo',array('id'=>$vo['goods_id']))}">{$goods_list[$vo['goods_id']]}</a></li>
+            <li>用户名 ：{$vo['nickname']?$vo['nickname']:$vo['mobile']}</li>
+            <li>内容 ： {$vo.content}</li>
+
+        </ul>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>评论列表</h3>
+                <h5><if condition="is_array($list)">  (共{$list|count}条记录)  </if></h5>
+            </div>
+            <div class="fbutton">
+                <a onClick="act_submit(1)">
+                    <div class="add" title="审核通过">
+                        <span><i class="fa fa-check"></i>审核通过</span>
+                    </div>
+                </a>
+            </div>
+            <div class="fbutton">
+                <a onClick="act_submit(2)">
+                    <div class="add" title="审核拒绝">
+                        <span><i class="fa fa-ban"></i>审核拒绝</span>
+                    </div>
+                </a>
+            </div>
+            <a href="" class="refresh-date"><div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div></a>
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;" onClick="checked()"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="comment_id" axis="col3" class="">
+                            <div style="text-align: left; width: 50px;" class="">ID</div>
+                        </th>
+                        <th align="left" abbr="user_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">会员名称</div>
+                        </th>
+                        <th align="left" abbr="user_id" axis="col4" class="">
+                            <div style="text-align: left; width: 100px;" class="">回复对方</div>
+                        </th>
+                        <th align="center" abbr="comment_content" axis="col5" class="">
+                            <div style="text-align: center; width: 700px;" class="">内容</div>
+                        </th>
+                        <th align="center" abbr="status" axis="col6" class="">
+                            <div style="text-align: center; width: 100px;" class="">审核状态</div>
+                        </th>
+                        <th align="center" abbr="is_delete" axis="col6" class="">
+                            <div style="text-align: center; width:80px;" class="">是否显示</div>
+                        </th>
+                        <th align="center" abbr="add_time" axis="col6" class="">
+                            <div style="text-align: center; width: 150px;" class="">评论时间</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <foreach name="list" item="vo" key="k">
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;">
+                                    <i class="ico-check">
+                                        <input type="checkbox" style="display:none;" name="selected[]" value="{$vo['cid']}">
+                                    </i>
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 50px;">{$vo.cid}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">
+                                    {$uid_list[$vo['user_id']]['nickname']?$uid_list[$vo['user_id']]['nickname']:$uid_list[$vo['user_id']]['mobile']}
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 100px;">
+                                    {$uid_list[$vo['to_user_id']]['nickname']?$uid_list[$vo['to_user_id']]['nickname']:$uid_list[$vo['to_user_id']]['mobile']}
+                                </div>
+                            </td>
+                            <td align="center" class="">
+                                <div style="text-align: center; width: 700px;">
+                                    {$vo.content}
+                                </div>
+                            </td>
+                            <td align="center" class="">
+                                <div style="text-align: center; width: 100px;">
+<!--                                    {$status[$vo['status']]}-->
+                                    <if condition="$vo['audit'] == 1">
+                                        <span style="color:green"> {$status[$vo['audit']]} </span>
+                                    <elseif condition="$vo['audit'] eq 2"/>
+                                        <span style="color:red"> {$status[$vo['audit']]} </span>
+                                    <else/>
+                                        <span style="color:#0ba4da"> {$status[$vo['audit']]} </span>
+                                    </if>
+                                </div>
+                            </td>
+                            <td align="center" class="">
+                                <div style="text-align: center; width: 80px;{$vo['status']==0?'color:red':''}">
+                                    <!--{$vo['is_delete']==1?'隐藏':'显示'}-->
+                                    <if condition="$vo['status'] eq 0">
+                                        <span class="no" onClick="isDelete('askall_comment','cid','{$vo.cid}','status',this)" ><i class="fa fa-ban"></i>否</span>
+                                    <else />
+                                        <span class="yes" onClick="isDelete('askall_comment','cid','{$vo.cid}','status',this)" ><i class="fa  fa-check-circle"></i>是</span>
+                                    </if>
+                                </div>
+                            </td>
+                            <td align="center" class="">
+                                <div style="text-align: center; width: 150px;">{$vo.createtime|date="Y-m-d H:i:s"}
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$pager->show()}
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.ico-check ' , '.hDivBox').click(function(){
+            $('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
+                var hasClass = $(this).hasClass('trSelected');
+                $('tr' , '#flexigrid').each(function(){
+                    if(hasClass){
+                        $(this).addClass('trSelected');
+                    }else{
+                        $(this).removeClass('trSelected');
+                    }
+                });
+            });
+        });
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function(){
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function(){
+            location.href = location.href;
+        });
+
+    });
+
+    function checked(){
+        $('input[type="checkbox"]').each(function(i,o){
+            if($(o).is(':checked')){
+                $(o).removeAttr('checked')
+            }else{
+                $(o).attr('checked','checked')
+            }
+
+        })
+    }
+
+    //批量操作提交
+    function act_submit(wst) {
+        var chks = [];
+        $('tr' , '#flexigrid').each(function(){
+            var hasClass = $(this).hasClass('trSelected');
+            if(hasClass){
+                var sid = $(this).find('input[name*=selected]').val();
+                chks.push(sid);
+            }
+        });
+
+        if (chks.length == 0) {
+            layer.alert('亲，请至少选择一项', {icon: 2});
+            return;
+        }
+        audit(chks, wst);
+    }
+
+    function audit(chks, wst) {
+        $.ajax({
+            type: "POST",
+            url: "/index.php?m=Admin&c=User&a=askall_comment_update",//+tab,
+            data: {id: chks, audit: wst},
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.alert(data.msg, {
+                        icon: 1,
+                        closeBtn: 0
+                    }, function () {
+                        window.location.reload();
+                    });
+                } else {
+                    layer.alert(data.msg, {icon: 2, time: 3000});
+                }
+            },
+            error: function () {
+                layer.alert('网络异常', {icon: 2, time: 3000});
+            }
+        });
+    }
+
+
+    // 修改指定表的指定字段值 包括有按钮点击切换是否(虚拟删除，1为删除，0未删除)
+    function isDelete(table,id_name,id_value,field,obj)
+    {
+        var src = "";
+        if($(obj).hasClass('no')) // 图片点击是否操作
+        {
+            //src = '/public/images/yes.png';
+            $(obj).removeClass('no').addClass('yes');
+            $(obj).html("<i class='fa fa-check-circle'></i>是");
+            var value = 1;
+
+        }else if($(obj).hasClass('yes')){ // 图片点击是否操作
+            $(obj).removeClass('yes').addClass('no');
+            $(obj).html("<i class='fa fa-ban'></i>否");
+            var value = 0;
+        }else{ // 其他输入框操作
+            var value = $(obj).val();
+        }
+
+        $.ajax({
+            url:"/index.php?m=Admin&c=Index&a=changeTableVal&table="+table+"&id_name="+id_name+"&id_value="+id_value+"&field="+field+'&value='+value,
+            success: function(data){
+                if(!$(obj).hasClass('no') && !$(obj).hasClass('yes'))
+                    layer.msg('更新成功', {icon: 1});
+            }
+        });
+    }
+</script>
+</body>
+</html>

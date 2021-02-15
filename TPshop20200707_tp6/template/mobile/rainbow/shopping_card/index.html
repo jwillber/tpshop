@@ -1,0 +1,103 @@
+<include file="public/header" title="购物卡首页" body="g4"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/index.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/swiper.min.css"/>
+<div class="shuffling">
+    <div class="back"></div>
+        <div class="swiper-container" style="background:{$v.bgcolor};">
+            <div class="swiper-wrapper">
+                <adv pid="538" item="v" limit="5">
+                <div class="swiper-slide">
+                    <a class="item-pic" href="{$v['ad_link']}{$edit_ad ? '&suggestion=1920*480' : ''}" <if condition="$v['target'] eq 1">target="_blank"</if>>
+                    <img  src="{$v['ad_code']|default='__STATIC__/images/dynamic/img.jpg'}" title="{$v['title']}" alt="{$v['title']}">
+                    </a>
+                </div>
+                </adv>
+            </div>
+        </div>
+    <div class="swiper-pagination"></div>
+</div>
+<div class="recommend">
+    <div class="title">
+        <img src="__STATIC__/images/shopping_card/title.png" alt="">
+    </div>
+    <div class="recommend_card">
+        <ul>
+            <volist name="card" id="vo">
+                <a href="{:url('ShoppingCard/card_info',array('id'=>$vo['id']))}">
+                <li>
+                    <div class="img">
+                        <img src="{$vo.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                    </div>
+                    <p class="name">{$vo.name}</p>
+                    <div class="price">
+                        <p class="left"><span>￥</span>{$vo.discount[0]['targer_money']}</p>
+                        <p class="right">已售{$vo['sell_num']}件</p>
+                    </div>
+                </li>
+                </a>
+            </volist>
+        </ul>
+    </div>
+</div>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script>
+    //轮播广告
+    var mySwiper = new Swiper('.swiper-container',{
+        centeredSlides: true,
+        spaceBetween: 10,
+        loop:true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    })
+</script>
+<script type="text/javascript">
+    // scroll event
+    var page=1;
+    var request_status=1;
+    function ajax_get_card(){
+        $.ajax({
+            type: "get",
+            //url: "{:url('Mobile/ShoppingCard/ajax_get_card')}",
+            url: "{:url('api/ShoppingCard/get_card')}",
+            data: {hotOrrecommend: "1", p: page},
+            dataType: 'json',
+            success: function (data) {
+                if(data.status==1){
+                    var html ='';
+                    for(var i=0;i<data.card.length;i++){
+                        var back_img=data.card[i]['back_img']?data.card[i]['back_img']:"__PUBLIC__/images/icon_goods_thumb_empty_300.png"
+                        html += "<a href=\"{:url('ShoppingCard/card_info')}?id="+data.card[i]['id']+"\">\n" +
+                            "                <li>\n" +
+                            "                    <div class=\"img\">\n" +
+                            "                        <img src=\""+back_img+"\" alt=\"\">\n" +
+                            "                    </div>\n" +
+                            "                    <p class=\"name\">"+data.card[i]['name']+"</p>\n" +
+                            "                    <div class=\"price\">\n" +
+                            "                        <p class=\"left\"><span>￥"+data.card[i]['discount'][0]["targer_money"]+"</span></p>\n" +
+                            "                        <p class=\"right\">已售"+data.card[i]['sell_num']+"件</p>\n" +
+                            "                    </div>\n" +
+                            "                </li>\n" +
+                            "                </a>"
+                    }
+
+                    $('.recommend_card').children('ul').append(html);
+                }
+                request_status=1;
+            }
+        })
+    }
+    $(window).scroll(function(){
+        // scroll at bottom
+        if(($(document).height() - ($(window).scrollTop() + $(window).height())) < 50){
+            if(request_status){
+                request_status=0
+                page++
+                ajax_get_card()
+            }
+        }
+    });
+</script>

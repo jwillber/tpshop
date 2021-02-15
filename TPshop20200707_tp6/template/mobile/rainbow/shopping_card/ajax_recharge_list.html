@@ -1,0 +1,8 @@
+<volist name="log" id="vo">
+    <div class="list_title list_item">
+        <div class="money">￥{$vo.account}</div>
+        <div class="state">{$sort[$vo.pay_status]}</div>
+        <div class="payment">{$vo.pay_name}</div>
+        <div class="time">{$vo.ctime|date="Y-m-d H:i:s"}</div>
+    </div>
+</volist>

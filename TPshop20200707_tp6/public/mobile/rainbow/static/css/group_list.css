@@ -1,0 +1,57 @@
+.dic .likeshop{
+    padding-top: 0;
+}
+.dic .likeshop li{
+    float: left;
+    margin-left: 0.4267rem;
+    margin-bottom: 0.4267rem;
+    padding-bottom: 0.4267rem;
+}
+.dic ul li a .similer-product img{
+    width: 100%;
+    height: 7.36rem;
+}
+span{
+    vertical-align: bottom;
+}
+body{
+    background-color: #f8f8f8;
+}
+.guesslike .likeshop ul li .similer-product .similar-product-text{
+    height: 1.5rem;
+    padding: 0 0.4267rem;
+    text-align: justify;
+}
+.groupquess .zjj .sale{
+    right: unset;
+}
+.groupquess .zjj .sale .last_g_time{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 0.46933rem;
+}
+.similar-product-price .big-price {
+    font-size: .512rem;
+}
+.groupquess .cy {
+    color: #666;
+    padding: 0 .4267rem;
+}
+.similar-product-price {
+    font-size: .46933rem;
+    padding-top: ;
+    position: relative;
+    height: auto;
+    line-height: unset;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.2133rem 0.4267rem 0 0.4267rem;
+}
+.similar-product-price p{
+    color: #fff;
+    background-color: #ff3b3b;
+    padding: 0.10667rem 0.2133rem;
+    border-radius: 0.10667rem;
+}

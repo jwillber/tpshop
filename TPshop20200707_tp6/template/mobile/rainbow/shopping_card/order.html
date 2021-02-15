@@ -1,0 +1,115 @@
+<include file="public/header" title="购物卡确认订单"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/order.css">
+<script src="__PUBLIC__/js/layer/layer.js"></script>
+<script src="__STATIC__/js/layer.js"  type="text/javascript" ></script>
+<div class="order">
+    <div class="top">
+        <div class="car_img">
+            <img src="{$discount.shopping_card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+        </div>
+        <div class="car_name">
+            <p class="name">{$discount.shopping_card.name}</p>
+            <div class="price">
+                <p><span>￥</span>{$discount.targer_money}</span></p>
+                <div class="number">x{$Request.param.num}</div>
+            </div>
+        </div>
+    </div>
+    <div class="remark">
+        <div>买家备注</div>
+        <textarea name="" id="" cols="30" rows="10" placeholder="建议留言前与商家沟通确认"></textarea>
+    </div>
+    <div class="card_price">
+        <div>购物卡售价</div>
+        <p id="sum">￥0</p>
+    </div>
+    <div class="total">
+        优惠：<span id="discount">￥0</span>
+    </div>
+    <div class="bottom">
+        <div>共{$Request.param.num}件商品</div>
+        <div class="bottom_total">
+            应付金额：<span id="total_amount">￥0</span>
+        </div>
+        <a><!--href="/index.php/mobile/shopping_card/pay_successful.html">-->
+            <div class="bottom_submit" onclick="submit_order();">提交订单</div>
+        </a>
+    </div>
+</div>
+
+<form id="cart_form" style="display: none">
+    <input type="hidden" name="num" value="{$Request.param.num}">
+    <input type="hidden" name="targer_money" value="{$discount.targer_money}">
+    <input type="hidden" name="id" value="{$discount.id}">
+    <input type="hidden" name="user_note" value="">
+</form>
+<script>
+    $(document).ready(function () {
+        ajax_order_price()
+    });
+    function ajax_order_price(){
+        $.ajax({
+            type: "POST",
+            url: "{:url('Mobile/ShoppingCard/addOrder')}",
+            dataType:'json',
+            data:$('#cart_form').serialize(),
+            success: function (data) {
+                if(data.code=="200"){
+                    var sum=data.data.price
+                    $("#sum").text("￥"+sum)
+                    $("#discount").text("￥"+data.data.order_prom_amount)
+                    $("#total_amount").text("￥"+data.data.total_amount)
+                }
+            }
+        });
+    }
+
+    function submit_order() {
+        var text =$('textarea').val();
+
+        $("input[name='user_note']").val(text)
+        $('#submit_order').attr('disabled','disabled');
+        $('.user_note_txt').each(function () {
+            $("input[name='user_note']").attr('value', $(this).val());
+        })
+        var invoice_desc = $("#invoice_desc").val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('Mobile/ShoppingCard/addOrder')}", //+tab,
+            data: $('#cart_form').serialize() + "&act=submit_order", //
+            dataType: "json",
+            success: function (data) {
+                // 当前人数过多 排队中
+                if (data.status == -99) {
+                    setTimeout("submit_order()", 5000);
+                    return false;
+                }
+                // else {
+                //     // 隐藏排队
+                //     $('.mask-filter-div').hide();
+                //     $('.rabbit').hide();
+                // }
+
+                if (data.status != 1) {
+                    layer.open({content:data.msg,time:1})
+                    // 登录超时
+                    if (data.status == -100) {
+                        location.href = "{:url('Mobile/User/login')}";
+                    }
+                    return false;
+                }
+
+                layer.open({content:'订单提交成功',time:1});
+                location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_sn=" + data.order_sn; // 跳转到结算页
+                // layer.msg('订单提交成功!', {
+                //     icon: 1, // 成功图标
+                //     time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                // }, function () { // 关闭后执行的函数
+                //     location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_sn=" + data.order_sn; // 跳转到结算页
+                // });
+            }
+        });
+    }
+</script>

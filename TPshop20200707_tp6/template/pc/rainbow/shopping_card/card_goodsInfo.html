@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$card_info.name}-{$tpshop_config['shop_info_store_name']}</title>
+    <meta name="keywords" content="{$card_info.name}"/>
+    <meta name="description" content="{$card_info.name}"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/jquery.jqzoom.css">
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/move.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/layer/layer-min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/jquery.jqzoom.js"></script>
+    <script src="__PUBLIC__/js/global.js"></script>
+    <script src="__PUBLIC__/js/pc_common.js"></script>
+    <link rel="stylesheet" href="__STATIC__/css/location.css" type="text/css"><!-- 收货地址，物流运费 -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <link rel="shortcut icon" type="image/x-icon"
+          href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}"
+          media="screen"/>
+    <if condition="(!empty($tpshop_config['basic_im_choose'])) && ($tpshop_config['basic_im_choose'] eq 1)">
+        <link rel="stylesheet" href="{$tpshop_config.basic_im_website}/static/test/common/layui/css/layui.css" media="all">
+    </if>
+</head>
+<body>
+<!--header-s-->
+<include file="public/header" w="w1224"/>
+<!--header-e-->
+<div class="search-box p">
+    <div class="w1224">
+        <div class="search-path fl">
+            <a href="{:url('home/ShoppingCard/index')}">购物卡</a>
+            <i class="litt-xyb"></i>
+            <a href="">{$sort[$card_info.sort]}</a>
+            <i class="litt-xyb"></i>
+            <div class="havedox">
+                <span>{$card_info.name} </span>
+            </div>
+        </div>
+
+        <if condition="(!empty($tpshop_config['basic_im_choose'])) && ($tpshop_config['basic_im_choose'] eq 1)">
+            <!--IM客服-->
+            <div class="online-service fr p">
+                <a href="javascript:;" class="z-onlines z-online-service fr"  user_id="{$Request.session.user.user_id}" uname="{$Request.session.user.nickname}"
+                   avatar="{$Request.session.user.head_pic}" sign="" goods_id="{$goods['goods_id']}" web_id="{$Think.const.SITE_URL}" im_href="{$tpshop_config.basic_im_website}" id="workerman-kefu" onclick="jump()" ws_socket="{$tpshop_config.basic_ws_socket}">
+                    <i class="detai-ico"></i>在线客服
+                </a>
+            </div>
+            <elseif condition="(!empty($tpshop_config['basic_im_choose'])) && ($tpshop_config['basic_im_choose'] eq 2)"/>
+            <!--小能客服-->
+            <div class="online-service fr p">
+                <a href="javascript:void(0);" class="z-onlines z-online-service fr">
+                    <i class="detai-ico"></i>在线客服
+                </a>
+            </div>
+            <else />
+            <!--qq客服-->
+            <div class="online-service fr p">
+                <a href="tencent://message/?uin={$tpshop_config['shop_info_qq']}&Site=商城&Menu=yes" class="z-onlines z-online-service fr">
+                    <i class="detai-ico"></i>在线客服
+                </a>
+            </div>
+        </if>
+        <!--<div class="online-service fr p">-->
+        <!--<a href="javascript:void(0);" class="z-onlines z-online-service fr"><i></i>在线客服</a>-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="details-bigimg p">
+    <div class="w1224">
+        <div class="detail-img">
+            <div class="product-gallery">
+                <div class="product-photo" id="photoBody">
+                    <div class="product-video">
+                    </div>
+                    <i class="close-video"></i>
+                    <i class="video-play"></i>
+                    <!-- 商品大图介绍 start [[-->
+                    <div class="product-img jqzoom">
+                        <img id="zoomimg" src="{$card_info.back_img}"
+                             jqimg="{$card_info.back_img|goods_thum_images=800,800}">
+                    </div>
+                    <!-- 商品大图介绍 end ]]-->
+                </div>
+                <!-- 分享商品 -->
+                <div class="share">
+                    <div class="jiathis_style">
+                        <div class="bdsharebuttonbox">
+                            <a href="#" class="bds_more" data-cmd="more"></a>
+                            <a href="#" class="bds_qzone" data-cmd="qzone"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+                            <a href="#" class="bds_tqq" data-cmd="tqq"></a>
+                            <a href="#" class="bds_renren" data-cmd="renren"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+                        </div>
+                    </div>
+                    <script>
+                        var bd_url = "http://{$_SERVER['HTTP_HOST']}/index.php?m=Home&c=ShoppingCard&a=card_goodsInfo&id={$_GET['id']}";
+                        var bd_pic = "http://{$_SERVER['HTTP_HOST']}{$card_info.back_img}";
+                        var bdText = "{$card_info.name}";
+                        var is_distribut = getCookie('is_distribut');
+                        var user_id = getCookie('user_id');
+                        // 如果已经登录了, 并且是分销商
+                        if (parseInt(is_distribut) == 1 && parseInt(user_id) > 0) {
+                            bd_url = bd_url + "&first_leader=" + user_id;
+                        }
+
+                        function setShareConfig(id, config) {
+                            config.bdUrl = bd_url;
+                            config.bdPic = bd_pic;
+                            config.bdText = bdText;
+                            return config;
+                        }
+
+                        window._bd_share_config = {
+                            "common": {
+                                onBeforeClick: setShareConfig,
+                                "bdSnsKey": {},
+                                "bdText": "",
+                                "bdMini": "2",
+                                "bdPic": "",
+                                "bdStyle": "0",
+                                "bdSize": "16"
+                            },
+                            "share": {},
+                            "image": {
+                                "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+                                "viewText": "分享到：",
+                                "viewSize": "16"
+                            },
+                            "selectShare": {
+                                "bdContainerClass": null,
+                                "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
+                            }
+                        };
+                        with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                    </script>
+                </div>
+            </div>
+        </div>
+        <form id="buy_goods_form" name="buy_goods_form" method="post" action="{:url('home/Shopping_card/oder_des')}">
+            <input type="hidden" name="id" value="{$card_info.discount[0]["id"]}"><!--购物卡id-->
+            <!-- 预售使用 s-->
+            <input type="hidden" name="deposit_price" value=""/><!-- 订金 -->
+            <input type="hidden" name="balance_price" value=""/><!-- 尾款 -->
+            <input type="hidden" name="ing_amount" value=""/><!-- 已预订了多少 -->
+            <div class="detail-ggsl">
+                <h1>{$card_info.name}</h1>
+                <!--<p class="detail-ggsl-p" style="display: none;" ><a href="">【首批售罄 7月20日10点再次开售，已购买的用户到货时间咨询客服】曲面全景屏、隐藏式摄像头 、骁龙845...</a></p>-->
+                <div class="shop-price-cou p">
+                    <div class="shop-price-le">
+                        <ul>
+                            <li class="jaj"><span id="goods_price_title">价格：</span></li>
+                            <li>
+                                <span class="bigpri_jj" id="goods_price"><em>￥{$card_info.price[0]|number_format=###,2}</em>
+                                    <!--<a href=""><em class="sale">（降价通知）</em></a>-->
+                                </span>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="shop-cou-ri">
+                        <div class="allcomm"><p>累计销量</p>
+                            <p class="f_blue">{$card_info.sell}</p></div>
+                    </div>
+                </div>
+                <div class="standard p">
+                    <ul>
+                        <li class="jaj"><span>服&nbsp;&nbsp;务：</span></li>
+                        <li class="lawir"><span class="service">由<a>{$tpshop_config['shop_info_store_name']}</a>发货并提供售后服务</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="standard p">
+                    <ul>
+                        <li class="jaj"><span>类&nbsp;&nbsp;型：</span></li>
+                        <li class="lawir"><span class="service">{$sort[$card_info.sort]}</span></li>
+                    </ul>
+                </div>
+
+                <!-- 优惠券 -->
+                <div class="standard">
+                    <ul class="p">
+                        <li class="jaj"><span>数&nbsp;&nbsp;量：</span></li>
+                        <li class="lawir">
+                            <div class="minus-plus">
+                                <a class="mins" href="javascript:void(0);" onclick="altergoodsnum(-1)">-</a>
+                                <input class="buyNum" id="number" type="text" name="num" value="1"
+                                       onblur="altergoodsnum(0)" max="{$card_info.residue}"/>
+                                <a class="add" href="javascript:void(0);" onclick="altergoodsnum(1)">+</a>
+                            </div>
+                            <div class="sav_shop"><empty name="card_info.residue"><b>已售罄</b><else />库存：<span id="spec_store_count">{$card_info.residue}</span> </empty></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="standard p">
+                    <div class="standard p">
+                        <a id="buy_now" class="paybybill buy_button" href="javascript:;" >立即购买</a>
+                    </div>
+                </div>
+                <div class="card_notice">
+                    <p>购买须知：</p>
+                    <div class="notice_content">{$card_info.user_rank}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--看了又看-s-->
+        <div class="detail-ry p">
+            <div class="type_more">
+                <div class="type-top">
+                    <h2>看了又看<a class="update_h fr" href="javascript:;" onclick="replace_look();">换一换</a></h2>
+                </div>
+                <div id="see_and_see">
+                </div>
+            </div>
+        </div>
+        <!--看了又看-s-->
+    </div>
+</div>
+<div id="hot_card">
+    <div class="w1224">
+        <div class="hotcard">
+            <div class="hot_card">
+                <div class="hot_title">
+                    <span>热销卡</span>
+                    <span>[最高赠送{$max_money}元]</span>
+                </div>
+                <div class="hot_more">
+                    <span>更多</span>
+                    <img src="__STATIC__/images/arrow_two.png" alt="">
+                </div>
+            </div>
+            <div class="hot_content">
+                <volist name="hot_card" id="vo" length="4">
+                    <div class="hot_item">
+                        <div class="hot_img">
+                            <img src="{$vo.back_img}" alt="">
+                        </div>
+                        <div class="hot_bottom">
+                            <div class="hot_name">{$vo.name}</div>
+                            <p>适用范围：{$vo.use_range}</p>
+                            <p>已售：{$vo.sell}</p>
+                            <div class="hot_bar">
+                                <p class="one"></p>
+                                <p class="two" style="width: {$vo.percent}%;"></p>
+                            </div>
+                            <div class="purchase" data-id="{$vo.discount[0]['id']}">立即抢购</div>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-s-->
+<include file="public/footer"/>
+<include file="public/sidebar_cart"/>
+<!--看了又看-s-->
+<div style="display: none" id="look_see">
+    <volist name="recommend_card" id="look" length="12">
+        <div class="tjhot-shoplist type-bot">
+            <div class="alone-shop">
+                <a href="{:url('Home/ShoppingCard/card_goodsInfo',array('id'=>$look['id']))}">
+                    <img class="wiahides"src="{$look['back_img']}" style="display: inline;"></a>
+                <p class="shop_name2">
+                    <a href="{:url('Home/ShoppingCard/card_goodsInfo',array('id'=>$look['id']))}">{$look.name}</a>
+                </p>
+                <p class="price-tag">
+                    <span class="li_xfo">￥</span><span>{$look.price[0]}</span>
+                </p>
+            </div>
+        </div>
+    </volist>
+    <!--看了又看-s-->
+</div>
+<!--footer-e-->
+<script>
+    //购买数量加减
+    function altergoodsnum(n) {
+        var num = parseInt($('#number').val());
+        var maxnum = parseInt($('#number').attr('max'));
+        if(isNaN(num)){
+            num = 1;
+        }
+        if(isNaN(maxnum)){
+            maxnum = 1;
+        }
+        if (maxnum > 200) {
+            maxnum = 200;
+        }
+        num += n;
+        num <= 0 ? num = 1 : num;
+        if (num >= maxnum) {
+            $(this).addClass('no-mins');
+            num = maxnum;
+        }
+
+        $('#store_count').text(maxnum - num); //更新库存数量
+        $('#number').val(num);
+
+        /*        initGoodsPrice();*/
+    }
+    var buy_now = $('#buy_now');
+    buy_now.click(function(){
+        $('#buy_goods_form').submit()
+    })
+
+    //看了又看切换
+    var tmpindex = 0;
+    var look_see_length = $('#look_see').children().length;
+    replace_look()
+    function replace_look() {
+        var listr = '';
+        if (tmpindex * 2 >= look_see_length) tmpindex = 0;
+        $('#look_see').children().each(function (i, o) {
+            if ((i >= tmpindex * 2) && (i < (tmpindex + 1) * 2)) {
+                listr += '<div class="tjhot-shoplist type-bot">' + $(o).html() + '</div>';
+            }
+        });
+        tmpindex++;
+        $('#see_and_see').empty().append(listr);
+    }
+    $('.purchase').click(function () {
+        var id=$(this).attr('data-id')
+        window.location.href='{:url('home/ShoppingCard/oder_des')}?num=1&id='+id;
+    })
+</script>
+
+</body>
+</html>

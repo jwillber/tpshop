@@ -1,0 +1,86 @@
+<include file="public/layout" />
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.config.js"/>
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.all.min.js"/>
+<script type="text/javascript" charset="utf-8" src="__ROOT__/public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/static/js/perfect-scrollbar.min.js"></script>
+<style type="text/css">
+    html, body {overflow: visible;}
+</style>
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>购物卡 - 创建实体卡</h3>
+                <h5>点击创建实体卡并生成excel表格</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" action="{:url('ShoppingCard/create_card')}" id="add_post" method="post">
+        <input type="hidden" name="id" value="{$Request.param.id}"/>
+        <div class="ncap-form-default">
+
+            <dl class="row">
+                <dt class="tit">
+                    <label><em></em>实体卡前缀</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="" name="prefix" class="input-txt">
+                    <span class="err" id="err_prefix"></span>
+                    <p class="notic"></p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em></em>编号长度</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="" name="long" class="input-txt" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+                    <span class="err" id="err_long"></span>
+                    <p class="notic">请输入6-16之间，超出或小于默认长度为8</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em></em>卡密长度</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="" name="p_len" class="input-txt" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+                    <span class="err" id="err_p_len"></span>
+                    <p class="notic">请输入6-12之内，超出或小于默认长度为6</p>
+                </dd>
+
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>生成数量</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="" name="num" class="input-txt" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+                    <span class="err" id="err_num"></span>
+                    <p class="notic"></p>
+                </dd>
+
+            </dl>
+
+
+            <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+    $(document).on("click", '#submitBtn', function () {
+        $('#add_post').submit()
+        // window.location.href="{:url('ShoppingCard/index')}";
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<include file="public/header" title="验证码登录"  body="menu-hide"/>
+<include file="public/header_nav" title=""  href="javascript:history.back(-1);"/>
+<link rel="stylesheet" href="__STATIC__/css/user.css">
+<div class="login-c">
+    <if condition="$tpshop_config.shop_info_wap_login_logo">
+        <a class="login-logo-wrap" href="#">
+            <img src="{$tpshop_config.shop_info_wap_login_logo}" alt="LOGO"/>
+        </a>
+    </if>
+    <!--登录表单-s-->
+    <form id="loginform" method="post">
+        <!-- 输入验证码 -->
+        <div class="import-code">
+            <div class="import-t">输入验证码</div>
+            <div class="import-n color999">验证码已发送至：<span>{$mobile}</span></div>
+            <div class="import-container">
+                <div class="vcode" id='vertifycode'>
+                    <input type="tel" maxlength='4' ref='code' class='code' id='code'
+                           @focus='focus=true'
+                           v-model='code'
+                           @blur='focus=false'
+                           :disabled='disabled'
+                    >
+                    <div class="labels">
+                        <label class='label' for="code"
+                               :class='{active: focus===true && index===currentIndex1}'
+                               v-for='item,index in length'
+                                v-text='arrCode1[index]'>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div disabled class="send-code" v-bind:class="{ 'code-c': code-c }">重新发送<span class="countdown"> &nbsp;(59s)</span></div>
+        </div>
+    </form>
+
+</div>
+<script src="__PUBLIC__/static/js/vue.js"></script>
+<script src="__PUBLIC__/static/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    var mobile="{$mobile}";
+    var code_flag=false;
+    $(".send-code").click(function(){
+        $(".send-code").removeClass('code-c');
+        $(".send-code").css("pointer-events","none")
+        getCode();
+    })
+
+   //发送验证码
+   function sendcode(){
+        if(code_flag){ return false; }
+        var time="{$tpshop_config.sms_sms_time_out|default=60}";
+        $(".send-code").removeClass('code-c');
+        $(".send-code").css("pointer-events","none")  
+         //改变按钮状态
+        code_flag=true;
+        callback();
+        //循环定时器
+        var T = window.setInterval(callback,1000);
+        function callback()
+        {
+            if(time == 1){
+                //移除定时器
+                window.clearInterval(T);
+                code_flag=false;
+                $(".send-code").addClass('code-c');
+                $(".send-code").css("pointer-events","visible")  
+            }else{
+                time--;
+                if(time<=9){
+                    $(".countdown").text("(0"+ time+"s)");
+                }else{
+                    $(".countdown").text("("+time+")");
+                }
+            }
+        }
+   }
+   sendcode();
+   new Vue({
+        el: '#vertifycode',
+        data: {
+            length: 4,
+            currentIndex: 0,       //当前验证码下标
+            code: '',
+            focus: false,         //焦点
+            arrCode: [],          //验证码
+            disabled: false,
+            codeC:true
+        },
+        computed: {
+            arrCode1: function () {
+                return this.code.split('');
+            },
+            currentIndex1: function () {
+                return this.code.length;
+            }
+        },
+        watch: {
+            code: function (newV,oldV) {
+                var self = this;
+                this.code = newV.replace(/[^\d]/g,''); // 限制非数字
+                if(newV.length >= 4) {
+                    this.disabled = true;
+                    this.$refs.code.blur();
+                    do_login(self)
+                }
+            }
+        }
+   })
+   function getCode(){
+        if(code_flag == true ){
+            return false;
+        }
+        code_flag = true;
+        if(mobile.length != 11){
+            return false;
+        }
+       on_going('正在获取验证码')
+        $.ajax({
+            url : "/index.php?m=Home&c=Api&a=send_validate_code&scene=6&type=mobile",
+            type:'post',
+            dataType:'json',
+            data:{mobile:mobile},
+            success:function(res){
+                on_going_hide()
+                code_flag = false;
+                if(res.status == 1){
+                    sendcode();
+                    self.code=" ";      //清空验证码
+                    self.focus=true;    //输入光标
+                    self.disabled=false,
+                    self.currentIndex=0;
+                    white_hint(res.msg,true,3000);   //提示弹窗
+                }else{
+                    white_hint(res.msg,false,3000);   //提示弹窗
+                }
+            }
+        })
+    }
+
+   function do_login(obj){
+       on_going('正在登录')
+        if(mobile.length != 11){
+            return false;
+        }
+        $.ajax({
+            url : "/index.php?m=Mobile&c=User&a=login_mobile",
+            type:'post',
+            dataType:'json',
+            data:{mobile:mobile,code:obj.code},
+            success:function(res){
+                on_going_hide()
+                if(res.status == 1){
+                    if(!res.result.password && !$.cookie("isSkip")){
+                        window.location.href = "{:U('Mobile/User/reset_password')}";
+                    }else {
+                        window.location.href = res.redirect_url;
+                    }
+                }else{
+                    white_hint(res.msg);   //提示弹窗
+                    obj.code="";      //清空验证码
+                    obj.focus=true;    //输入光标
+                    obj.disabled=false,
+                    obj.currentIndex=0;
+                    return false;
+                }
+            }
+        })
+
+   }
+</script>
+</body>
+</html>

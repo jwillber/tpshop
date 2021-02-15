@@ -1,0 +1,126 @@
+.order .top{
+    padding: 1rem .427rem .853rem;
+    display: flex;
+    justify-content: space-between;
+}
+.order .car_img{
+    width: 3.84rem;
+    height: 3.84rem;
+}
+.order .car_img{
+    width: 3.84rem;
+    height: 3.84rem;
+}
+.order .car_img img{
+    width: 3.84rem;
+    height: 3.84rem;
+    border:1px solid #E6E6E6;
+    border-radius:.427rem;
+}
+.order .car_name{
+    width: 10.46rem;
+    position: relative;
+}
+.order .car_name .name{
+    font-size:.64rem;
+    color:#333;
+    padding: .64rem 0 0;
+    line-height: .768rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.order .car_name .price{
+    display: flex;
+    justify-content: space-between;
+    line-height: 2rem;
+    position: absolute;
+    bottom: 0;
+    width: 10.46rem;
+}
+.order .car_name .price p{
+    color: #FF3B3B;
+    font-size: .768rem;
+    font-weight: 600;
+}
+.order .car_name .price p span{
+    font-size: .64rem;
+    line-height: 1rem;
+}
+.order .car_name .price .number{
+    color: #999;
+    font-size: .512rem;
+}
+.order .remark{
+    padding: .5rem .427rem 0;
+    border-top: .213rem solid #F5F5F5;
+    border-bottom: .213rem solid #F5F5F5;
+    font-size: .64rem;
+    line-height: 1.2rem;
+}
+.order .remark textarea{
+    color: #333;
+    font-size: .6rem;
+    outline: none;
+    border: none;
+    display: inline-block;
+    max-height: 1.5rem;
+    width: 15.15rem;
+    line-height: .768rem;
+}
+textarea::-webkit-input-placeholder{
+    color: #999;
+}
+.order .card_price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .853rem .427rem;
+    color: #333;
+    font-size: .64rem;
+}
+.order .card_price p{
+    color: #FF3B3B;
+    font-size: .512rem;
+}
+.order .total{
+    padding: 0 .427rem;
+    font-size: .64rem;
+    color: #333;
+    text-align: right;
+}
+.order .total span{
+    color: #FF3B3B;
+}
+.order .bottom{
+    position: fixed;
+    bottom: 0;
+    width: 16rem;
+    height: 2.13rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: .427rem;
+    background: #F5F5F5;
+    font-size: .64rem;
+}
+.order .bottom .bottom_total span{
+    color: #FF3B3B;
+}
+.order .bottom .bottom_submit{
+    width: 5.12rem;
+    height: 2.13rem;
+    line-height: 2.13rem;
+    text-align: center;
+    font-size: .768rem;
+    background: #FF3B3B;
+    color: #fff;
+}
+.layui-layer-msg{
+    width: 3.84rem;
+    left: 4rem !important;
+}
+.layui-layer-dialog .layui-layer-content{
+    font-size: .65rem;
+}

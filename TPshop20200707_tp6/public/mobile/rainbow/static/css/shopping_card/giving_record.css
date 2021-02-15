@@ -1,0 +1,80 @@
+body{
+    background: #f5f5f5;
+}
+.containter .nav{
+    width: 16rem;
+    height: 1.92rem;
+    line-height: 1.92rem;
+    color: #333;
+    font-size: .64rem;
+    display: flex;
+    text-align: center;
+    background: #fff;
+}
+.containter .nav div{
+    width: 8rem;
+    position: relative;
+}
+.containter .nav .check{
+    color:#FF3B3B
+}
+.containter .nav .check:before {
+    content: '';
+    width: 1.28rem;
+    height: .128rem;
+    background-color: #FF3B3B;
+    border-radius: .064rem;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 3.36rem;
+}
+.card_list{
+    padding-top: .213rem;
+    font-size: .597rem;
+}
+.card_list .card_item{
+    display: none;
+}
+.card_list .card_item .name{
+    width: 16rem;
+    height: 1.707rem;
+    background: #FAFAFA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .427rem;
+    color: #333;
+}
+.card_list .card_item .name .card_name{
+    white-space: nowrap;
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.707rem;
+    display: flex;
+    align-items: center;
+}
+.card_list .card_item .name .card_number{
+    color: #666;
+}
+.card_list .choose{
+    display: inline-block;
+}
+.card_list .item{
+    margin-bottom: .427rem;
+}
+.card_list .card_item .receive{
+    background: #fff;
+    padding: 0 .427rem .853rem;
+    color: #666;
+}
+.card_list .card_item .receive .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 2rem;
+}
+.card_list .card_item .receive .details{
+    line-height: .768rem;
+}

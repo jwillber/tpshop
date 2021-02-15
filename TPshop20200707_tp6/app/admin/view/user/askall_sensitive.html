@@ -1,0 +1,56 @@
+<include file="public/layout" />
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>问大家管理</h3>
+                <h5>问大家提问，评论</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                <li><a href="/index.php/admin/user/askall"><span>问大家列表</span></a></li>
+                <li><a class="current" href="/index.php/admin/user/askall_sensitive"><span>敏感词配置</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation" style="color: rgb(44, 188, 163); background-color: rgb(237, 251, 248); width: 99%; height: 100%;">
+        <div id="checkZoom" class="title"><i class="fa fa-lightbulb-o"></i>
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+        </div>
+        <ul>
+            <li>设置敏感词请遵循格式</li>
+        </ul>
+    </div>
+    <form method="post" enctype="multipart/form-data" name="form1" action="{:url('System/handle')}">
+        <input type="hidden" name="inc_type" value="{$inc_type}">
+        <div class="ncap-form-default">
+            <dl class="row" id="tpshop-im-web">
+                <dt class="tit">
+                    <label>敏感词配置</label>
+                </dt>
+                <dd class="opt">
+                    <textarea style="height:200px;width:500px" id="askall_sensitive_config" name="askall_sensitive_config">{$config['askall_sensitive_config']}</textarea>
+                    <p class="notic">配置格式:敏感词|敏感词 (多个敏感词请用 '|' 号隔开)</p>
+                </dd>
+            </dl>
+
+            <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="fromsubmit();">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script>
+    function fromsubmit(){
+        var askall_sensitive_config=$("#askall_sensitive_config").val();
+        // if(askall_sensitive_config.indexOf("|") == -1){
+        //     layer.msg('敏感词配置必须遵循格式！', {icon: 2,time: 1000});
+        //     return false;
+        // }
+        document.form1.submit();
+    }
+</script>
+</body>
+</html>

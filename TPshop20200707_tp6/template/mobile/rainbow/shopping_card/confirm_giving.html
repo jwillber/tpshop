@@ -1,0 +1,89 @@
+<include file="public/header" title="购物卡-分享"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/confirm_giving.css">
+<div class="containter">
+    <div class="card_photo">
+        <img src="http://demo5.tp-shop.cn/public/upload/goods/2019/04-16/416e0041ccc983ae79940630ebf4a621.jpg" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">{$card.shopping_card.name}</div>
+    </div>
+    <div class="car_balance">
+        <div class="balance">卡内余额：<p><span>￥</span>{$card.balance}</p></div>
+    </div>
+    <div class="card_number">
+        <p>卡号：{$card.sn}</p>
+        <p>{$card.indate}</p>
+    </div>
+    <div class="border"></div>
+</div>
+<div class="giving_language">
+    赠语：
+    <div class="giving_content">
+        {$text}
+    </div>
+    <div class="source">
+        <p>{$name}</p>
+        <p>{$now|date="Y/m/d"}</p>
+    </div>
+</div>
+<!--弹窗-->
+<div class="mask-filter-div"></div>
+
+
+<if condition="$Request.param.cid">
+    <div class="activate_prompt succeed">
+        <img src="__STATIC__/images/shopping_card/activate_win.png" alt="">
+        <div class="order_information">
+            <p>领取成功！</p>
+            <p>购物卡自动存入您的卡包</p>
+        </div>
+        <div class="prompt_button"><a href="{:url('ShoppingCard/activate',array('id'=>$Request.param.cid))}" style="color: #ffffff">查看卡详情</a></div>
+        <img class="succeed_close" src="__STATIC__/images/shopping_card/close.png" alt="">
+    </div>
+    <div class="receive">领取</div>
+<else/>
+    <div class="qr_code">
+        <img class="code_img" src="{$pic_url}" alt="" >
+        <div class="close">
+            <p>长按图片保存到相册</p>
+            <img class="close_img" src="__STATIC__/images/shopping_card/close.png" alt="" >
+        </div>
+    </div>
+    <div class="next_step">生成二维码</div>
+</if>
+<script>
+    //    生成二维码
+    $(".next_step").click(function(){
+        $(".mask-filter-div").show();
+        $(".qr_code").show();
+    })
+    $(".close_img").click(function(){
+        $(".mask-filter-div").hide();
+        $(".qr_code").hide();
+    })
+    //    领取
+    <if condition="$Request.param.cid">
+    $(".receive").click(function(){
+        $.ajax({
+            type: "POST",
+            dataType:'json',
+            url: "{:url('Mobile/ShoppingCard/gain')}",
+            data: {cid: {$Request.param.cid|default=0},sn:'{$Request.param.sn|default=0}',card_password:'{$Request.param.card_password|default=0}'},
+            success: function (data) {
+                if(data.status==1){
+                    $(".mask-filter-div").show();
+                    $(".succeed").show();
+                }else{
+                    layer.open({content: data.msg, time: 2});
+                }
+            }
+        });
+    })
+    </if>
+    $(".succeed_close").click(function(){
+        $(".mask-filter-div").hide();
+        $(".succeed").hide();
+    })
+</script>

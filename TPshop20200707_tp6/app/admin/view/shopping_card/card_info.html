@@ -1,0 +1,609 @@
+<include file="public/layout" />
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<style>
+    .ncsc-default-table {
+        line-height: 20px;
+        width: 100%;
+        border-collapse: collapse;
+        clear: both;
+    }
+    .ncsc-default-table thead th {
+        line-height: 20px;
+        color: #777;
+        background-color: #FFF;
+        text-align: center;
+        height: 20px;
+        padding: 8px 0;
+        border-bottom: solid 1px #DDD;
+    }
+    .ncsc-default-table tbody td {
+        color: #777;
+        background-color: #FFF;
+        text-align: center;
+        padding: 10px 0;
+    }
+    label{ cursor:pointer }
+    .recharge_giving input,.recharge_discount input{
+        width: 60px;
+        margin-bottom: 10px;
+    }
+    .recharge_giving .copy span,.recharge_discount .copy span{
+        display: inline-block;
+        width: 35px;
+        height: 26px;
+        border: 1px solid #e5e5e5;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        margin-left: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>购物卡管理 - 编辑购物卡</h3>
+                <h5>网站系统购物卡管理</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="handleposition" method="post">
+        <input type="hidden" name="id" value="{$card.id}"/>
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>卡类型</label>
+                </dt>
+                <dd class="opt ctype shopping_card">
+                    <label> <input name="sort" type="radio" value="0" <if condition="$card['sort'] eq 0">checked</if> >购物卡</label>
+                    <label> <input name="sort" type="radio" value="1" <if condition="$card['sort'] eq 1">checked</if> >购物余额卡</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>购物卡名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="name" name="name" value="{$card.name}" class="input-txt">
+                    <span class="err" id="err_name"></span>
+                    <p class="notic">请填写购物卡名称</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>背景图片</label>
+                </dt>
+                <dd class="opt">
+                    <div class="input-file-show">
+                        <span class="show">
+                                <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$card.back_img}">
+                                    <i id="img_i" class="fa fa-picture-o"
+                                       onMouseOver="layer.tips('<img src={$card.back_img}>',this,{tips: [1, '#fff']});" onMouseOut="layer.closeAll();"></i>
+                                </a>
+                        </span>
+                        <span class="type-file-box">
+                            <input type="text" id="back_img" name="back_img" value="{$card.back_img}" class="type-file-text">
+                            <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                            <input class="type-file-file" onClick="GetUploadify(1,'','goods','img_call_back')" size="30"
+                                   title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                        </span>
+                    </div>
+                    <span class="err"></span>
+
+                    <p class="notic">请上传图片格式文件，建议图片尺寸800*800像素</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>购物卡面额</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="face_value" name="face_value"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" value="{$card.face_value}" class="input-txt">
+                    <span class="err" id="err_face_value"></span>
+                    <p class="notic">优惠券可抵扣金额</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>优惠设置</label>
+                </dt>
+                <dd class="opt">
+                    <select id="give" name="give">
+                        <option value="0" <if condition="$card['give'] eq 0">selected</if>>赠送金额</option>
+                        <option value="1" <if condition="$card['give'] eq 1">selected</if>>折扣</option>
+                        <option value="2" <if condition="$card['give'] eq 2">selected</if>>原价出售</option>
+                    </select>
+                    <p class="notic">卡片优惠类型</p>
+                </dd>
+            </dl>
+            <dl class="row custom" style="display:none">
+                <dt class="tit">
+                    <label><em>*</em>是否自定义储值</label>
+                </dt>
+                <dd class="opt ctype">
+                    <label> <input name="custom" type="radio" value="0" <if condition="$card['custom'] eq 0">checked</if> >否</label>
+                    <label> <input name="custom" type="radio" value="1" <if condition="$card['custom'] eq 1">checked</if> >是</label>
+                </dd>
+                <div>
+                    <dl class="row" style="display: block;">
+                        <dt class="tit">
+                            <label><em>*</em>充值金额</label>
+                        </dt>
+                        <dd class="opt recharge_giving">
+                            <div class="copy"> 充值（元）<input class="recharge" type="text" value="{$card.discount[1]['targer_money']}">
+                                &nbsp;赠送  <input class="giving" type="text" value="{$card.discount[1]['give_num']}">
+                                <span class="copy_add">+</span><br>
+                            </div>
+                            <div class="copy copy_two">充值（元）<input class="recharge" type="text">
+                                &nbsp;赠送  <input class="giving" type="text">
+                                <span class="copy_minus">-</span><br>
+                            </div>
+                            <volist name="$card.discount" id="vo" offset="2">
+                               <div class="copy copy_two">充值（元）<input class="recharge" type="text" value="{$vo.targer_money}">
+                                   &nbsp;赠送  <input class="giving" type="text" value="{$vo.give_num}">
+                                   <span class="copy_minus">-</span><br>
+                               </div>
+                            </volist>
+                            <div class="copy copy_two">充值（元）<input class="recharge" type="text">
+                                &nbsp;赠送  <input class="giving" type="text" >
+                                <span class="copy_minus">-</span><br>
+                            </div>
+                        </dd>
+                        <dd class="opt recharge_discount" style="display: none;">
+                            <div class="copy">
+                                充值（元）<input class="recharge" type="text" value="{$card.discount[1]['targer_money']}">
+                                &nbsp;折扣（%）<input class="discount" type="text" value="{$card.discount[1]['give_num']}">
+                                <span class="copy_add">+</span><br>
+                            </div>
+                            <div class="copy copy_two">
+                                充值（元）<input class="recharge" type="text" >
+                                &nbsp;折扣（%）<input class="discount" type="text">
+                                <span class="copy_minus">-</span><br>
+                            </div>
+                            <volist name="$card.discount" id="vo" offset="2">
+                                <div class="copy">
+                                    充值（元）<input class="recharge" type="text" value="{$vo.targer_money}">
+                                    &nbsp;折扣（%）<input class="discount" type="text" value="{$vo.give_num}">
+                                    <span class="copy_minus">-</span><br>
+                                </div>
+                            </volist>
+                            <div class="copy copy_two">
+                                充值（元）<input class="recharge" type="text" >
+                                &nbsp;折扣（%）<input class="discount" type="text">
+                                <span class="copy_minus">-</span><br>
+                            </div>
+                            <div class="copy copy_two">
+                                充值（元）<input class="recharge" type="text" >
+                                &nbsp;折扣（%）<input class="discount" type="text" >
+                                <span class="copy_minus">-</span><br>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </dl>
+            <dl class="row" <if condition="$card.give neq 2">style="display:none"</if>>
+                <dt class="tit">
+                    <label><em>*</em>购买价格</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="targer_money" name="targer_money" value="{$card.face_value}" class="input-txt">
+                    <span class="err" id="err_targer_money"></span>
+                    <p class="notic">请填写购物卡购买价格</p>
+                </dd>
+            </dl>
+            <dl class="row" <if condition="$card.give eq 2">style="display:none"</if>>
+                <dt class="tit">
+                    <label><em>*</em><if condition="$card.give eq 0">赠送金额(元)</if><if condition="$card.give eq 1">折扣(%)</if></label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="give_num" name="give_num" value="{$card.discount[0]['give_num']|default=0|intval}" class="input-txt">
+                    <span class="err" id="err_give_num"></span>
+                    <p class="notic">请填写<if condition="$card.give eq 0">赠送金额</if><if condition="$card.give eq 1">折扣</if></p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>有效期</label>
+                </dt>
+                <dd class="opt ctype">
+                    <p class="notic">请填写购物卡有效期</p>
+                    <label> <input name="period" type="radio" value="0" <if condition="$card['validity'] eq 0">checked</if> >永远有效</label>
+                    <label> <input name="period" type="radio" value="1" <if condition="$card['validity'] neq 0">checked</if> >有效期为</label>
+                    <input type="text" id="validity" name="validity" value="{$card.validity|default=0}" <if condition="$card.validity eq 0">style="display:none"</if>><span id="day" <if condition="$card.validity eq 0">style="display:none"</if>>天</span>
+                    <span class="err" id="err_validity"></span>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>可使用商品：</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input type="radio" value="0" name="use_type" onclick="use_type_tab(0)" <if condition="$card.use_type eq 0">checked</if>>全店通用</label>
+                    <label>
+                        <input type="radio" value="1" name="use_type" onclick="javascript:selectGoods();" <if condition="$card.use_type eq 1">checked</if>>指定商品
+                    </label>
+                    <label>
+                        <input type="radio" value="2" name="use_type" onclick="use_type_tab(2)" <if condition="$card.use_type eq 2">checked</if>>指定分类
+                    </label>
+                </dd>
+            </dl>
+            <dl id="goods_all_cate" style="display:<if condition="$card['use_type'] eq 2">block;<else/>none;</if>">
+                <dt class="tit"><em>*</em>限制商品分类使用：</dt>
+                <dd class="opt">
+                    <select name="cat_id1" id="cat_id1" onChange="get_category(this.value,'cat_id2','0');" class="valid">
+                        <option value="0">请选择商品分类</option>
+                        <foreach name="cat_list" item="v" key="k" >
+                            <option value="{$v['id']}" <if condition="$v['id'] eq $card['CatId']['cat_id1']">selected="selected"</if> >
+                            {$v['name']}
+                            </option>
+                        </foreach>
+                    </select>
+                    <select name="cat_id2" id="cat_id2" onChange="get_category(this.value,'cat_id3','0');" class="valid">
+                        <option value="0">请选择商品分类</option>
+                    </select>
+                    <select name="cat_id3" id="cat_id3" class="valid">
+                        <option value="0">请选择商品分类</option>
+                    </select>
+                    <span class="err" id="err_cat_id1"></span>
+                    <span class="err" id="err_cat_id2"></span>
+                    <span class="err" id="err_cat_id3"></span>
+                    <p class="hint">若不选表示不限制，否则请选择到指定三级分类</p>
+                </dd>
+            </dl>
+            <dl id="enable_goods" style="display:<if condition="$card['use_type'] eq 1">block;<else/>none;</if>">
+                <dt class="tit">指定商品列表：</dt>
+                <dd class="opt">
+                    <table class="ncsc-default-table">
+                        <thead>
+                        <tr>
+                            <th class="w80">商品ID</th>
+                            <th class="w80">商品名称</th>
+                            <th class="w80">价格</th>
+                            <th class="w80">库存</th>
+                            <th class="w80">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="goods_list">
+                        <foreach name="enable_goods" item="vo">
+                            <tr>
+                                <td style="display:none"><input type="checkbox" name="goods_id[]" class="goods_id" checked="checked" value="{$vo.goods_id}"/></td>
+                                <td>{$vo.goods_id}</td>
+                                <td>{$vo.goods_name}</td>
+                                <td>{$vo.shop_price}</td>
+                                <td>{$vo.store_count}</td>
+                                <td class="nscs-table-handle">
+                                    <span><a onClick="$(this).parent().parent().parent().remove();" class="btn-grapefruit"><i class="icon-trash"></i><p>删除</p></a></span>
+                                </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                    <span class="err" id="err_goods_id"></span>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>库存</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="repertory" name="repertory" value="{$card.repertory}" class="input-txt">
+                    <span class="err" id="err_repertory"></span>
+                    <p class="notic">请填写购物卡库存</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>使用须知</label>
+                </dt>
+                <dd class="opt">
+                    <textarea rows="4" cols="60" name="user_rank" id="user_rank" class="input-txt">{$card.user_rank}</textarea>
+                    <span class="err" id="err_user_rank"></span>
+                </dd>
+            </dl>
+
+                <div class="bot">
+
+                    <a onClick="verifyForm();" class="ncap-btn-big ncap-btn-green">确认提交</a>
+                </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        // $('.ctype ').find('input[type="radio"]:checked').trigger('click');
+
+
+        <if condition="$card['cat_id']['cat_id1'] gt 0">
+            get_category("{$card['cat_id']['cat_id1']}",'cat_id2',"{$card['cat_id']['cat_id2']}");
+        </if>
+        <if condition="$card['cat_id']['cat_id2'] gt 0">
+                get_category("{$card['cat_id']['cat_id2']}",'cat_id3',"{$card['cat_id']['cat_id3']}");
+        </if>
+    })
+
+    var ajax_return_status=1;
+    function verifyForm(){
+//        充值的参数face_value 格式 ：充值1_充值2_充值3
+//        折扣/赠送参数 give_num 格式： 折扣/赠送1_折扣/赠送2_折扣/赠送3
+        //充值，赠送
+        var input_length=$(".recharge_giving .copy").length;
+        for( var i=0;i<input_length;i++){
+            var recharge=$(".recharge_giving .copy").eq(i).children(".recharge").val();  //充值
+            var giving=$(".recharge_giving .copy").eq(i).children(".giving").val();      //
+            if(i==0){
+                recharge_to=$(".recharge_giving .copy").eq(0).children(".recharge").val();   //充值
+                giving_to=$(".recharge_giving .copy").eq(0).children(".giving").val();    //赠送
+            }else{
+                var recharge_to=recharge_to+'_'+recharge;
+                var giving_to=giving_to+'_'+giving;
+            }
+
+        }
+        //充值，折扣
+        var discount_length=$(".recharge_discount .copy").length;
+        for( var i=0;i<discount_length;i++){
+            var recharge=$(".recharge_discount .copy").eq(i).children(".recharge").val();  //充值
+            var giving=$(".recharge_discount .copy").eq(i).children(".discount").val();      //
+            if(i==0){
+                recharge_discount=$(".recharge_discount .copy").eq(0).children(".recharge").val();   //充值
+                giving_discount=$(".recharge_discount .copy").eq(0).children(".discount").val();    //赠送
+            }else{
+                var recharge_discount=recharge_discount+'_'+recharge;
+                var giving_discount=giving_discount+'_'+giving;
+            }
+
+        }
+        if(ajax_return_status==0){
+            return ;
+        }
+        ajax_return_status=0
+        $('span.err').show();
+        if ($('input[name="use_type"]:checked').val()==1){
+            var goods =0;
+            $('.goods_id').each(function(i,o){
+                goods += 1;
+            });
+            if(goods<1){
+                ajax_return_status=1;
+                layer.alert("请选择活动商品");
+                return;
+            }
+        }
+        
+        if ($('input[name="use_type"]:checked').val()==2){
+            if($('#cat_id1').val() == 0){
+                ajax_return_status=1;
+                layer.alert("最少请选一个分类");
+                return;
+            }
+        }
+
+        if($('#give').val()=='1')
+        {
+
+            var recharge=recharge_discount
+            var giving=giving_discount
+        }else{
+
+            var recharge=recharge_to
+            var giving=giving_to
+        }
+
+        
+        $.ajax({
+            type: "POST",
+            url: "{:url('Admin/ShoppingCard/card_info')}",
+            data: $('#handleposition').serialize()+"&recharge="+recharge+"&giving="+giving,
+            dataType: "json",
+            success: function (data) {
+                ajax_return_status=1;
+                if (data.status == 1) {
+                    layer.msg(data.msg, {icon: 1},function () {
+                        location.href = "{:url('Admin/ShoppingCard/index')}";
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                    $.each(data.result, function (index, item) {
+                        $('#err_' + index).text(item).show();
+                    });
+                }
+            },
+            error: function () {
+                ajax_return_status=1;
+                layer.alert("服务器繁忙, 请联系管理员!");
+            },
+        });
+    }
+
+    /**可使用商品**/
+    //点击单选按钮
+    function use_type_tab(v){
+        if(v == 0){
+            $('#goods_all_cate').hide();
+            $('#enable_goods').hide();
+            $('#goods_list').html('');
+        }
+        if(v == 1){
+            $('#enable_goods').show()
+            $('#goods_all_cate').hide();
+        }
+        if(v == 2){
+            $('#goods_all_cate').show();
+            $('#enable_goods').hide();
+            $('#goods_list').html('');
+        }
+    }
+
+    function selectGoods(){
+        use_type_tab(1);
+        var goods_id = [];
+        //过滤选择重复商品
+        $('.goods_id').each(function(i,o){
+            goods_id += $(o).val()+',';
+        });
+        var url = '/index.php?m=admin&c=Promotion&a=search_goods&exvirtual=1&nospec=1&goods_id='+goods_id+'&t='+Math.random();
+        layer.open({
+            type: 2,
+            title: '选择商品',
+            shadeClose: true,
+            shade: 0.3,
+            area: ['70%', '80%'],
+            content: url,
+        });
+    }
+    function call_back(table_html)
+    {
+        layer.closeAll('iframe');
+        var goods_list_html='';
+        $.each(table_html, function (n, value) {
+            goods_list_html += ' <tr>' +
+                    '<td style="display:none"><input type="checkbox" name="goods_id[]" class="goods_id" checked="checked" value="'+value.goods_id+'"/></td>' +
+                    '<td>'+value.goods_id+'</td><td>'+value.goods_name+'</td><td>'+value.goods_price+'</td>' +
+                    '<td>'+value.store_count+'</td>' +
+                    '<td class="nscs-table-handle"><span><a href="javascript:;" onclick="$(this).parent().parent().parent().remove();" class="btn-grapefruit"><i class="icon-trash"></i><p>删除</p></a></span></td>' +
+                    '</tr>';
+        });
+        $('#goods_list').append(goods_list_html);
+    }
+//    充值金额设置+,-
+    $(".copy_add").click(function(){
+        var clone=$(this).parent().parent().find(".copy_two").first().clone(true);
+        $(this).parent().parent().append(clone);
+    })
+    $(".copy_minus").click(function(){
+        var length=$(this).parent().parent().find(".copy_two").length;
+        if(length>2){
+            $(this).parent().remove();
+        }
+    })
+    // 有效期
+    $("input[name='period']").click(function(){
+        var result=$("input[name='period']:checked").val()
+        if(result==0) {
+            $('#validity').hide()
+            $('#day').hide()
+            $('#validity').attr('value','{$card.validity|default=0}')
+        }else{
+            $('#validity').show()
+            $('#day').show()
+            $('#validity').attr('value','{$card.validity|default=0}')
+        }
+
+    })
+
+    // 卡片优惠类型
+    function  promotion(){
+        var index = $('#give').val()
+        var result=$("input[name='sort']:checked").val(); //当前选择卡的类型
+        if(index==2){
+            $('#targer_money').parents('dl').show();
+            $('#give_num').parents('dl').hide();
+        }else if(index==0){
+            $('#targer_money').parents('dl').hide();
+            if(result==0){
+                $('#give_num').parents('dl').show();
+            }
+            $(".recharge_giving").show();            //充值金额赠送
+            $(".recharge_discount").hide();            //充值金额折扣
+            $('#give_num').siblings().eq(1).text('请输入赠送金额');
+            $('#give_num').parent().siblings('dt').children('label').text('');
+            $('#give_num').parent().siblings('dt').children('label').append('<em>*</em>赠送金额(元)');
+        }else{
+            $('#targer_money').parents('dl').hide();
+            if(result==0){
+                $('#give_num').parents('dl').show();
+            }
+            $(".recharge_giving").hide();            //充值金额赠送
+            $(".recharge_discount").show();            //充值金额折扣
+            $('#give_num').siblings().eq(1).text('请输入折扣');
+            $('#give_num').parent().siblings('dt').children('label').text('');
+            $('#give_num').parent().siblings('dt').children('label').append('<em>*</em>折扣(%)');
+        }
+    }
+    // 卡类型切换
+    function card_type() {
+        var result=$("input[name='sort']:checked").val();     //0购物卡，1购物余额卡
+        if(result==0){
+            $('form').each(function(){
+                this.reset();
+            })
+            $('#face_value').parents('dl').show();
+            $('#give').children().eq(2).show();
+            $('#give_num').parents('dl').show();
+            $('#give_num').siblings().eq(1).text('请输入赠送金额');
+            $('#give_num').parent().siblings('dt').children('label').text('');
+            $('#give_num').parent().siblings('dt').children('label').append('<em>*</em>赠送金额(元)');
+            $("input[name='sort']:first").attr('checked', 'checked');
+            $('#input[name="period"]:first').attr('checked','checked')
+
+            $('#validity').parents('dl').show();
+            $('#day').show()
+
+            $('#user_rank').parents('dl').show();
+            $('input[name="custom"]:first').parents('dl').hide();
+            $('input[name="custom"]:first').attr('checked','checked')
+            $("input[name='use_type']:checked").parents('dl').show();  //可使用商品（全店通用,指定商品,指定分类,）
+           <if condition="$card['use_type'] eq 2 ">
+                $("#goods_all_cate").show();
+                $("#enable_goods").hide();
+            </if>
+            <if condition=" $card['use_type'] eq 1">
+                $("#enable_goods").show();
+                $("#goods_all_cate").hide();
+            </if>
+
+
+        }else{
+            $('form').each(function(){
+                this.reset();
+            })
+            $(".row.custom").show();
+            $("input[name='sort']").eq(1).attr('checked', 'checked');
+            $('#give').children().eq(2).hide();
+            $('#give_num').parents('dl').hide();
+            $('#validity').parents('dl').hide()
+            $('#day').hide()
+            $('#validity').attr('value','{$card.validity|default=0}')
+            //$('#user_rank').parents('dl').hide();
+            $('#custom').parents('dl').hide();
+            $('#targer_money').parents('dl').hide();
+            $("input[name='use_type']:checked").parents('dl').hide();  //可使用商品（全店通用,指定商品,指定分类,）
+            $("#goods_all_cate").hide();          //可使用商品（全店通用,指定商品,指定分类,）
+            $("#enable_goods").hide();
+            // use_type_tab(0);
+        }
+        if(result==1){
+            $('#give').val(0)
+        }
+    }
+
+       $(document).ready(function () {
+           card_type();
+           promotion();
+       })
+    $("#give").click(function(){
+        promotion();
+    })
+    $(".shopping_card input").click(function(){
+        card_type();
+    })
+    function img_call_back(fileurl_tmp)
+    {
+        $("#back_img").val(fileurl_tmp);
+        $("#img_a").attr('href', fileurl_tmp);
+        $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<include file="public/header" title="我的购物卡"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<script src="__PUBLIC__/js/layer/layer.js"></script>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/my_card.css">
+<script src="__STATIC__/js/layer.js"  type="text/javascript" ></script>
+<div class="containter">
+    <div class="nav">
+        <div <if condition="$sort eq -1">class="check"</if> data-sort="-1">全部<span>({$all_sum})</span></div>
+        <div <if condition="$sort eq 0">class="check"</if> data-sort="0">购物卡<span>({$card_sum})</span></div>
+        <div <if condition="$sort eq 1">class="check"</if> data-sort="1">余额卡<span>({$balance_card})</span></div>
+    </div>
+    <div class="card_list">
+        <div class="record">
+            <a href="{:url('ShoppingCard/buy_record')}">
+                <span class="span">购买记录</span>
+            </a>
+            <a href="{:url('ShoppingCard/giving_record')}">
+                <span>赠送记录</span>
+            </a>
+            <span class="get">兑换购物卡</span>
+        </div>
+        <div class="card_item card_all choose">
+
+        </div>
+    </div>
+    <div class="info_mask"></div>
+    <form action="{:url('ShoppingCard/gain')}" id="form" method="post">
+    <div class="exchange">
+        <div class="exchange_title">兑换购物卡</div>
+        <div class="import">
+            <input placeholder="请输入购物卡账号" type="text" name="sn">
+            <input placeholder="请输入激活码" type="password" name="card_password">
+            <div class="agreement">
+                <img src="__STATIC__/images/shopping_card/query.png" alt="">
+                <span><a href="{:url('Mobile/Article/agreement',['doc_code'=>'shopping_card'])}">《购物卡兑换协议》<a></span>
+            </div>
+        </div>
+        <div class="exchange_button">
+            <div class="cancel">取消</div>
+            <div class="sure">确定</div>
+        </div>
+        <img src="__STATIC__/images/shopping_card/close.png" alt="" class="close_img">
+    </div>
+    </form>
+</div>
+<script>
+    $(".sure").click(function(){
+        $.ajax({
+            type : "POST",
+            url:"{:url('ShoppingCard/gain')}",
+            dataType: "json",
+            data: $('#form').serialize(),
+            success: function(data){
+                if(data.status==1){
+                    // layer.msg(data.msg, {
+                    //     icon: 1, // 成功图标
+                    //     time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    // }, function () { // 关闭后执行的函数
+                    // })
+                    layer.open({content:data.msg,time:2})
+                    // alert(data.msg);
+                    $(".info_mask").hide();
+                    $(".exchange").hide();
+                }else{
+                    layer.open({content:data.msg,time:2})
+                    // alert(data.msg);
+                    // layer.msg(data.msg, {
+                    //     icon: 2, // 成功图标
+                    //     time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    // }, function () { // 关闭后执行的函数
+                    // })
+                }
+            }
+        })
+    })
+//    兑换 购物卡
+    $(".record .get").click(function(){
+        $(".info_mask").show();
+        $(".exchange").show();
+    })
+    $(".cancel,.close_img").click(function(){
+        $(".info_mask").hide();
+        $(".exchange").hide();
+    })
+//    头部导航
+$(".nav div").click(function(){
+    var sort= $(this).attr('data-sort')
+   window.location.href="{:url('ShoppingCard/my_card')}?sort="+sort;
+})
+</script>
+<script type="text/javascript">
+    // scroll event
+    ajax_get_my_card()
+    var page=1;
+    var request_status=1;
+    function ajax_get_my_card(){
+        $.ajax({
+            type: "get",
+            url: "{:url('Mobile/ShoppingCard/ajax_get_my_card')}",
+            data: {sort:{$sort}, p: page},
+            dataType: 'json',
+            success: function (data) {
+                if(data.status==1){
+                    var html ='';
+                    for(var i=0;i<data.list.length;i++){
+                        var is_activate_img={0:"__STATIC__/images/shopping_card/activate_f.png",1:"__STATIC__/images/shopping_card/activate_t.png"};
+                        var back_img = data.list[i]['back_img']?data.list[i]['back_img']:"__PUBLIC__/images/icon_goods_thumb_empty_300.png"
+                        html+="<div class=\"item\" onclick='skip(this)' data-activate=\""+data.list[i]['activate']+"\" data-id=\""+data.list[i]['id']+"\" data-sort=\""+data.list[i]['sort']+"\">\n" +
+                            "                <div class=\"card_img\">\n" +
+                            "                    <img src=\""+back_img+"\" alt=\"\">\n" +
+                            "                </div>\n" +
+                            "                <div class=\"name\">"+data.list[i]['name']+"</div>\n" +
+                            "                <div class=\"balance\">\n" +
+                            "                    <span>余额:</span>\n" +
+                            "                    <span>￥"+data.list[i]['balance']+"</span>\n" +
+                            "                </div>\n" +
+                            "                <img class=\"activate_img\" src=\""+is_activate_img[data.list[i]['activate']]+"\" alt=\"\">\n" +
+                            "            </div>"
+                    }
+
+                    $('.card_item.card_all.choose').append(html);
+                }
+                request_status=1;
+            }
+        })
+    }
+    function skip(obj){
+        var id=$(obj).attr('data-id')
+        if($(obj).attr('data-sort'))
+        if($(obj).attr('data-sort')==1 && $(obj).attr('data-activate')==1){
+            var sort=1
+        }else{
+            var sort=0
+        }
+        var href ={0:"{:url('ShoppingCard/activate')}?id="+id,1:"{:url('ShoppingCard/card_recharge')}?id="+id}
+        window.location.href=href[sort]
+    }
+    $(window).scroll(function(){
+        // scroll at bottom
+        if(($(document).height() - ($(window).scrollTop() + $(window).height())) < 50){
+            if(request_status){
+                request_status=0
+                page++
+                ajax_get_my_card()
+            }
+        }
+    });
+</script>

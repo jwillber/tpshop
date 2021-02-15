@@ -1,0 +1,194 @@
+<include file="public/layout"/>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>购物卡列表</h3>
+                <h5>购物卡列表</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+<!--                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>-->
+            </div>
+<!--            <ul>-->
+<!--                <li>购物卡列表, 由平台设置管理.</li>-->
+<!--            </ul>-->
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>记录列表</h3>
+                <h5>(共{$pager->totalRows}条记录)</h5>
+            </div>
+            <a href="{:url('ShoppingCard/card_info')}">
+                <div class="fbutton">
+                    <div title="添加购物卡" class="add"><span><i class="fa fa-plus"></i>添加购物卡</span></div>
+                </div>
+            </a>
+            <a href="{:url('ShoppingCard/create_card',array('id'=>$Request.param.card_id))}">
+                <div class="fbutton">
+                    <div title="生成实体卡" class="add"><span><i class="fa fa-plus"></i>生成实体卡</span></div>
+                </div>
+            </a>
+
+            <div class="fbutton"><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/52.html" target="_blank">
+                <div class="add" title="帮助"><span>帮助</span></div>
+            </a></div>
+            <a href="" class="refresh-date">
+                <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+            </a>
+<!--            <form action="" id="search-form1" class="navbar-form form-inline" method="post" onSubmit="return false">-->
+<!--                <div class="sDiv">-->
+<!--                    <div class="sDiv2">-->
+<!--                        <select name="is_on_sale" id="is_on_sale" class="select">-->
+<!--                            <option value="">全部</option>-->
+<!--                            <option value="1"></option>-->
+<!--                            <option value="0">下架</option>-->
+<!--                        </select>-->
+<!--                        <input type="button" onClick="ajax_get_table('search-form2',1)" class="btn" value="搜索">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col1" class="">
+                            <div style="text-align: left; width: 100px;" class="">id</div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col2" class="">
+                            <div style="text-align: left; width: 240px;" class="">购物卡名称</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: center; width: 80px;" class="">购物卡类型</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: center; width: 150px;" class="">购物卡号</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 120px;" class="">所属用户</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 120px;" class="">是否激活</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 120px;" class="">是否禁用</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <form class="navbar-form form-inline" method="post" action="{:url('Admin/Coupon/export_coupon')}"
+                  name="search-form2" id="search-form2">
+                <input type="hidden" name="list_ids" value="">
+                <input type="hidden" name="cid" value="{$lists['0']['cid']}">
+                <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                    <table>
+                        <tbody>
+                        <volist name="lists" id="list">
+                            <tr data-list-id="{$list['id']}">
+                                <td class="sign">
+                                    <div style="width: 24px;"><i class="ico-check"></i></div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: left; width: 100px;">{$list.id}</div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: left; width: 240px;">{$list.name}</div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: center; width: 80px;">{$sort[$list.shopping_card['sort']]}</div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: center; width: 150px;">{$list.sn}</div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: center; width: 120px;">{$list.user.nickname}</div>
+                                </td>
+                                <td align="left" class="">
+                                    <div style="text-align: center; width: 120px;">{$list.activate?'已激活':'未激活'}</div>
+                                </td>
+                                <td align="center" axis="col0">
+                                    <div style="text-align: center; width: 60px;">
+                                        <span class="{$list.status?"yes":"no"}" onclick="changeTableVal('shopping_card_list','id','{$list.id}','status',this)"><i class="fa fa-ban"></i>{$list.status?"是":"否"}</span>
+                                    </div>
+                                </td>
+                                <td align="" class="" style="width: 100%;">
+                                    <div>&nbsp;</div>
+                                </td>
+
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+    </div>
+    {$page->show()}
+
+    <!--分页位置-->
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        //单选全选
+        $('.ico-check ' , '.hDivBox').click(function(){
+            $('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
+                var hasClass = $(this).hasClass('trSelected');
+                $('tr' , '#flexigrid').each(function(){
+                    if(hasClass){
+                        $(this).addClass('trSelected');
+                    }else{
+                        $(this).removeClass('trSelected');
+                    }
+                });
+            });
+        });
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function () {
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function () {
+            location.href = location.href;
+        });
+
+    });
+
+    function exportReport() {
+        var selected_ids = '';
+        $('.trSelected', '#flexigrid').each(function (i) {
+            selected_ids += $(this).data('list-id') + ',';
+        });
+        if (selected_ids != '') {
+            $('input[name="list_ids"]').val(selected_ids.substring(0, selected_ids.length - 1));
+        }
+        $('#search-form2').submit();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+body{
+    background-color: #f5f5f5;
+}
+.get_mp span.disable {
+    cursor: default;
+    color: #e9e9e9;
+}
+.guesslike ul li {
+    float: left;
+    width: 50%;
+    position: relative;
+}
+.guesslike ul li .similer-product {
+    background-color: #fff;
+    clear: both;
+    overflow: hidden;
+    display: block;
+    padding-bottom: .42667rem;
+    width: 100%;
+    position:relative;
+    height: 100%;
+}
+.guesslike ul li .similer-product img {
+    width: 100%;
+    height: auto;
+}
+.payallb{
+    height: 2.05rem;
+    background-color: #fff;
+    overflow: hidden;
+}
+.radio i{
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    border: solid 0.04rem #999999;
+    background: none;
+}
+.payallb{
+    padding-left: 0.4267rem;
+}
+/*.payit .alllef{*/
+    /*width: 10.71rem;*/
+/*}*/
+.payallb .alllef .radio{
+    margin: 0;
+    padding-top: 0.66rem;
+    display: flex;
+    align-items: center;
+}
+.payallb .alllef .radio .all{
+    margin-left: 0.58rem;
+    color: #666666;
+}
+.payallb .youbia{
+    width: 8.75rem;
+}
+.payit .fl{
+    line-height: unset;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.payit .fl p .pmo{
+    font-size: 0.59733rem;
+    font-weight: 500;
+    color: #333;
+}
+.payit .fl p span{
+    font-weight: bold;
+}
+.payit .fl .lastime span{
+    font-size: 0.47rem;
+    color: #1e1e1e;
+    font-weight: 400;
+}
+.payallb .youbia p{
+    padding-right: 0.4267rem;
+    line-height: 0.878rem;
+}
+.payit .fr{
+    width: 4.27rem;
+}
+.payit .fr a{
+    height: 2.05rem;
+    line-height: 2.05rem;
+    font-size: 0.64rem;
+}
+.Set-meal-wrap{
+    margin: 0.43rem!important;
+    background-color: #fff;
+    width: 15.15rem;
+    border-radius: 0.21rem;
+    padding: 0;
+}
+.orderlistshpop-titles{
+    height: 1.792rem;
+    line-height: 1.792rem;
+}
+.orderlistshpop-titles p{
+    line-height: 2.04rem;
+    padding: 0;
+    font-weight: bold;
+}
+.r-first{
+    width: 0.85rem;
+    margin-right: 0.62rem;
+    padding: 0.6rem 0;
+}
+.radio .dapei_icon_s{
+    width: 0.85rem;
+    height: 0.85rem;
+}
+.radio .check_t .dapei_icon_s{
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    margin: 0;
+    background: url(/template/mobile/rainbow/static/images/ck2.png) no-repeat 100% 100%;
+    border: 1px solid #f32c2c;
+}
+.sc_list{
+    padding: 0;
+    border: none;
+}
+.sc_list .shopimg img{
+    width: 3.43rem;
+    height: 3.43rem;
+}
+.radio .check_t .dapei_icon_b{
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    margin: 0;
+    background: url(/template/mobile/rainbow/static/images/ck2.png) no-repeat 100% 100%;
+    border: none;
+}
+.radio .dapei_icon_b{
+    width: 0.85rem;
+    height: 0.85rem;
+    background-color: #ffffff;
+    border: 1px solid #999;
+}
+.radio i{
+    margin: 0;
+    background-size: 100% 100%!important;
+}
+.orderlistshpop-titles{
+    padding: 0 0.58rem;
+}
+.maleri30{
+    margin: 0 0.58rem;
+    margin-right: 0;
+    padding-top: 0.34rem;
+    padding-bottom: 0.4267rem;
+}
+.hotshop .thirdlogin h4 {
+    background-color: #fff;
+}
+.hotshop {
+    background-color: #fff;
+}
+.sc_list .radio{
+    margin-right: 0.6rem;
+}
+.sc_list .deleshow{
+    width: 8.66rem;
+    margin-right: 0.58rem;
+}
+.sc_list .deleshow .deletes .similar-product-text{
+    font-size: 0.55rem;
+    color: #181818;
+    font-weight: 500;
+    margin: 0;
+}
+.sc_list .deleshow .weight{
+    font-size: 0.47rem;
+    line-height: 1.0667rem;
+    bottom: 1.6rem;
+    right: .7rem;
+    width: 8.94rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+.sc_list .deleshow .prices .sc_pri{
+    margin: 0;
+    font-size: 0.64rem;
+    font-weight: bold;
+}
+.sc_list .deleshow .prices{
+    margin-top: 0;
+}
+.mp_price_i{
+    line-height: 0.7rem;
+}
+.mun-two span.h-mp{
+    line-height: 0;
+}
+.price-foots .price-foot-two{
+    font-size: 0.43rem;
+    color: #ff2a2a;
+    border: solid 0.02rem #ff3939;
+    background-color: #ffffff;
+    padding: 0.13rem 0.28rem;
+    border-radius: 0.64rem;
+    margin: 0;
+    line-height: 0.43rem;
+}
+.plus span{
+    border:none;
+}
+.plus span input.input-num{
+    background-color: #f3f3f3;
+    width: 1.71rem;
+    height: 0.94rem;
+    padding: 0;
+    color: #1c1c1c;
+    font-weight: bold;
+}
+.get_mp span.mp_minous{
+    font-size: 0.77rem;
+    width: 0.8rem;
+    color: #1c1c1c;
+}
+.get_mp span.mp_plus{
+    color: #1c1c1c;
+    font-size: 0.77rem;
+    width: 0.8rem;
+    font-weight: bold;
+}
+.h-smw{
+    padding-left: 0.6rem;
+}
+.sc_list .deleshow .prices .plus{
+    font-weight: bold;
+    color: #1c1c1c;
+}
+.sc_list .deleshow .prices .sc_pri em{
+    font-size: 0.47rem;
+}
+.z_cart_wrap{
+    padding: 0;
+    border: 0;
+}
+.radio .check_t i{
+    background: url(../images/cgood.png);
+    border: none;
+    top: 0;
+}
+.guesslike ul li{
+    width: 7.68rem;
+    margin: 0.4266rem 0 0 0.4266rem;
+}
+.guesslike .likeshop span{
+    vertical-align: bottom;
+    padding: 0.4267rem 0.4267rem 0 0.4267rem !important;
+    margin-top: 0;
+}
+.content{
+    margin: 0;
+}
+
+
+.Set-meal-wrap{
+    border-bottom: 0rem solid #f3f5f7
+}
+.guesslike ul:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.similar-product-text{
+    height:auto !important;
+    margin-bottom: 0.3rem;
+}
+.similar-product-price{
+    position:absolute;
+    left:0;
+    bottom:0.4rem;
+    font-weight:800;
+    height: auto;
+    line-height: auto;
+}
+
+.guesslike{
+    margin-bottom:4.5rem;
+}
+.foohi{
+    height: auto;
+}

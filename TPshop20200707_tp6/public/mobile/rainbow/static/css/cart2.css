@@ -1,0 +1,426 @@
+.g4{
+  background-color: #f2f2f2;
+}
+.content{
+  background-color: #ffffff;
+}
+.edit_gtfix .namephone .top{
+  font-weight: bold;
+}
+.edit_gtfix .namephone .bot span{
+  font-weight: 500;
+  margin-left: 0.8rem;
+}
+.fill-orderlist{
+  margin-top: 0.55rem;
+  padding: 0;
+  background-color: #f2f2f2;
+  margin-bottom: 0.427rem;
+}
+.shopprice .img_or{
+  margin: 0;
+  width: 3.84rem;
+  height: 3.84rem;
+}
+.shopprice .img_or img{
+  width: 100%;
+  height: 100%;
+}
+.shopprice .fon_or{
+  margin-left: 0.62rem;
+  margin-top: 0;
+  font-size: 0.55rem;
+}
+.shopprice .fon_or h2{
+  margin: 0;
+  color: #1d1d1d;
+  font-size: 0.55rem;
+}
+.shopprice .fon_or div{
+  margin-top: 0.41rem;
+  font-size: 0.47rem;
+  color: #999999;
+  line-height: .6rem;
+}
+.shopprice .price_or{
+  margin-top: 0;
+  width: 11rem;
+  float: left;
+  padding-left: .55rem;
+}
+.fill-orderlist .shopprice .price_or p.red{
+  float: left;
+  width: 50%;
+  font-size: 0.64rem;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 0.9rem;
+}
+.fill-orderlist .shopprice .price_or p.ligfill{
+  float: right;
+  width: 50%;
+  font-size: 0.64rem;
+  margin-top: 0.9rem;
+  color: #1b1b1b;
+}
+.z-select-wrap .z-select-title{
+  background-color: #ffffff;
+  font-size: ;
+}
+.information_dr{
+  margin-top: 0.427rem;
+}
+.z-dispatching .fl{
+  font-size: 0.55rem;;
+}
+.invoice .myorder .order .fl span{
+  font-size: 0.55rem;
+}
+.invoice .myorder .order .fl p{
+  margin-bottom: 0.4rem;
+}
+.go-set-password{
+  margin-left: 3.66rem;
+}
+#coupon_div{
+  margin-top: 0;
+}
+.customer-messa p{
+  font-size: 0.55rem;
+  padding: 0;
+  line-height: 1.9rem;
+}
+.customer-messa textarea{
+  outline: none;
+  margin-top: 0;
+  height: 2.99rem;
+  background-color: #f2f2f2;
+  padding: 0.47rem 0.62rem;
+}
+.z-monry .z-monry-cont .fl{
+  margin: 0;
+  line-height: 1.26rem;
+}
+.z-monry .z-monry-cont .fr a{
+  margin: 0;
+  line-height: 1.26rem;
+  font-weight: bold;
+}
+.dizhi-pop{
+  background-color: #fafafa;
+}
+.z-Package-hrader{
+  background-color: #eee;
+}
+.jd_listaddless{
+  padding: 0.661rem 0;
+  border-bottom: 0.021rem solid #e6e6e6;
+}
+.address-list{
+  width: 100%;
+  padding: 0.667rem 0;
+  border-bottom: 0.022rem solid #e6e6e6;
+  position: relative;
+  overflow: hidden;
+}
+.address-list .list-radio{
+  float: left;
+  width: 0.64rem;
+  height: 0.64rem;
+  position: absolute;
+  left: 0.64rem;
+  top: 50%;
+  transform: translate(0,-50%);
+}
+.address-list .list-radio input{
+  display: block;
+  width: 0.64rem;
+  height: 0.64rem;
+  position: relative;
+  appearance:none;
+  -webkit-appearance:none;
+  outline: none;
+  border: none;
+  z-index: 2;
+}
+.address-list .list-radio input::before{
+  position: absolute;
+  z-index: 3;
+  content: "";
+  width: 0.64rem;
+  height: 0.64rem;
+  background-image: url(__STATIC__/images/address-icon02.png);
+  background-size: 0.64rem;
+  background-repeat: no-repeat;
+}
+.address-list .list-radio input:checked::before{
+  background-image: url(__STATIC__/images/address-icon01.png);
+}
+.address-list .list-right{
+  width: 10.8rem;
+  height: auto;
+  float: left;
+  margin-left: 2.091rem;
+  overflow: hidden;
+}
+.address-list .list-right .p1{
+  font-size: 0.597rem;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.024rem;
+}
+.address-list .list-right .p1 span{
+  margin-right: 0.661rem;
+}
+.address-list .list-right .p2{
+  font-size: 0.597rem;
+  color: #666;
+  line-height: 0.9rem;
+}
+.address-list .list-modify{
+  z-index: 3;
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  right: 0.256rem;
+  top: 50%;
+  transform: translate(0,-50%);
+  background-image: url(__STATIC__/images/address-icon03.png);
+  background-repeat: no-repeat;
+  background-size: 0.768rem;
+  background-position: center;
+}
+.createnew{
+  position: fixed;
+  width: 14.72rem;
+  height: 1.963rem;
+  border-radius: 0.213rem;
+  left: 0.64rem;
+  bottom: 0.64rem;
+  font-size: 0.768rem;
+  color: #fff;
+  line-height: 1.963rem;
+  text-align: center;
+  z-index: 10;
+}
+.myorder{
+  border-bottom: 1px solid #dadada;
+  min-height: 1.877rem;
+  overflow: hidden;
+}
+.floor .order{
+  line-height: 1.877rem;
+}
+.floor .order .fl{
+  float: left;
+  width: 2.6rem;
+  height: 1.877rem;
+}
+.floor .order .fr{
+  float: right;
+  width: 11rem;
+  height: 1.877rem;
+  margin: 0;
+  font-size: 0.555rem;
+  color: #666;
+}
+.floor .order .fr input{
+  float: left;
+  width: 100%;
+  height: 1.877rem;
+  border: none;
+  outline: none;
+  font-size: 0.555rem;
+  color: #666;
+  background-color: none;
+}
+.floor .order .fr .span01{
+  color: #bbb;
+  font-size: 0.512rem;
+}
+.floor .order .fr input::-webkit-input-placeholder{
+  color: #bbb;
+  font-size: 0.512rem;
+  text-align: left;
+}
+.floor .order .fr .Mright{
+  float: right;
+}
+.modify-btn{
+  width: 14.72rem;
+  height: 1.963rem;
+  border-radius: 0.213rem;
+  font-size: 0.768rem;
+  color: #fff;
+  line-height: 1.963rem;
+  text-align: center;
+  margin: 0.64rem auto 0;
+  background-color: #ff4c4c;
+}
+.modify-btn a{
+  display: block;
+  width: 14.72rem;
+  height: 1.963rem;
+  color: #fff;
+}
+#address_form_confirm{
+  cursor: pointer;
+}
+/*购物卡-s*/
+#shopping_card{
+  position: fixed;
+  bottom: 0;
+  width: 16rem;
+  height: 14.93rem;
+  background: #fff;
+  z-index: 1000;
+  display: none;
+  pointer-events: auto;
+}
+#shopping_card .top{
+  color: #333;
+  font-size: .64rem;
+  height: 1.92rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 .427rem;
+  background: #EFF0F4;
+}
+#shopping_card .top img{
+  width: .768rem;
+  height: .768rem;
+}
+#shopping_card .middle{
+  width: 16rem;
+  height: 1.707rem;
+  background: #FAFAFA;
+  font-size: .64rem;
+  color: #333;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  border-bottom: .0213rem solid #E6E6E6;
+}
+#shopping_card .middle .choose{
+  background: #FF3B3B;
+  border-radius: .6rem;
+  color: #fff;
+}
+#shopping_card .middle div{
+  width:2.987rem;
+  height:1.195rem;
+  line-height: 1.195rem;
+}
+#shopping_card .usable_none{
+  margin: 1.707rem auto;
+}
+#shopping_card .usable_none p{
+  font-size: .597rem;
+  color: #999;
+  text-align: center;
+  margin-top: .853rem;
+}
+#shopping_card .usable_none img{
+  width: 5.248rem;
+  height: 3.882rem;
+  margin-left: 5.376rem;
+}
+#shopping_card .bottom .card_list{
+  padding: 0 .427rem;
+  background: #FAFAFA;
+  width: 16rem;
+  height: 2.987rem;
+  padding-top: .4rem;
+  border-bottom: .0213rem solid #E6E6E6;
+  border-top: .0213rem solid #E6E6E6;
+  margin-top: .213rem;
+}
+#shopping_card .bottom{
+  height: 8.2rem;
+  overflow: scroll;
+}
+#shopping_card .disabled{
+  display: none;
+}
+#shopping_card .card_list>div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+  line-height: 1.1rem;
+}
+#shopping_card .card_list .name{
+  font-size: 0.597rem;
+}
+#shopping_card .card_list .name p:nth-child(1){
+  color: #333;
+  white-space: nowrap;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#shopping_card .card_list .card_number{
+  font-size: .512rem;
+}
+#shopping_card .ensure{
+  position: fixed;
+  bottom: .427rem;
+  left: .425rem;
+  width:15.15rem;
+  height:1.92rem;
+  line-height: 1.92rem;
+  background:#FF3B3B;
+  /*box-shadow:0 .213rem .213rem 0 #F7BEC3;*/
+  border-radius:1rem;
+  color: #fff;
+  font-size: .768rem;
+  text-align: center;
+}
+#shopping_card .card_list i{
+  width: .682rem;
+  height: .682rem;
+  display: inline-block;
+  background: #EFF0F4;
+  border: .0427rem solid #CCCCCC;
+  border-radius: 50%;
+}
+#shopping_card .card_list i input{
+  display: none;
+}
+#shopping_card .card_list .check i{
+  background: url(/template/mobile/rainbow/static/images/shopping_card/selected.png);
+  background-size: 100% 100%!important;
+  border: none;
+}
+#shopping_card .usable .card_list{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 .427rem;
+  font-size: .597rem;
+}
+#shopping_card .usable .usable_name{
+  margin-left: .64rem;
+}
+#shopping_card .usable .usable_name p:nth-child(1){
+  color: #333;
+  white-space: nowrap;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#shopping_card .usable .usable_name p:nth-child(2){
+  color: #666;
+  font-size: .512rem;
+}
+/*解决手机上层滑动，导致底层body滑动-s*/
+.noscroll, .noscroll body {
+  overflow: hidden;
+}
+.noscroll body {
+  position: relative;
+}
+/*解决手机上层滑动，导致底层body滑动-e*/
+/*购物卡-e*/

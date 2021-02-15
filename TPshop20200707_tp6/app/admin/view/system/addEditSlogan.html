@@ -1,0 +1,112 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>商品分类 - 添加修改分类</h3>
+                <h5>添加或编辑商品分类</h5>
+            </div>
+        </div>
+    </div>
+    <div class="explanation" id="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <form action="{:url('System/addEditSlogan')}" method="post" class="form-horizontal" id="category_form">
+        <input type="hidden" name="id" value="{$slogan.id}">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="t_mane"><em>*</em>标语</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" placeholder="名称" class="input-txt" name="remark" value="{$slogan.remark}">
+                    <span class="err" id="err_remark" style="color:#F00; display:none;"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>背景图片</label>
+                </dt>
+                <dd class="opt">
+                    <div class="input-file-show">
+                        <span class="show">
+                                <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$slogan.img}">
+                                    <i id="img_i" class="fa fa-picture-o"
+                                       onMouseOver="layer.tips('<img src={$slogan.img}>',this,{tips: [1, '#fff']});" onMouseOut="layer.closeAll();"></i>
+                                </a>
+                        </span>
+                        <span class="type-file-box">
+                            <input type="text" id="img" name="img" value="{$slogan.img}" class="type-file-text">
+                            <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                            <input class="type-file-file" onClick="GetUploadify(1,'','goods','img_call_back')" size="30"
+                                   title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                        </span>
+                    </div>
+                    <span class="err"></span>
+
+                    <p class="notic">请上传图片格式文件，建议图片尺寸49*56像素</p>
+                </dd>
+            </dl>
+
+            <div class="bot"><a id="submitBtn" class="ncap-btn-big ncap-btn-green" href="JavaScript:void(0);" onClick="ajax_submit_form('category_form','{:url('System/addEditSlogan?is_ajax=1')}');">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script>
+
+    /** 以下是编辑时默认选中某个商品分类*/
+    $(document).ready(function(){
+
+    });
+
+    // 将品牌滚动条里面的 对应分类移动到 最上面
+    //javascript:document.getElementById('category_id_3').scrollIntoView();
+    var typeScroll = 0;
+    function spec_scroll(o){
+        var id = $(o).val();
+        //if(!$('#type_id_'+id).is('dt')){
+        //return false;
+        //}
+        $('#ajax_brandList').scrollTop(-typeScroll);
+        var sp_top = $('#type_id_'+id).offset().top; // 标题自身往上的 top
+        var div_top = $('#ajax_brandList').offset().top; // div 自身往上的top
+        $('#ajax_brandList').scrollTop(sp_top-div_top); // div 移动
+        typeScroll = sp_top-div_top;
+    }
+
+    function img_call_back(fileurl_tmp)
+    {
+        $("#image").val(fileurl_tmp);
+        $("#img_a").attr('href', fileurl_tmp);
+        $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+    }
+
+    function img_call_back2(fileurl_tmp)
+    {
+        $("#thumbnail").val(fileurl_tmp);
+        $("#img_b").attr('href', fileurl_tmp);
+        $("#img_j").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+    }
+
+    function img_call_back(fileurl_tmp)
+    {
+        $("#img").val(fileurl_tmp);
+        $("#img_a").attr('href', fileurl_tmp);
+        $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+    }
+</script>
+</body>
+</html>

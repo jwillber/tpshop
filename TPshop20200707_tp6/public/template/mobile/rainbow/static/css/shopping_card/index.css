@@ -1,0 +1,86 @@
+body,.g4{
+    background: #EFF0F4;
+}
+.shuffling{
+    height: 8.53rem;
+    position: relative;
+}
+.shuffling .back{
+    height: 4rem;
+    background: #FF3B3B;
+    border-radius: 0 0 0.3rem .3rem;
+}
+.shuffling .swiper-container{
+    position: absolute;
+    bottom: 0;
+    left: .425rem;
+    width: 15.15rem;
+    border-radius: 0.427rem;
+}
+.shuffling .swiper-container img{
+    width: 15.15rem;
+    height: 7.68rem;
+    border-radius:.427rem;
+}
+.shuffling .swiper-pagination{
+    position: absolute;
+    bottom: .34rem;
+    width: 16rem;
+}
+.shuffling .swiper-pagination span{
+    width:.213rem;
+    height:.213rem;
+    background:#fff;
+    border-radius:.107rem;
+    opacity: 1;
+    margin-right: .34rem;
+}
+.shuffling .swiper-pagination-bullet-active{
+    width:.64rem !important;
+}
+/*热销推荐*/
+.recommend .title img{
+    width: 16rem;
+    height: 1.707rem;
+    margin: .427rem 0;
+}
+.recommend .recommend_card li{
+    width:7.36rem;
+    height:10.24rem;
+    background:#fff;
+    border-radius:.427rem;
+    float: left;
+    margin-left: .427rem;
+    margin-bottom: .427rem;
+}
+.recommend .recommend_card .img,.recommend .recommend_card img{
+    width:7.36rem;
+    height: 7.36rem;
+    border-radius: .427rem .427rem 0 0;
+}
+.recommend .recommend_card .name{
+    font-size: .64rem;
+    color: #181818;
+    margin: .53rem .427rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.recommend .recommend_card .price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: .1rem .427rem;
+}
+.recommend .recommend_card .price .left{
+    font-size:.64rem;
+    color:#FF2E2E;
+    font-weight: 600;
+}
+.recommend .recommend_card .price .left span{
+    font-size:.47rem;
+}
+.recommend .recommend_card .price .right{
+    font-size:.47rem;
+    color:#999;
+}

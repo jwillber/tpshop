@@ -1,0 +1,49 @@
+.pay_successful .successful_img{
+    width: 6.4rem;
+    height: 4.27rem;
+    margin: 1.8rem 4.8rem 1.1rem;
+}
+.order_information{
+    color: #333;
+    text-align: center;
+    line-height: 1.2rem;
+}
+.order_information p:nth-child(1){
+    font-size: 1.024rem;
+    font-weight: 600;
+}
+.order_information p:nth-child(2){
+    font-size: .64rem;
+    font-weight: 600;
+}
+.order_information p:nth-child(3){
+    font-size: .6rem;
+}
+.pay_successful .order_info{
+    box-shadow: 0 0.213rem 0.213rem 0 #FF3B3B;
+    margin: 1rem auto;
+}
+.pay_successful .button{
+    width: 12.58rem;
+    height: 1.92rem;
+    line-height: 1.92rem;
+    background: #FF3B3B;
+    border-radius: .96rem;
+    text-align: center;
+    font-size: .768rem;
+    color: #fff;
+}
+.pay_successful .giving{
+    margin: .64rem auto;
+    background: #fff;
+    border: .0427rem solid #FF3B3B;
+    color: #FF3B3B;
+}
+.pay_successful .prompt{
+    width: 12.58rem;
+    margin: 0 auto;
+    text-align: center;
+    font-size: .512rem;
+    color: #666;
+    line-height: .768rem;
+}

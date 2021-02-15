@@ -1,0 +1,2 @@
+index_hot_goods==
+index_recommend_goods==

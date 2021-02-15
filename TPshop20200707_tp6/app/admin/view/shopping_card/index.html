@@ -1,0 +1,214 @@
+<include file="public/layout" />
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>购物卡管理</h3>
+                <h5>网站系统购物卡管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>购物卡列表</h3>
+                <h5>(共{$page->totalRows}条记录)</h5>
+            </div>
+            <a href="{:url('Admin/Shopping_card/card_info')}"><div class="fbutton"><div title="添加购物卡" class="add"><span><i class="fa fa-plus"></i>添加购物卡</span></div></div></a>
+            <div class="fbutton"><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/52.html" target="_blank"><div class="add" title="帮助"><span>帮助</span></div></a></div>
+            <a href="" class="refresh-date"><div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div></a>
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col3" class="">
+                            <div style="text-align: left; width: 240px;" class="">购物卡名称</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: center; width: 60px;" class="">购物卡类型</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: center; width: 60px;" class="">库存</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: center; width: 50px;" class="">赠送类型</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 60px;" class="">推荐</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 60px;" class="">热卖</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 60px;" class="">剩余数量</div>
+                        </th>
+                        <th align="left" axis="col1" class="handle">
+                            <div style="text-align: center; width: 170px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <volist name="lists" id="list">
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 240px;">{$list.name}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 60px;">{$sort[$list['sort']]}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 60px;">{$list['repertory']==0?'无限制':$list['repertory']}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 50px;">{$give_sort[$list['give']]}</div>
+                            </td>
+                            <td align="center" axis="col0">
+                                <div style="text-align: center; width: 60px;">
+                                    <span class="{$list.recommend?"yes":"no"}" onclick="changeTableVal('shopping_card','id','{$list.id}','recommend',this)"><i class="fa fa-ban"></i>{$list.recommend?"是":"否"}</span>
+                                </div>
+                            </td>
+                            <td align="center" axis="col0">
+                                <div style="text-align: center; width: 60px;">
+                                    <span class="{$list.hot?"yes":"no"}" onclick="changeTableVal('shopping_card','id','{$list.id}','hot',this)"><i class="fa fa-ban"></i>{$list.hot?"是":"否"}</span>
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 60px;">{$list['residue']}</div>
+                            </td>
+                            <td align="left" class="handle">
+                                <div style="text-align: left; width: 170px; max-width:170px;">
+                                    <a class="btn blue" href="{:url('Admin/Shopping_Card/card_list',array('card_id'=>$list['id']))}">查看</a>
+                                    <a class="btn blue" href="{:url('Admin/Shopping_Card/card_info',array('id'=>$list['id']))}">编辑</a>
+                                    <a class="btn blue" onclick="stop_deal(this)" data-id="{$list['id']}" data-status="{$list.status}">{$list.status==2?'发售':'停售'}</a>
+                                    <a class="btn blue" onclick="del(this)" data-id="{$list['id']}" data-status="{$list.status}">删除</a>
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page->show()} </div>
+</div>
+<script>
+    $(document).ready(function(){
+        //单选全选
+        $('.ico-check ' , '.hDivBox').click(function(){
+            $('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
+                var hasClass = $(this).hasClass('trSelected');
+                $('tr' , '#flexigrid').each(function(){
+                    if(hasClass){
+                        $(this).addClass('trSelected');
+                    }else{
+                        $(this).removeClass('trSelected');
+                    }
+                });
+            });
+        });
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function(){
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function(){
+            location.href = location.href;
+        });
+
+    });
+    function stop_deal(obj)
+    {
+        var id = $(obj).attr('data-id')
+        var status = $(obj).attr('data-status');
+        var str = status=='1'?'停售':'发售'
+        var value = status=='1'?'2':'1'
+        layer.confirm('确定要'+str+'吗?', {
+             btn: ['确定', '取消'] //按钮
+           }, function () {
+                // 确定
+                layer.closeAll();
+                $.ajax({
+                    url:'{:url("ShoppingCard/ajax_update_status")}',
+                    data: {id:id,status:value},
+                    dataType:'json',
+                    success: function (data) {
+                        if(data['status']==1){
+                            if(value==1){
+                                $(obj).text("停售")
+                                $(obj).attr('data-status',value);
+                                layer.open({content: '发售成功', time: 2000});
+                            }else{
+                                $(obj).text("发售")
+                                $(obj).attr('data-status',value);
+                                layer.open({content: '停售成功', time: 2000});
+                            }
+                        }else{
+                            layer.open({content:data.msg,time:2000});
+                        }
+                    }
+                });
+                }, function (index) {
+                    layer.close(index);
+                }
+            );
+    }
+
+    function del(obj){
+        var id = $(obj).attr('data-id')
+        $.ajax({
+            url:'{:url("ShoppingCard/del_card")}',
+            data: {id:id},
+            dataType:'json',
+            success: function (data) {
+                if(data.status==1){
+                    layer.open({content:data.msg,time:2000})
+                    $(obj).parents('tr').hide()
+                }else{
+                    layer.open({content:data.msg,time:2000})
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

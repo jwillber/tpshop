@@ -1,0 +1,40 @@
+body{
+    background: #f5f5f5;
+}
+.brandbanner{
+    margin: 0.4267rem 0.4267rem 0 0.4267rem;
+}
+.brandbanner .mslide ul li a{
+    width: 33.33%;
+    margin-left: 0;
+}
+.brandbanner .mslide ul li .content_img {
+    height: 4.864rem;
+    width: 4.864rem;
+    display: block;
+    margin: 0 auto;
+}
+.brandbanner .mslide{
+    background: #fff;
+    border-radius: 0.2133rem;
+    overflow: hidden;
+}
+.brandbanner .mslide ul li a p{
+    margin: 0.2133rem 0;
+}
+.ma-to-20{
+    margin-top: 0;
+}
+.tuijbrand{
+    margin: 0.4267rem 0.42678rem 0 0.42678rem;
+    border-radius: 0.2133rem;
+}
+.brandlistall ul li {
+    width: 4.7574rem;
+    margin: 0.2133rem 0 0 0.2133rem;
+    padding: 0;
+}
+.titb {
+    font-size: 0.59733rem;
+    border-bottom: 1px solid #f3f3f3;
+}

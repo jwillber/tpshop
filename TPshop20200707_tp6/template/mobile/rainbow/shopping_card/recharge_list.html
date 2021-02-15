@@ -1,0 +1,52 @@
+<include file="public/header" title="购物卡-充值记录"/>
+<include file="public/card_nav" title="购物卡-充值记录" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/recharge_record.css">
+<div class="recharge_record">
+    <div class="card_number">卡号：{$card.sn}充值记录</div>
+    <!--宽度分配220-148-148-234-->
+    <div class="record_list">
+        <div class="list_title">
+            <div class="money">充值金额</div>
+            <div class="state">状态</div>
+            <div class="payment">支付方式</div>
+            <div class="time">充值时间</div>
+        </div>
+
+        <div class="item_content">
+            <volist name="log" id="vo">
+                <div class="list_title list_item">
+                    <div class="money">￥{$vo.account}</div>
+                    <div class="state">{$sort[$vo.pay_status]}</div>
+                    <div class="payment">{$vo.pay_name}</div>
+                    <div class="time">{$vo.ctime|date="Y-m-d H:i:s"}</div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</div>
+<script>
+    var page=1;
+    var request_status=1;
+    function ajax_get_card(){
+        $.ajax({
+            type: "get",
+            url: "{:url('Mobile/ShoppingCard/recharge_list')}",
+            data: {is_ajax: "1", p: page},
+            success: function (data) {
+                $('.buy_list').append(data);
+                request_status=1;
+            }
+        })
+    }
+    $(window).scroll(function(){
+        // scroll at bottom
+        if(($(document).height() - ($(window).scrollTop() + $(window).height())) < 50){
+            if(request_status){
+                request_status=0
+                page++
+                ajax_get_card()
+            }
+        }
+    });
+</script>

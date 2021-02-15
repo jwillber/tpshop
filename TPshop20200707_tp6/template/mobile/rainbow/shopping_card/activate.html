@@ -1,0 +1,136 @@
+<include file="public/header" title="购物卡激活"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/card_activate.css">
+<div class="containter">
+    <div class="card_photo">
+        <img src="{$card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">{$card.shopping_card.name}</div>
+    </div>
+    <div class="car_balance">
+        <div class="balance">购物卡余额：<p><span>￥</span>{$card.balance}</p></div>
+    </div>
+    <div class="card_number">
+        <p>卡号：{$card.sn}</p>
+        <p>{$card.indate}</p>
+    </div>
+    <div class="border"></div>
+    <div class="list">
+        <div class="div list_know">
+            <div>使用须知</div>
+            <img class="right_img" src="__STATIC__/images/shopping_card/arrow_right.png" alt="">
+        </div>
+        <div class="div">
+            <div>联系客服</div>
+            <div class="right">
+                <img class="right_img" src="__STATIC__/images/shopping_card/card_phone.png" alt="">
+                <p>{$tpshop_config['shop_info_phone']}</p>
+            </div>
+        </div>
+        <div class="div">
+            <div>使用范围</div>
+            <div class="right">{$card['use_type']}</div>
+        </div>
+    </div>
+</div>
+<!--激活成功是显示-s-->
+<div></div>
+<if condition="$card.activate eq 1">
+<!--激活成功是显示-e-->
+    <if condition="$card.shopping_card.use_type eq 0">
+        <div class="choose_goods"><a href="{:url('mobile/index/index')}" style="color: #ffffff">选购商品</a></div>
+    <elseif condition="$card.shopping_card.use_type eq 1"/>
+        <div class="choose_goods"><a href="{:url('mobile/Goods/search',array('shopping_card_id'=>$card.cid))}" style="color: #ffffff">选购商品</a></div>
+    <else/>
+        <div class="choose_goods"><a href="{:url('mobile/goods/goodsList',array('id'=>$card.shopping_card.category_id))}" style="color: #ffffff">选购商品</a></div>
+    </if>
+
+<else/>
+<!--激活成功是显示-e-->
+    <div class="bottom">
+        <div class="activate">激活购物卡</div>
+        <div><a href="{:url('mobile/ShoppingCard/donate',array('id'=>$card.id))}" style="color: #E83632">
+            <if condition="$card.is_continue eq 0">赠给好友<else/>继续赠送</if>
+        </a></div>
+    </div>
+</if>
+
+<!--弹窗-->
+<div class="mask-filter-div mask">
+    <div class="activate_prompt">
+        <img src="__STATIC__/images/shopping_card/activate_prompt.png" alt="">
+        <div class="order_information">
+            <p>您正在激活卡</p>
+            <p>卡号：{$card.sn}</p>
+            <p>确定要继续么？</p>
+        </div>
+        <div class="prompt_button">
+            <div class="button cancel">取消</div>
+            <div class="button ensure" onclick="activity()">确定</div>
+        </div>
+    </div>
+    <div class="activate_prompt succeed">
+        <img src="__STATIC__/images/shopping_card/activate_win.png" alt="">
+        <div class="order_information">
+            <p>激活成功!</p>
+            <p>卡号：{$card.sn}</p>
+        </div>
+        <div class="prompt_button"><a href="<if condition="$card['shopping_card']['sort'] eq 0">__ROOT__<else/>{:url('mobile/ShoppingCard/card_recharge',array('id'=>$Request.param.id))}</if>" style="color: #ffffff">查看卡详情</a></div>
+        <img class="succeed_close" onclick="window.location.href=
+        <if condition="$card['shopping_card']['sort'] eq 0">'__ROOT__'<else/>'{:url('ShoppingCard/card_recharge',array('id'=>$Request.param.id))}'</if>
+        " src="__STATIC__/images/shopping_card/close.png" alt="">
+    </div>
+</div>
+<div class="mask-filter-div know"></div>
+<div class="use_know">
+    <p>{$card.shopping_card.user_rank}</p>
+</div>
+<div class="close">
+    <img class="close_img" src="/template/mobile/rainbow/static/images/shopping_card/close.png" alt="">
+</div>
+<script>
+    // 使用须知
+
+    $(".list_know").click(function () {
+        $(".mask-filter-div.know").show();
+        $(".use_know").show();
+        $(".close").show();
+    })
+    $(".close").click(function () {
+        $(".mask-filter-div.know").hide();
+        $(".use_know").hide();
+        $(".close").hide();
+    })
+    //    激活卡
+    $(".activate").click(function(){
+        $(".mask").show();
+    })
+    $(".cancel").click(function(){
+        $(".mask").hide();
+    })
+    // $(".ensure").click(function(){
+    //     $(".activate_prompt").hide();
+    //     $(".succeed").show();
+    // })
+    $(".succeed_close").click(function(){
+        $(".mask-filter-div").hide();
+		$(".choose_goods").show();
+        $(".bottom").hide();
+    })
+    function activity(){
+        $.ajax({
+            type : "POST",
+            url:"{:url('mobile/ShoppingCard/ajax_activate')}",
+            dataType:'json',
+            data: {id: {$card.id}},
+            success: function(data){
+                if(data.status==1){
+                    $(".activate_prompt").hide();
+                    $(".succeed").show();
+                }
+            }
+        })
+    }
+</script>

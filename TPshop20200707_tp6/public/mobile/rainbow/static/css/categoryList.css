@@ -1,0 +1,123 @@
+/* 分类 */
+/* <!--width: 3.63rem;--> */
+.tp-bann{
+  border-radius: 0.2133rem;
+  overflow: hidden;
+  margin-top: 0.4267rem;
+}
+.classlist .fl ul li a{
+    width: 3.63rem;
+    height: 2.56rem;
+
+  text-overflow:none !important;
+}
+.classlist .fr .branchList .tp-bann img{
+    height: 3.84rem;
+}
+.classlist .fr .branchList .tp-class-list h4{
+    height: 1.47rem;
+    line-height: 1.47rem;
+}
+.classlist .fr .branchList .tp-class-list ul{
+    margin-bottom: 0.341rem;
+    border-radius: 0.2133rem;
+}
+.classlist .fr .branchList .tp-class-list ul li a p{
+    font-size: 0.47rem;
+    color: #666666;
+    margin: 0.26rem 0;
+    margin-bottom: 0;
+height: 0.47rem;
+    margin-bottom: 0.469rem;
+    height: 0.47rem;
+    margin-bottom: 0.469rem;
+display:block;
+}
+.classlist .fl{
+  background-color: #fff !important;
+  height: 24.54rem !important;
+}
+.branchList-cont{
+    /*display: -webkit-box;*/
+    overflow-y: auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    height: 20.2rem;
+    width: 11.5rem;
+}
+
+/* <!--width: 3.35rem;--> */
+.classlist .fl ul li a p{
+    width: 3rem;
+    width: 3.35rem;
+    width: 3.35rem !important;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.classlist .fl ul li a p.br{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 100%;
+  line-height: 2.56rem;
+  margin-top: 0;
+  background: #fff;
+  width: 100% !important;
+}
+.classlist .fl ul li:first-child{
+  background: #fff;
+}
+.classlist .fr .branchList .tp-class-list ul li{
+overflow:hidden;
+white-space:nowrap;
+overflow:elipsis !important;
+}
+.content{
+margin:0;
+}
+.tp-category{
+  padding: 0.4267rem;
+}
+
+
+
+
+
+/* 积分商城 */
+.qxatten{
+  margin-top: 2.8rem;
+}
+.sc_list .deleshow .prices{
+  left: 0 !important;
+  bottom: .2rem !important;
+}
+.paycloseto {
+  padding: .42667rem 0;
+  margin: 0.4267rem;
+  border-radius: 0.2133rem;
+  border-bottom: none !important;
+}
+.paycloseto .shopimg{
+  position: relative;
+  width: 3.84rem;
+  height: 3.84rem;
+}
+.sc_list .shopimg img {
+  width: 100% !important;
+  height: 100% !important;
+}
+.se_sclist .deleshow {
+  height: 3.84rem !important;
+  padding: 0 !important;
+  position: relative;
+}
+.similar-product-text{
+  margin-top: 0 !important;
+}
+.se_sclist .deleshow .prices .sc_pri{
+  padding-left: 0;
+}
+
+
+/* 浏览记录 */

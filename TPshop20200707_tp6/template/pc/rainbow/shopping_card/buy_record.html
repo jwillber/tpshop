@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡-购买记录</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+</head>
+
+<body class="bg-f5">
+<include file="user/header"/>
+<div class="home-index-middle buy_record">
+    <div class="w1224">
+        <div class="g-crumbs">
+            <a href="{:url('Home/User/index')}">我的商城</a>
+            <i class="litt-xyb"></i>
+            <span>我的订单</span>
+        </div>
+        <div class="home-main">
+            <include file="user/menu"/>
+            <div class="ri-menu fr">
+                <div class="menumain p">
+                    <div class="my_card">
+                        <p class="title">我的购物卡</p>
+                        <div class="bac">购物卡明细</div>
+                        <div class="wrap-line" style="width: 130px; left: 10px;">
+                        <span style="left:15px;"></span>
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="detail_title">
+                        <p class="detail_time">名字</p>
+                        <p class="detail_price">售价</p>
+                        <p class="detail_number">卡号</p>
+                        <p class="detail_note">时间</p>
+                    </div>
+                    <div class="detail_content">
+                        <volist name="list" id="vo">
+                            <div class="detail_item">
+                                <p class="detail_time">{$vo.name}</p>
+                                <p class="detail_price">￥{$vo.cost}</p>
+                                <p class="detail_number">{$vo.sn}</p>
+                                <p class="detail_note">{$vo.time}</p>
+                            </div>
+                        </volist>
+                    </div>
+                </div>
+                <!--无购物卡-s-->
+                <div  class="order-alone-li lastset_cm">
+                    <empty name="list">
+                        <div class="car-none-pl">
+                            <i class="account-acco1"></i>您还没有购物卡，<a href="/">快去逛逛吧~</a>
+                        </div>
+                        <else/>
+                    </empty>
+                </div>
+                <!--无购物卡-e-->
+            </div>
+            <!--页码-s-->
+            <div class="operating fixed" id="bottom">
+                <div class="fn_page clearfix">
+                    {$page->show()}
+                </div>
+            </div>
+            <!--页码-e-->
+        </div>
+    </div>
+</div>
+</div>
+<!--footer-s-->
+<include file="user/footer" />
+<!--footer-e-->
+<script type="text/javascript">
+    //    卡类型切换
+    $(function() {
+        var speed = 380;
+        $('#navitems5 ul li').click(function(){
+            $(this).find('a').addClass('selected').parent().siblings().find('a').removeClass('selected');
+            var index=$("#navitems5 ul li").index(this);
+            $(".card_list .card_item").removeClass("choose");
+            $(".card_list .card_item").eq(index).addClass("choose");
+            var pl = $(this).position().left;
+            var liw = $(this).width();
+            $('.wrap-line').stop().animate({
+                left: pl,
+                width: liw
+            }, speed);
+        })
+    });
+    //    页数跳转
+    function jump()
+    {
+        var max_page = "{$page_array.total_page}";
+        var jump_page = $('#jump_page').val();
+        if(jump_page>0 && jump_page<=max_page){
+            location.href = "<?php echo urldecode(url('Home/Virtual/virtual_list',$get_no_p,''));?>"+"/p/"+$('#jump_page').val();
+        }else{
+            layer.alert('请输入正确的页数', {icon: 2});
+        }
+    }
+</script>
+</body>
+</html>

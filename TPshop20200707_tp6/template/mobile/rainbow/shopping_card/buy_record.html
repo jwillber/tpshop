@@ -1,0 +1,53 @@
+<include file="public/header" title="购物卡-购买记录"/>
+<include file="public/card_nav" title="购物卡-购买记录" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/buy_record.css">
+<div class="buy_list">
+    <volist name="list" id="vo">
+        <div class="buy_item">
+            <div class="name">
+                <p>{$vo.name}</p>
+                <p>卡号：{$vo.sn}</p>
+            </div>
+            <div class="price">
+                <p>交易金额：{$vo.cost}</p>
+                <p>{$vo.time}</p>
+            </div>
+        </div>
+    </volist>
+
+</div>
+<script>
+    //    头部导航
+    $(".nav div").click(function(){
+        var index=$(".nav div").index(this);
+        $(".card_list .card_item").removeClass("choose");
+        $(".card_list .card_item").eq(index).addClass("choose");
+        $(this).addClass("check");
+        $(this).siblings().removeClass("check");
+    })
+
+    var page=1;
+    var request_status=1;
+    function ajax_get_card(){
+        $.ajax({
+            type: "get",
+            url: "{:url('Mobile/ShoppingCard/buy_record')}",
+            data: {is_ajax: "1", p: page},
+            success: function (data) {
+                $('.buy_list').append(data);
+                request_status=1;
+            }
+        })
+    }
+    $(window).scroll(function(){
+        // scroll at bottom
+        if(($(document).height() - ($(window).scrollTop() + $(window).height())) < 50){
+            if(request_status){
+                request_status=0
+                page++
+                ajax_get_card()
+            }
+        }
+    });
+</script>

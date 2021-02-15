@@ -1,0 +1,46 @@
+.card_number{
+    height: 1.707rem;
+    line-height: 1.707rem;
+    text-align: center;
+    background: #EFF0F4;
+    color: #333;
+    font-size: .64rem;
+}
+.record_list .money{
+    padding-left:.427rem;
+    width: 3.69rem;
+}
+.record_list .time{
+    padding-right: .427rem;
+    width: 5.3rem;
+    text-align: right;
+}
+.record_list .state,.record_list .payment{
+    width: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.record_list .payment{
+    width: 4.5rem;
+}
+.record_list .list_title{
+    height: 1.92rem;
+    line-height: 1.92rem;
+    text-align: left;
+    background: #FAFAFA;
+    color: #666;
+    font-size: .597rem;
+    display: flex;
+    justify-content: space-between;
+}
+.record_list .list_title{
+    color: #666;
+    font-size: .597rem;
+}
+.record_list .list_item{
+    font-size: .512rem;
+    overflow: hidden;
+    background: #fff;
+    border-bottom: .0213rem solid #E6E6E6;
+}

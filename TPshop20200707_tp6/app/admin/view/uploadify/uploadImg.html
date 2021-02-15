@@ -1,0 +1,461 @@
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>文件管理</title>
+<link rel="stylesheet" type="text/css" href="/public/plugins/webuploader/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/public/plugins/webuploader/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/public/static/css/file_management.css">
+</head>
+<body>
+<div class="upload-box" style="">
+	<div class="switch">
+		<div class="search-condition">
+			<input placeholder="" name="search" class="key" type="text" />
+			<input class="submit search_sub"  type="button" hidefocus="true" value="搜索" />
+		</div>
+		<ul class="webuploader">
+			<li class="create_photo btn-green"> <if condition="$info.fileType eq 'Flash'"> 创建文件夹<else>创建相册</if></li>
+			<input type="file" onchange="getFile()" name="file[]" multiple="multiple">
+			<li style="background-color: #49AFCD;margin-left: 10px;" style="background-color: #49AFCD;margin-left: 10px;" class="btn-green">上传文件</li>
+		</ul>
+	</div>
+	<div class="container_photo">
+		<div class="container_left">
+			<ul id="album_list">
+				<volist name="$info.list" id="album_list">
+					<li class="select_type  <if condition=" $key eq 0">selecttype </if> "  data-category_id="{$album_list.category_id}" >
+						<b class="album-title">{$album_list.name}</b>
+						<span class="album-img-active">({$album_list.number})</span>
+					</li>
+				</volist>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="area manage-area" id="manage_area">
+				<div class="file-list">
+					<ul id="file_all_list">
+
+					</ul>
+				</div>
+				<div class="page" id="turn-ul" style="">
+					<div class="pagination">
+						<ul>
+							<li class="according-number">每页显示<input type="text" class="input-medium" id="showNumber" value="20" data-default="20" autocomplete="off">条</li>
+							<li><a id="beginPage" class="page-disable" style="border: 1px solid #dddddd;">首页</a></li>
+							<li><a id="prevPage" class="page-disable">上一页</a></li>
+							<li id="pageNumber"><a onclick="JumpForPage(this)" class="currentPage">1</a><a onclick="JumpForPage(this)">2</a><a onclick="JumpForPage(this)">3</a><a onclick="JumpForPage(this)">4</a><a onclick="JumpForPage(this)">5</a></li>
+							<li id="JslastPage" style="display: inline-block;"><span class="ellipsis">···</span><a onclick="JumpForPage(this)">29</a></li>
+							<li><a id="nextPage">下一页</a></li>
+							<li><a id="lastPage">末页</a></li>
+							<li class="total-data" data-total-count="423">共423条</li>
+							<li class="according-number">
+								跳<input type="text" class="input-medium" id="skipPage" data-curr-page="1">页
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="area search-area" id="search_area">
+				<ul class="choose-btns">
+					<li class="search">
+						<div class="search-condition">
+							<input placeholder="" class="key" type="text" />
+							<input class="submit" type="button" hidefocus="true" value="搜索" />
+						</div>
+					</li>
+					<li class="btn sure checked">确定</li>
+					<li class="btn cancel">取消</li>
+				</ul>
+				<div class="file-list">
+					<ul id="file_search_list">
+						<!--<li>
+                            <div class="img">
+                                <img src="" />
+                                <span class="icon"></span>
+                            </div>
+                            <div class="desc"></div>
+                        </li>-->
+					</ul>
+				</div>
+			</div>
+			<div class="fileWarp" style="display:none;">
+				<fieldset>
+					<legend>列表</legend>
+					<ul>
+					</ul>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	<!--创建相册弹框-->
+	<div class="photo_album">
+		<div class="photo-header">
+			<p>文件夹创建</p>
+			<span class="photo_close">×</span>
+		</div>
+		<div class="dislog-style">
+			<ul>
+				<li>
+					<span>名称</span>
+					<input type="text" id="album_name" placeholder="请输入名称">
+					<span style="width: inherit;color: red;display:none;">请输入名称</span>
+				</li>
+				<li>
+					<span>说明</span>
+					<!--<input type="text" id="sort" onkeyup="this.value=this.value.replace(/\D/gi,&quot;&quot;)">-->
+					<input type="text" id="sort" >
+				</li>
+			</ul>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default confirm_create">创建</button>
+			<button type="button" class="btn btn-default photo_close" data-dismiss="modal">关闭 </button>
+		</div>
+	</div>
+</div>
+<input type="button" value="确认" id="confirm" class="input_blue sure sure ">
+<script type="text/javascript" src="/public/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/public/plugins/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="/public/plugins/webuploader/upload.js"></script>
+<script>
+	//	创建相册
+	$(".create_photo").click(function(){
+		$(".photo_album").show();
+		$(".container_photo").css({background: 'rgba(0,0,0,0.1)'})
+	})
+	$(".photo_close").click(function(){
+		$(".photo_album").hide();
+		$(".container_photo").css({background: '#fff'})
+	})
+	$(".confirm_create").click(function(){
+		var name    = $('#album_name').val();
+		var explain = $('#sort').val();
+		if(name==''){
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url :"/Admin/Uploadify/CreateAlbum",
+			data:{name:name,explain:explain,type:fileType},
+			dataType : 'json',
+			success : function(data){
+				window.location.reload();
+			}
+		});
+	})
+
+	var category_id = {$info['list']['0']['category_id']|default='0'};
+	var page  = 1;
+	var count = {$info['list']['0']['number']|default='0'};
+	var size  = 18;
+	var toall_page = Math.ceil(count/size);
+	var fileType = "{$info.fileType|default='Images'}";
+	var search = '';
+	$(function(){
+		getFiles();
+		page_list(page);
+		moudle = 'Admin';
+		var config = {
+				"swf":"/public/plugins/webuploader/Uploader.swf",
+				"server":"{$info.upload}",
+				"filelistPah":"{$info.fileList}",
+				"delPath":"{:url('Uploadify/delupload')}",
+				"chunked":false,
+				"chunkSize":1024000,
+				"fileNumLimit":{$info.num|default=1},
+				"fileSizeLimit":2097152000,
+				"fileSingleSizeLimit":20971520,
+				"fileVal":"file",
+				"auto":true,
+				"formData":{},
+				"pick":{"id":"#filePicker","label":"点击选择文件","name":"file"},
+				"thumb":{"width":110,"height":110,"quality":70,"allowMagnify":true,"crop":true,"preserveHeaders":false,"type":"image\/jpeg"},
+				"compress":false
+		};
+
+		Manager.upload($.extend(config, {type : fileType}));
+
+		/*点击保存按钮时
+		 *判断允许上传数，检测是单一文件上传还是组文件上传
+		 *如果是单一文件，上传结束后将地址存入$input元素
+		 *如果是组文件上传，则创建input样式，添加到$input后面
+		 *隐藏父框架，清空列队，移除已上传文件样式*/
+		$(".statusBar .saveBtn").click(function(){
+			var callback = "{$info.func}";
+			var elementid = "{$info.input}";
+			var num = {$info.num|default=1};
+			var fileurl_tmp = [];
+			if(callback != "undefined"){
+				if(num > 1){
+					$(".file.checked").each(function(index,dom){
+						fileurl_tmp[index] = $(this).attr('data-uri')
+					});
+
+				}else{
+					fileurl_tmp = $("input[name^='fileurl_tmp']").val();
+				}
+				eval('window.parent.'+callback+'(fileurl_tmp,elementid)');
+				window.parent.layer.closeAll();
+				return;
+			}
+			if(num > 1){
+					var fileurl_tmp = "";
+					$("input[name^='fileurl_tmp']").each(function(){
+						fileurl_tmp += '<li rel="'+ this.value +'"><input class="input-text" type="text" name="{$info.input}[]" value="'+ this.value +'" /><a href="javascript:void(0);" onclick="ClearPicArr(\''+ this.value +'\',\'\')">删除</a></li>';
+					});
+					$(window.parent.document).find("#{$info.input}").append(fileurl_tmp);
+			}else{
+					$(window.parent.document).find("#{$info.input}").val($("input[name^='fileurl_tmp']").val());
+			}
+			window.parent.layer.closeAll();
+		});
+	});
+	//获取数据
+	function getFiles(){
+		var type = "{$info.fileType|default='Images'}";
+		$.ajax({
+			url :"{$info.fileList}/page/"+page +"/category_id/"+category_id+"/size/"+size+"/search/"+search,
+			dataType : 'json',
+			async:false,
+			success : function(data){
+				$('#file_all_list').html('');
+				var html = '';
+				$(data.list).each(function(i,e){
+					html +='<li class="file" data-uri="'+e.path+'"  data-file_id="'+ e.file_id+'">'+
+							'	<div class="file-panel">'+
+							'	<span class="cancel">删除</span>'+
+							'	</div>';
+					if(type=='Images'){
+						html += '	<div class="img" title="'+ e.file_name+'">'+
+						'	<img style="width:100%;" src="'+ e.path+'" />'+
+						'	<span style="top:12px" class="icon"></span>'+
+						'	</div>';
+					}else{
+						html +=	'<div class="img file-global file-mp4" title="'+ e.file_name+'"><span style="top:12px" class="icon"></span></div>';
+					}
+					html += '	<div class="desc"><p>'+ e.name+'</p>'+ e.file_name+'</div>'+
+							'	</li>';
+				});
+				$('#file_all_list').append(html);
+				count = data.count;
+				$(".select_type.selecttype").find('.album-img-active').html('('+count+')')
+			},
+			complete:function(){
+				toall_page = Math.ceil(count/size);
+				page_list(page);
+			}
+		});
+	}
+
+	//分页
+	function page_list(now_page){
+		//根据数量
+		var page_html = '';
+		page_html += '<li class="according-number">每页显示<input type="text" class="input-medium" id="showNumber" value="'+size+'" data-default="20" autocomplete="off">条</li>';
+		if(now_page>1){
+			page_html += '<li><a id="beginPage" data-page="1"  style="border: 1px solid #dddddd;">首页</a></li>';
+			page_html += '<li><a id="prevPage" >上一页</a></li>';
+			page_html += '<li id="pageNumber">';
+		}else{
+			page_html += '<li><a id="beginPage" data-page="1" class="page-disable" style="border: 1px solid #dddddd;">首页</a></li>';
+			page_html += '<li><a id="prevPage" class="page-disable" >上一页</a></li>';
+			page_html += '<li id="pageNumber">';
+		}
+		if(toall_page>5  && now_page < toall_page-2){
+
+			var i = now_page-2<=1?1:now_page-2;
+			for(var z=i ; z<(i+5);z++){
+				if(now_page ==z ){
+					page_html +='<a onclick="JumpForPage(this)" class="currentPage">'+z+'</a>';
+				}else {
+					page_html +='<a onclick="JumpForPage(this)" class="">'+z+'</a>';
+				}
+			}
+			page_html +='</li><li id="JslastPage" style="display: inline-block;"><span class="ellipsis">···</span><a onclick="JumpForPage(this)">'+toall_page+'</a></li>';
+		}else if (toall_page>5 && now_page >= toall_page-3){
+
+			for(var i = (toall_page-4);i<=toall_page;i++){
+				if(now_page ==i ){
+					page_html +='<a onclick="JumpForPage(this)" class="currentPage">'+i+'</a>';
+				}else {
+					page_html +='<a onclick="JumpForPage(this)" class="">'+i+'</a>';
+				}
+			}
+			page_html +='</li>';
+		}else{
+			for(var i= 1;i<=toall_page;i++){
+				if(now_page ==i ){
+					page_html +='<a onclick="JumpForPage(this)" class="currentPage">'+i+'</a>';
+				}else {
+					page_html +='<a onclick="JumpForPage(this)" class="">'+i+'</a>';
+				}
+			}
+			page_html +='</li>';
+		}
+		if(now_page == toall_page){
+			page_html += '<li><a id="nextPage" class="page-disable">下一页</a></li><li><a id="lastPage" data-page="'+toall_page+'" class="page-disable">末页</a></li>';
+		}else{
+			page_html += '<li><a id="nextPage" class="">下一页</a></li><li><a id="lastPage" data-page="'+toall_page+'" >末页</a></li>';
+		}
+		page_html += '<li class="total-data" data-total-count="'+count+'">共'+count+'条</li>'+
+				'<li class="according-number">'+
+				'跳<input type="text" class="input-medium" id="skipPage" data-curr-page="1">页'+
+				'</li>';
+		$('.pagination ul').html(page_html);
+	}
+	function JumpForPage(obj){
+		page = $(obj).text();
+		getFiles();
+	}
+
+	$(document).on("click",'#beginPage,#lastPage ',function () {
+		page = $(this).attr('data-page');
+		getFiles();
+	})
+	$(document).on("click",'#prevPage ',function () {
+		page = page-1<=1?1:page-1;
+		getFiles();
+	})
+	$(document).on("click",'#nextPage ',function () {
+		page = page+1>=toall_page?toall_page:page+1;
+		getFiles();
+	})
+
+	$(document).on("change",'#showNumber ',function () {
+
+		size = $(this).val();
+		getFiles();
+	})
+	$(document).on("change",'#skipPage ',function () {
+		var val_page = $(this).val();
+		page = val_page;
+		if(val_page>toall_page ){
+			page = toall_page;
+		}
+		if( val_page<1){
+			page = 1;
+		}
+		getFiles();
+	})
+	$(document).on("click",'.select_type',function () {
+		$(this).siblings().removeClass('selecttype');
+		$(this).addClass('selecttype');
+		category_id = $(this).attr('data-category_id');
+		page = 1;
+		getFiles();
+	});
+
+	$(document).on('click','.search_sub', function () {
+		search  = $('input[name="search"]').val();
+		page = 1;
+		getFiles();
+	})
+	$(document).on('change','input[name="search"]', function () {
+		search  = $('input[name="search"]').val();
+		page = 1;
+		getFiles();
+	})
+
+	function getFile(){
+		var url = "{$info.upload}";
+		$.each($('input[name="file[]"]')[0].files,function(k,v){
+			postCurrent(url, v);
+		});
+	}
+
+	$(document).on('click','.file',function(){
+		var num = {$info.num|default=1};
+		var src = $(this).attr('data-uri');
+		if(num>1){
+			if($(".file.checked").length >= num){
+				return;
+			}
+			if($(this).hasClass('checked')){
+				$(this).removeClass('checked');
+			}else{
+				$(this).addClass('checked');
+			}
+		}else{
+			if($('.fileurl_tmp').length != 0){
+				$('input[name="fileurl_tmp"]').val(src);
+			}else{
+				$('#file_all_list').append("<input type='hidden' class='fileurl_tmp' name='fileurl_tmp' value='"+src+"'>");
+			}
+			$(this).addClass('checked').siblings().removeClass('checked');
+		}
+
+	});
+
+	$(document).on('click','#confirm',function(){
+
+		var callback = "{$info.func}";
+		var elementid = "{$info.input}";
+		var num = {$info.num|default=1};
+		var fileurl_tmp = [];
+		if(callback != "undefined"){
+			if(num > 1){
+				$(".file.checked").each(function(index,dom){
+					fileurl_tmp[index] = $(this).attr('data-uri')
+				});
+			}else{
+				fileurl_tmp = $("input[name^='fileurl_tmp']").val();
+			}
+			eval('window.parent.'+callback+'(fileurl_tmp,elementid)');
+			window.parent.layer.closeAll();
+			return;
+		}
+		if(num > 1){
+			var fileurl_tmp = "";
+			$(".file.checked").each(function(index,dom){
+				var value =  $(this).attr('data-uri')
+				fileurl_tmp += '<li rel="'+ value +'"><input class="input-text" type="text" name="{$info.input}[]" value="'+ value +'" /><a href="javascript:void(0);" onclick="ClearPicArr(\''+ value +'\',\'\')">删除</a></li>';
+			});
+			$(window.parent.document).find("#{$info.input}").append(fileurl_tmp);
+		}else{
+			$(window.parent.document).find("#{$info.input}").val($("input[name^='fileurl_tmp']").val());
+		}
+		window.parent.layer.closeAll();
+	});
+
+	$(document).on('click','.file-panel',function(){
+		var file_id = $(this).parent().attr('data-file_id');
+		$(this).parent().remove();
+		$.get(
+				"Admin/Uploadify/deleteFile/file_id/"+file_id,{},function(){}
+		);
+		getFiles();
+	})
+
+	//页面跳转模拟jq form表单提交
+	function postCurrent(url,params){
+		var formData = new FormData();
+		formData.append("category_id",category_id);
+		formData.append("file", params);
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			processData: false,
+			contentType: false,
+			url: url,
+			data: formData,
+			success: function (data) {
+				if(data.state=='SUCCESS'){
+					page = 1;
+					getFiles();
+				}else{
+					alert("error:"+data.state);
+				}
+
+			},
+			error: function(data) {
+				alert("error:"+data.msg);
+			}
+
+		});
+	}
+
+
+
+</script>
+</body>
+</html>

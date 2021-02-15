@@ -1,0 +1,303 @@
+<include file="public/header" title="个人中心" body=""/>
+<link rel="stylesheet" href="__STATIC__/css/usre-index.css">
+<link rel="stylesheet" href="__STATIC__/css/all_page.css">
+
+<!-- 头部 -->
+<div class="index_header">
+    <div class="head_pic">
+        <img src="__STATIC__/images/index/index_bac.png" alt="">
+        <div class="head_message">
+            <a href="{:url('Mobile/User/message_notice')}">
+                <div class="message">
+                    <img src="__STATIC__/images/index/s_2.png" alt="">
+                    <span>{$no_read}</span>
+                </div>
+            </a>
+            <a class="setting" href="{:url('Mobile/User/userinfo')}">
+                <img src="__STATIC__/images/index/s_1.png" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="head_name mian_flex_4">
+        <div class="head_img">
+            <img src="{$user.head_pic}"/>
+        </div>
+        <div class="user_name">
+            <p>{$user['nickname']}</p>
+            <p class="member">{$user.user_level.level_name}</p>
+        </div>
+        <a href="{:url('Mobile/User/sign')}">
+            <div class="sign">
+                <img src="__STATIC__/images/index/sign.png" alt="">
+                <span>签到赚积分</span>
+            </div>
+        </a>
+    </div>
+    <div class="head_bot mian_width_3">
+        <a href="{:url('Mobile/User/account')}">
+            <div class="bot_item line">
+                <div class="num">{$user['user_money']}</div>
+                <div class="num_name">余额</div>
+            </div>
+        </a>
+        <a href="{:url('Mobile/User/points_list')}">
+            <div class="bot_item line">
+                <div class="num">{$user['pay_points']}</div>
+                <div class="num_name">积分</div>
+            </div>
+        </a>
+        <a href="{:url('Mobile/User/coupon')}">
+            <div class="bot_item">
+                <div class="num">{$user['coupon_count']}</div>
+                <div class="num_name">优惠券</div>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- 我的订单 -->
+<div class="my_order bottom_menu mian_width_3">
+    <div class="menu_title">
+        <span>我的订单</span>
+        <volist name="menu_list" id="menu" length="1">
+                <if condition="$menu.menu_id eq 1">
+                    <a href="{$menu.menu_url}">
+                            <div class="all">
+                                    <span>全部订单</span>
+                                    <i class="index_r"></i>
+                                </div>
+                    </a>
+                </if>
+            </volist>
+        <!-- <a href="{$menu_list.menu_url}">
+            <div class="all">
+                <span>全部订单</span>
+                <i class="index_r"></i>
+            </div>
+        </a> -->
+    </div>
+    <div class="order_item">
+        <ul>
+            <li>
+                <a href="{:url('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}">
+                    <span <if condition="$user['waitPay'] eq 0">style="display:none"</if>>{$user['waitPay'] >= 100?'99+':$user['waitPay']}</span>
+                    <img src="__STATIC__/images/index/order1.png" alt="">
+                    <p>待付款</p>
+                </a>
+            </li>
+            <li>
+                <a href="/Mobile/Order/order_list/type/WAITSEND.html">
+                    <span <if condition="$user['waitSend'] eq 0">style="display:none"</if>>{$user['waitSend'] >= 100?'99+':$user['waitSend']}</span>
+                    <img src="__STATIC__/images/index/order2.png" alt="">
+                    <p>待发货</p>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Mobile/Order/comment',array('status'=>0))}">
+                    <span <if condition="$user['uncomment_count'] eq 0">style="display:none"</if>>{$user['uncomment_count'] >= 100?'99+':$user['uncomment_count']}</span>
+                    <img src="__STATIC__/images/index/order4.png" alt="">
+                    <p>待评价</p>
+                </a>
+            </li>
+            <li>
+                <a href="{:url('Mobile/Order/return_goods_list',array('type'=>1))}">
+                    <span style="display: none;"><if condition="$user['return_count']">{$user['return_count'] >= 100?'99+':$user['return_count']}</span>
+                    <img src="__STATIC__/images/index/order5.png" alt="">
+                    <p>退款/退货</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--底部菜单-->
+<div class="bottom_menu mian_width_3">
+    <div class="menu_title">必备功能</div>
+    <ul class="menu_list">
+        <volist name="menu_list" id="menu">
+            <if condition="$menu.menu_id neq 1">
+                <a href="{$menu.menu_url}">
+                    <li>
+                        <div class="item_img">
+                            <img src="__PUBLIC__/static/images/w{$menu.menu_id}.png"/>
+                        </div>
+                        <p>{$menu.menu_name}</p>
+                    </li>
+                </a>
+            </if>
+        </volist>
+    </ul>
+</div>
+
+<!--底部导航-start-->
+<include file="public/footer_nav"/>
+<!--底部导航-end-->
+<script>
+    $(function(){
+        $('.z_user_head').css("background-color", "{$tpshop_config['basic_header_background']}");
+        var ua = window.navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $('#logout').hide();
+        }
+    });
+    $('.border10').css('border-color','#f8f8f8');
+    $("a").click(function () {
+        $('#h-onload').css('display','block')
+    })
+</script>
+</body>
+</html>
+
+
+<!-- <div class="z_user_vs">
+    <div class="z_user_head">
+        <div class="z_user_top">
+            <div class="user_top_tx">
+                <img src="{$user.head_pic}"/>
+            </div>
+            <div class="user_top_name">
+                <a href="javascript:void(0);">{$user['nickname']}</a>
+            </div>
+            <div class="user_top_title">
+                <a href="javascript:void(0);">{$user.user_level.level_name}</a>
+            </div>
+        </div>
+        <div class="z_user_down">
+            <div class="user_down_bg"></div>
+            <ul>
+                <li>
+                    <a href="{:url('Mobile/User/account')}">
+                        <div class="user_down_dev">{$user['user_money']}</div>
+                        <div class="user_down_name">余额</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('Mobile/User/points_list')}">
+                        <div class="user_down_dev">{$user['pay_points']}</div>
+                        <div class="user_down_name">积分</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+       <div class="z_user_icon">
+       	<a href="/Mobile/User/userinfo.html">
+       		<i></i>
+       	</a>
+       </div> 
+    </div>
+
+    <div class="z_user_li_wrap">
+        <volist name="menu_list" id="menu">
+            <switch name="$menu['menu_id']">
+                <case value="1">
+                        <div class="z_user_list border10" style="border: none">
+                            <a href="{$menu.menu_url}">
+                                <div class="user_list_cont padd10">
+                                    <div class="cont_fl">
+                                        <img src="__PUBLIC__/static/images/mlist.png"/>
+                                        <span>我的订单</span>
+                                    </div>
+                                    <div class="cont_fr">
+                                                <span>
+                                                    查看全部
+                                                </span>
+                                        <i class="zMright"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        <div class="z_user_nav">
+                            <ul>
+                                <li>
+                                    <a href="{:url('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}">
+                                        <img src="__PUBLIC__/static/images/q1.png"/>
+                                        <i>{$user['waitPay'] >= 100?'99+':$user['waitPay']}</i>
+                                        <p>待付款</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{:url('/Mobile/Order/wait_receive',array('type'=>'WAITRECEIVE'))}">
+                                        <img src="__PUBLIC__/static/images/q2.png"/>
+                                        <i>{$user['waitReceive'] >= 100?'99+':$user['waitReceive']}</i>
+                                        <p>待收货</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{:url('Mobile/Order/comment',array('status'=>0))}">
+                                        <img src="__PUBLIC__/static/images/q3.png"/>
+                                        <i>{$user['uncomment_count'] >= 100?'99+':$user['uncomment_count']}</i>
+                                        <p>待评价</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{:url('Mobile/Order/return_goods_list',array('type'=>1))}">
+                                        <img src="__PUBLIC__/static/images/q4.png"/>
+                                        <i>{$user['return_count'] >= 100?'99+':$user['return_count']}</i>
+                                        <p>售后服务</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </case>
+                <default />
+                <a href="{$menu.menu_url}">
+                    <div class="z_user_list <if condition="$menu.is_tab eq 1">border10</if>">
+                        <div class="user_list_cont padd10">
+                            <div class="cont_fl">
+                                <img src="__PUBLIC__/static/images/w{$menu.menu_id}.png"/>
+                                <span>{$menu.menu_name}</span>
+                            </div>
+                            <div class="cont_fr">
+                                <i class="zMright"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </switch>
+        </volist>
+    </div>
+</div>
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

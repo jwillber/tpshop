@@ -1,0 +1,202 @@
+<include file="public/header" title="详情" body=""/>
+<include file="public/header_nav" title="详情" href="javascript:history.back(-1);"/>
+<link rel="stylesheet" href="__STATIC__/css/shopdes.css">
+<style>
+    body{
+        background: #F8F8F8;
+    }
+    .classreturn{
+        position: fixed;
+    }
+    .classreturn .content{
+        background: #F8F8F8;
+    }
+</style>
+<div class="askinfo">
+<!--    <img src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--    <p>关于华为手机华为手机华为手机华为手机华为手机华为手机华为手机</p>-->
+<!--    <img class="jiantou" src="__STATIC__/images/jiantou-1.png" alt="">-->
+</div>
+<!--占位-->
+<div style="height: 5rem;"></div>
+<input type="hidden" name="qid" value="{$qid}">
+<input type="hidden" name="gid" value="{$gid}">
+<div class="asklist">
+    <div class="ask">
+<!--        <div class="askleft">-->
+<!--            <span>问</span>-->
+<!--            <span>能用在防盗门上吗</span>-->
+<!--        </div>-->
+<!--        <div class="number">-->
+<!--            <span>提问于 6天前</span>-->
+<!--        </div>-->
+<!--        <ul class="askul">-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--                <div class="clear"></div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img class="headimg" src="http://demo5.tp-shop.cn/public/upload/goods/thumb/312/goods_thumb_312_0_300_300.jpeg" alt="">-->
+<!--                <div class="middle">-->
+<!--                    <div class="name">-->
+<!--                        <span>冰***锅</span>-->
+<!--                    </div>-->
+<!--                    <div class="time">6天前</div>-->
+<!--                    <div class="content">可以的呀，我就是用在门把上我就是用在门把上我就是用在门把上我就是用在门把上</div>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
+    </div>
+</div>
+<div class="askbottom">
+    <textarea placeholder="请输入您的评论" name="" id="comment_content" cols="32" rows="10"></textarea>
+    <div onclick="comment()">发送</div>
+</div>
+<script>
+    $(document).ready(function () {
+        // askall({$goods.goods_id});
+        var gid = $('input[name*=gid]').val();
+        var qid = $('input[name*=qid]').val();
+        // console.log("gid-qid", gid+'-'+qid);
+        // gid = qid = 1;
+        askall_detail(gid,qid);
+    });
+    function askall_detail(gid, qid){
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=api&c=user&a=ask_all",
+            data: {id:gid,qid:qid},
+            success: function(data){
+                var result  = data['result'];
+                var good = data['good'];
+                var user = data['user'];
+                var ask = '';
+                var comment = "";
+                var gid = $('input[name*=gid]').val();
+                var askinfo =
+                    '<a href="/Mobile/Goods/goodsInfo/'+gid+'.html">'+
+                    '    <img src="/public/images/icon_goods_thumb_empty_300.png" alt="">' +
+                    // '    <img src="'+(good['original_img']?good['original_img']:'/public/images/icon_goods_thumb_empty_300.png')+'" alt="">' +
+                    '    <p>关于'+good['goods_name']+'</p>' +
+                    '    <img class="jiantou" src="__STATIC__/images/jiantou-1.png" alt="">'+
+                    '</a>'
+                var question = '';
+                $.each(result,function (i, o) {
+                    $.each(o['comment'], function (i2, o2) {
+                        comment +=
+                            '            <li>' +
+                            '                <img class="headimg" src="'+(user[o2['user_id']]['head_pic']?user[o2['user_id']]['head_pic']:user[o2['user_id']]['head_pic'])+'" alt="">' +
+                            '                <div class="middle">' +
+                            '                    <div class="name">' +
+                            '                        <span>'+(user[o2['user_id']]['nickname']?user[o2['user_id']]['nickname']:user[o2['user_id']]['mobile'])+'</span>' +
+                            '                    </div>' +
+                            '                    <div class="time">'+timestampToTime(o2['createtime'])+'</div>' +
+                            '                    <div class="content">'+o2['content']+'</div>' +
+                            '                </div>' +
+                            '                <div class="clear"></div>' +
+                            '            </li>';
+                    });
+                    question+=
+                        '        <div class="askleft">' +
+                        '            <span>问</span>' +
+                        '            <span>'+o['question']['content']+'</span>' +
+                        '        </div>' +
+                        '        <div class="number">' +
+                        '            <span>提问于 '+timestampToTime(o['question']['createtime'])+'</span>' +
+                        '        </div>' ;
+                });
+                    ask+=
+                        question+
+                    '        <ul class="askul">' +
+                        comment+
+                    '        </ul>'
+                $('.ask').html(ask);
+                $('.askinfo').html(askinfo);
+            }
+        });
+    }
+    function comment(){
+        var content = $("#comment_content").val();
+        if (!content){
+            layer.open({content:'请填写评论！', time:2});
+            return false;
+        }
+        var gid = $('input[name*=gid]').val();
+        var qid = $('input[name*=qid]').val();
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=api&c=user&a=askall_answer",
+            data: {qid:qid,goods_id:gid,content:content},
+            success: function(data){
+                if (data["status"]==1){
+                    layer.open({content:data.msg, time:3});
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+                }else{
+                    layer.open({content:data.msg, time:3});
+                }
+            }
+        });
+    }
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = date.getDate() < 10 ?  '0'+date.getDate()+ ' ' : date.getDate()+ ' ';
+        var h = date.getHours() < 10 ? '0'+date.getHours()+ ':' : date.getHours()+ ':';
+        var m = date.getMinutes() < 10 ? '0'+date.getMinutes()+ ':' : date.getMinutes()+ ':';
+        var s = date.getSeconds()< 10 ? '0'+date.getSeconds() : date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+
+</script>

@@ -1,0 +1,376 @@
+/*上传图片，视频弹窗uploadImg.html*/
+.switch{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.switch .create_photo{
+    padding: 0 5px;
+}
+.switch .btn-green{
+    background-color: #49AFCD;
+    color: #fff;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 0 10px;
+    float: left;
+}
+.search-condition .key{
+    border: 1px solid #CFCFCF;
+    width: 200px;
+    padding: 5px;
+    outline: none;
+}
+.search-condition .key:focus{
+    border-color: #75B9F0;
+}
+.search-condition .submit{
+    background-color: #49AFCD;
+    width: 67px;
+    color: #fff;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-left: 8px;
+    display: inline-block;
+}
+.key::-webkit-input-placeholder {
+    color:#777;
+    font-size: 12px;
+}
+.key:-moz-placeholder {
+    color:#777;
+    font-size: 12px;
+}
+.key::-moz-placeholder {
+    color:#777;
+    font-size: 12px;
+}
+.key:-ms-input-placeholder {
+    color:#777;
+    font-size: 12px;
+}
+.container_photo{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+}
+.container_photo .container_left{
+    width: 135px;
+    height: 490px;
+    overflow-y: scroll;
+    background: #f2f2f2;
+}
+.container_left::-webkit-scrollbar{
+    display: none;
+}
+.container_photo .container{
+    width: 765px;
+    border: none;
+}
+.container .area{
+    display: none;
+}
+.container_left{
+    padding-bottom: 10px;
+    width: 15%;
+    background: #f2f2f2;
+    margin-left: -1px;
+    border-right: 1px solid #e5e5e5;
+}
+#album_list li{
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+#album_list .selecttype{
+    background: #fff;
+}
+#album_list .album-title{
+    display: inline-block;
+    white-space: nowrap;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#album_list li span{
+    float: right;
+}
+.album-img-active {
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 50px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+}
+#confirm{
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    width: 110px;
+    text-align: center;
+    outline: none;
+    border-radius: 2px;
+    border: 1px solid #00A0DE !important;
+    background: #00A0DE !important;
+    color: #Fff;
+    margin: 13px 395px;
+    position: absolute;
+    bottom: 0;
+}
+.upload-box{
+    position: relative;
+}
+.webuploader input{
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    width: 87px;
+}
+.container .area .file-list .file .desc{
+    height: 40px;
+}
+.container .area .file-list .file .desc p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+}
+.container .area .file-list .file .icon{
+    top: -12px;
+}
+/*分页-s*/
+#turn-ul {
+    position: absolute;
+    margin: 0;
+    width: 100%;
+    bottom: 0;
+    height: 35px;
+    line-height: 35px;
+}
+.page .pagination {
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+}
+.pagination ul{
+    display: inline-block;
+}
+#turn-ul .according-number {
+    padding: 0 5px;
+    float: left;
+    line-height: 30px;
+}
+.pagination ul li {
+    width: auto !important;
+    margin-left: 0px !important;
+    height: auto !important;
+    float: left;
+    position: relative;
+    margin-bottom: 10px;
+}
+.pagination ul>li {
+    display: inline;
+}
+#turn-ul .according-number input {
+    height: 25px;
+    text-align: center;
+    width: 30px;
+}
+#turn-ul .according-number input {
+    margin: 0 5px 0;
+    vertical-align: middle;
+    width: 20px;
+    padding: 4px;
+    height: 17px;
+}
+#turn-ul ul li a {
+    outline: none;
+    cursor: pointer;
+}
+.pagination ul>li>a {
+    padding: 4px 8px;
+}
+.pagination ul>li>a, .pagination ul>li>span {
+    float: left;
+    padding: 4px 12px;
+    line-height: 20px;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-left-width: 0;
+}
+.page-disable {
+    background: #F5F5F5 !important;
+    color: #AAA !important;
+    cursor: default !important;
+}
+.dialog_body article ul li {
+    float: left;
+    width: 111px;
+    position: relative;
+    height: 125px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.currentPage {
+    border-top: 1px solid #00A0DE !important;
+    border-bottom: 1px solid #00A0DE !important;
+    color: #fff !important;
+    background: #00A0DE !important;
+    cursor: default !important;
+}
+#turn-ul .total-data {
+    float: left;
+    height: 30px;
+    border-right: 1px solid #D7D7D8;
+    line-height: 30px;
+    padding-right: 5px;
+}
+#turn-ul .according-number {
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    padding: 0 5px;
+}
+#turn-ul .according-number input {
+    margin: 0 5px 0;
+    vertical-align: middle;
+    width: 30px !important;
+    padding: 4px;
+    height: 30px !important;
+    border: 1px solid #cccccc;
+}
+/*分页-e*/
+.layer-anim{
+    width: 900px !important;
+    height: 650px !important;
+}
+.layui-layer-iframe iframe{
+    height: 607px !important;
+}
+
+/*图片管理列表*/
+#manage_area{
+    display: inline-block;
+    height: 490px;
+    width: 100%;
+    margin: 0;
+}
+#file_all_list{
+    overflow-y: scroll;
+    height: 450px;
+    padding-left: 5px;
+}
+#file_all_list .file{
+    width: 110px;
+    height: 150px;
+    border: 1px solid #e5e5e5;
+}
+/*创建相册弹框-s*/
+.photo_album{
+    display: none;
+    position: absolute;
+    top: 100px;
+    left: 250px;
+    width: 450px;
+    height: 260px;
+    z-index: 1000;
+    background: #fff;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+}
+#album_name::-webkit-input-placeholder {
+    font-size: 12px;
+}
+#album_name:-moz-placeholder {
+    font-size: 12px;
+}
+#album_name::-moz-placeholder {
+    font-size: 12px;
+}
+#album_name:-ms-input-placeholder {
+    font-size: 12px;
+}
+.photo-header{
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+.photo-header .photo_close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #999;
+    text-shadow: 0 1px 0 #ffffff;
+    margin-top: -20px;
+    cursor: pointer;
+}
+.dislog-style{
+    margin: 40px auto;
+    width: 80%;
+}
+.dislog-style ul li span {
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #666;
+    font-size: 14px;
+}
+.dislog-style ul li input {
+    width: 200px;
+    height: 30px;
+}
+.dislog-style ul li input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #CCC;
+    outline: none;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.modal-footer {
+    padding: 14px 15px 15px;
+    margin-bottom: 0;
+    text-align: right;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+    *zoom: 1;
+    -webkit-box-shadow: inset 0 1px 0 #ffffff;
+    -moz-box-shadow: inset 0 1px 0 #ffffff;
+    box-shadow: inset 0 1px 0 #ffffff;
+}
+.modal-footer .btn{
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #333;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+.modal-footer .btn+.btn {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+.modal-footer .btn+.btn{
+    outline: none;
+}
+/*创建相册弹框-e*/

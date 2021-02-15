@@ -1,0 +1,120 @@
+/* 改一个全部都改 */
+/* 虚拟订单、拼团订单、预约订单、自提订单共用 */
+.mypackeg{
+    margin: 0 0.4267rem 0.4267rem 0.4267rem;
+    border-radius: 0.2133rem;
+    overflow: hidden;
+}
+.packeg {
+    padding: 0 0.4267rem;
+    border-bottom: 0.02133rem solid #f3f3f3;
+    height: 1.70667rem;
+    box-sizing: border-box;
+}
+.sc_list .shopimg img {
+    width: 3.2rem;
+    height: 3.2rem;
+    display: block;
+    margin-right: 0.4267rem;
+}
+.paycloseto a{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.paycloseto {
+    padding: .42667rem;
+}
+.sc_list .shopimg img {
+    width: 3.84rem;
+    height: 3.84rem;
+    display: block;
+    margin-right: 0.4267rem;
+}
+.se_sclist .deleshow .deletes .similar-product-text{
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0.4267rem;
+}
+.packeg .fl{
+    line-height: 1.70667rem;
+}
+.packeg .fr span {
+    line-height: 1.70667rem;
+}
+.tanme_1{
+    width: 6.9333rem;
+}
+.sk_right{
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 !important;
+    width: 10.52rem;
+}
+.wiconfine{
+    width: auto;
+}
+.shimen{
+    font-size: 0.46933rem;
+    color: #999;
+    text-align: right;
+}
+.shimen .sc_pri{
+    margin-bottom: 0.4267rem;
+}
+.similar-product-text{
+    margin-top: 0;
+    font-size: 0.55rem;
+    color: #666;
+    margin-bottom: 0.64rem;
+    font-weight: normal;
+}
+.shop-rebuy-price {
+    margin: 0;
+    overflow: hidden;
+    margin-top: 0.64rem;
+    text-align: right;
+    box-sizing: border-box;
+}
+.price-alln {
+    font-size: .55467rem;
+    margin: 0;
+    float: right;
+    width: 100%;
+    position: relative;
+    padding-left: 0;
+    text-align: right;
+}
+.price-alln .threel{
+    margin: 0;
+    margin-right: 0.62rem;
+    color: #999;
+    font-size: .55467rem;
+}
+.shop-rebu_1{
+    height: 2.07rem;
+    line-height: 2.07rem;
+    padding: 0 0.4267rem;
+}
+.shop-rebu_1 .a_buy{
+    width: 3.2rem;
+    height: 1.19rem;
+    font-size: 0.55rem;
+    line-height: 1.19rem;
+    padding: 0;
+    text-align: center;
+    margin-top: 0.45rem;
+    margin-right: 0;
+    margin-left: 0.4rem;
+    display: block;
+    border-radius: .21333rem;
+    float: right;
+    border: 0.02133rem solid #e6e6e6;
+    box-sizing: border-box;
+}
+.price-alln .han_three{
+    margin-right: 0;
+    margin-left: 0.2133rem;
+}

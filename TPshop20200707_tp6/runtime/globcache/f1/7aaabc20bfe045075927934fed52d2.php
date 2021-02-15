@@ -1,0 +1,4 @@
+<?php
+//000000000000
+ exit();?>
+a:27:{s:12:"reg_integral";s:3:"100";s:9:"file_size";s:1:"2";s:15:"default_storage";s:3:"100";s:15:"warning_storage";s:2:"10";s:3:"tax";s:1:"6";s:9:"is_remind";s:1:"0";s:17:"order_finish_time";s:0:"";s:17:"order_cancel_time";s:0:"";s:12:"hot_keywords";s:41:"手机|小米|iphone|三星|华为|冰箱";s:8:"app_test";s:1:"0";s:4:"need";s:3:"100";s:3:"min";s:2:"50";s:6:"invite";s:1:"1";s:15:"invite_integral";s:3:"200";s:18:"rechargevip_on_off";s:1:"1";s:17:"rechargevip_price";s:1:"1";s:25:"rechargevip_rebate_on_off";s:1:"0";s:18:"rechargevip_rebate";s:1:"1";s:15:"is_bind_account";s:1:"0";s:9:"im_choose";s:1:"0";s:17:"header_background";s:7:"#dd0f20";s:9:"is_manual";s:1:"0";s:8:"goods_sn";s:2:"TP";s:5:"bd_ak";s:32:"xXo650H9zUKh1Lk19uBaNcEWLoG3eGBU";s:11:"bd_serverak";s:32:"WWmazz3dLLwtLdmcG4BfV3PjSHSwqITh";s:10:"im_website";s:0:"";s:9:"ws_socket";s:0:"";}

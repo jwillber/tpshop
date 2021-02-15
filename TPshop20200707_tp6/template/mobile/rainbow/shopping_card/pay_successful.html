@@ -1,0 +1,16 @@
+<include file="public/header" title="支付成功"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/pay_successful.css">
+<div class="pay_successful">
+    <img class="successful_img" src="__STATIC__/images/shopping_card/pay_successful.png" alt="">
+    <div class="order_information">
+        <p>¥ {$order.total_amount}</p>
+        <p>订单支付成功</p>
+        <p>订单编号：{$order.order_sn}</p>
+    </div>
+<!--    <div class="button order_info"><a style="color: #ffffff" href="{:url('Order/order_detail',array('id'=>$Request.param.id))}">查看订单详情</a></div>-->
+    <div class="button order_info"><a style="color: #ffffff" href="{:url('Order/order_detail',array('id'=>$order.order_id))}">查看订单详情</a></div>
+    <div class="button giving"><a style="color: #FF3B3B;" href="{:url('ShoppingCard/my_card')}" >赠送好友</a></div>
+    <div class="prompt">温馨提示：商城平台级销售商不会以订单异常、系统升级为理由要求您点击任何网址链接进行退款操作</div>
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡首页</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__PUBLIC__/js/global.js"></script>
+</head>
+<body>
+<include file="public/header" w='w1224'/>
+<div id="hot_card" class="search-box p card_index">
+    <div class="w1224">
+
+            <div class="hot_content">
+                <volist name="card" id="vo">
+                    <div class="hot_item">
+                        <div class="hot_img">
+                            <a href="{:url('ShoppingCard/card_goodsInfo',array('id'=>$vo.id))}">
+                                <img src="{$vo.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                            </a>
+                        </div>
+                        <div class="hot_bottom">
+                            <div class="hot_name">{$vo.name}</div>
+                            <p>适用范围：{$vo.use_range}</p>
+                            <p>已售：<if condition="$vo.repertory gt 0">{$vo.sell}</if></p>
+                            <div class="hot_bar">
+                                <p class="one"></p>
+                                <p class="two" style="width: {$vo.percent}%"></p>
+                            </div>
+                            <div class="purchase" data-id="{$vo.discount[0]['id']}">立即抢购</div>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+        {$page->show()}
+    </div>
+</div>
+
+
+<!--footer-s-->
+<div class="footer p">
+    <include file="public/footer" />
+    <include file="public/sidebar_cart" />
+</div>
+<script>
+    $('.purchase').click(function () {
+        var id=$(this).attr('data-id')
+        window.location.href='{:url('home/ShoppingCard/oder_des')}?num=1&id='+id;
+    })
+</script>
+<!--footer-e-->
+<script src="__STATIC__/js/lazyload.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/headerfooter.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

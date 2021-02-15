@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>兑换购物卡</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+</head>
+
+<body class="bg-f5">
+<include file="user/header"/>
+<div class="home-index-middle MyCard" id="exchange">
+    <div class="w1224">
+        <div class="g-crumbs">
+            <a href="{:url('Home/User/index')}">我的商城</a>
+            <i class="litt-xyb"></i>
+            <span>我的订单</span>
+        </div>
+        <div class="home-main">
+            <include file="user/menu"/>
+            <div class="ri-menu fr">
+                <div class="menumain p">
+                    <div class="tit">我的购物卡</div>
+                    <div class="convert">
+                        <div class="import">
+                            <form action="" method="post">
+                            <div class="card_num">
+                                <span>卡号：</span>
+                                <input placeholder="请输入卡号" type="text" name="sn" >
+                                <div class="error_message" id="error_sn" style="display: none">
+                                    <img src="__STATIC__/images/error_message.png" alt="">
+                                    <span>卡号不存在</span>
+                                </div>
+                            </div>
+                            <div class="card_num">
+                                <span>卡密：</span>
+                                <input placeholder="请输入卡密，区分大小写" type="password" name="card_password">
+                                <div class="error_message" id="error_password" style="display: none">
+                                    <img src="__STATIC__/images/error_message.png" alt="">
+                                    <span>卡密错误</span>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="exchange_button">立即兑换</div>
+                        </div>
+                        <div class="sweep">
+                            <p>手机扫描卡背面二维码，快速绑定</p>
+                            <img src="__STATIC__/images/sweep_code.png" alt="">
+                        </div>
+                    </div>
+                <!--无购物卡-s-->
+                <div style="display: none" class="order-alone-li lastset_cm">
+                    <empty name="lists">
+                        <div class="car-none-pl">
+                            <i class="account-acco1"></i>您还没有购物卡，<a href="/">快去逛逛吧~</a>
+                        </div>
+                        <else/>
+                    </empty>
+                </div>
+                <!--无购物卡-e-->
+            </div>
+
+            <!--页码-e-->
+        </div>
+    </div>
+</div>
+</div>
+<!--footer-s-->
+<include file="user/footer" />
+<!--footer-e-->
+<script type="text/javascript">
+    //    卡类型切换
+    $(function() {
+        var speed = 380;
+        $('#navitems5 ul li').click(function(){
+            $(this).find('a').addClass('selected').parent().siblings().find('a').removeClass('selected');
+            var index=$("#navitems5 ul li").index(this);
+            $(".card_list .card_item").removeClass("choose");
+            $(".card_list .card_item").eq(index).addClass("choose");
+            var pl = $(this).position().left;
+            var liw = $(this).width();
+            $('.wrap-line').stop().animate({
+                left: pl,
+                width: liw
+            }, speed);
+        })
+    });
+
+    $('.exchange_button').click(function () {
+        $('.error_message').hide()
+        $.ajax({
+            type : "POST",
+            url:"{:url('home/ShoppingCard/exchange')}",
+            dataType:'json',
+            data: $('form').serialize(),
+            success: function(data){
+                if(data.status==1){
+                    layer.msg(data.msg, {icon: 1, time: 2000});
+                    window.location.href="__ROOT__"
+                }else{
+                    layer.msg(data.msg, {icon: 2, time: 2000});
+                }
+            }})
+    })
+</script>
+</body>
+</html>

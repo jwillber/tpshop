@@ -1,0 +1,1024 @@
+﻿/*我的购物卡-s*/
+.MyCard .navitem li .selected {
+    color: #FF3B3B;
+    border-bottom-color: #FF3B3B;
+}
+.MyCard .navitem li a{
+    width: 140px;
+    color: #e23435;
+    border-bottom-color: #FF3B3B;
+}
+.MyCard .navitem .selected a, .MyCard .navitem li:hover a {
+    position: relative;
+    z-index: 9;
+    color: #e23435;
+    border-bottom-color: #FF3B3B;
+}
+.MyCard  .navitem li{
+    float: left;
+    margin-right: 10px;
+}
+.MyCard .navitem li a{
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    line-height: 38px;
+    color: #555;
+    border-bottom: 2px solid transparent;
+}
+.MyCard .card_item{
+    display: none;
+}
+.MyCard .choose{
+    display: block;
+}
+.MyCard .item{
+    width: 240px;
+    height: 320px;
+    margin-top: 30px;
+    margin-left: 8px;
+    float: left;
+    border:1px solid #f3f3f3;
+    border-radius: 10px;
+}
+.MyCard .item_img,.MyCard .item_img img{
+    width: 240px;
+    height: 320px;
+    border-radius: 10px;
+    position: relative;
+    object-fit: scale-down;
+}
+.MyCard .item_img p{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:70px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius:15px 10px 0px 15px;
+    color: #fff;
+}
+.MyCard .item_img .state_t{
+    background: #2FD6A2;
+}
+.MyCard .item_img .state_f{
+    background: #F39818;
+}
+.MyCard .card_content{
+    color: #333;
+    font-size: 16px;
+}
+.MyCard .card_content .name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 15px 6px 2px;
+}
+.MyCard .card_content .price{
+    margin: 0 6px;
+}
+.MyCard .card_content .price span:nth-child(1){
+    font-size: 14px;
+}
+.MyCard .card_content .price span:nth-child(2){
+    font-size: 14px;
+    color: #FF3B3B;
+    font-weight: 600;
+}
+/*我的购物卡-e*/
+
+
+
+/*购物卡-购买记录-s*/
+.buy_record .my_card .title{
+    color: #333;
+    font-size: 24px;
+    margin: 26px 0 18px 6px;
+}
+.buy_record .my_card .balance{
+    border-bottom: 1px solid #F5F5F5;
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+}
+.buy_record .my_card .bac{
+    width: 150px;
+    height: 45px;
+    line-height: 45px;
+    background: #F3F3F3;
+    border-radius: 23px;
+    text-align: center;
+    font-size: 18px;
+}
+.buy_record .my_card .balance .card_money{
+    color: #333;
+    font-size: 14px;
+    width: 434px;
+    padding-left: 76px;
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+.buy_record .detail{
+    color: #333;
+    text-align: center;
+}
+.buy_record .detail_title{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    height: 55px;
+    line-height: 70px;
+    border-bottom: 1px solid #F5F5F5;
+}
+.buy_record .detail_item{
+    display: flex;
+    justify-content: space-between;
+    height: 55px;
+    border-bottom: 1px solid #F5F5F5;
+    line-height: 80px;
+    font-size: 14px;
+}
+.buy_record .detail_time{
+    width: 155px;
+}
+.buy_record .detail_price{
+    width: 320px;
+}
+.buy_record .detail_number{
+    width: 150px;
+}
+.buy_record .detail_note{
+    width: 200px;
+    text-align: right;
+    padding-right: 15px;
+}
+.buy_record .detail_title .detail_note{
+    width: 185px;
+    padding-right: 30px;
+}
+/*购物卡-购买记录-e*/
+
+
+
+/*购物卡详情-s*/
+.card_info .ri-menu{
+    position: relative;
+}
+.card_info .my_card .title{
+    color: #333;
+    font-size: 24px;
+    margin: 26px 0 37px 6px;
+}
+.card_info .info_item{
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+}
+.card_info .info_item:nth-child(3n+1)  {
+    margin-left: 30px;
+}
+.card_info .info_img,.card_info .info_img img{
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    position: relative;
+}
+.card_info .info_img p{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:70px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius:15px 10px 0px 15px;
+    color: #fff;
+}
+.card_info .info_img .state_t{
+    background: #2FD6A2;
+}
+.card_info .info_img .state_f{
+    background: #F39818;
+}
+.card_info .card_information{
+    color: #333;
+    font-size: 16px;
+    line-height: 30px;
+    margin-top: 10px;
+}
+.card_info .card_information .info_name{
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card_info .info_button{
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 100px auto 0;
+}
+.card_info .info_button p{
+    width:150px;
+    height:46px;
+    line-height: 46px;
+    text-align: center;
+    background:#FF3B3B;
+    border-radius:5px;
+    color: #fff;
+    font-size: 20px;
+}
+.card_info .info_button .give_friends{
+    background: #999999;
+}
+.info_mask{
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.4);
+}
+.card_info .menumain{
+    position: relative;
+}
+.card_info .activate_success,.balace .activate_success{
+    display: none;
+    position: absolute;
+    top: 150px;
+    left: 216px;
+    width: 600px;
+    height: 420px;
+    z-index: 999;
+    background: rgba(255,255,255,0.2);
+}
+.card_info .activate_success .successful,.balace .activate_success .successful{
+    width: 580px;
+    height: 345px;
+    margin: 10px;
+    background: #fff;
+    padding-top: 55px;
+}
+.card_info .activate_success .successful .successful_img,.balace .activate_success .successful_img{
+    width: 141px;
+    height: 106px;
+    display: block;
+    margin: 0 auto;
+}
+.card_info .activate_success .card_number,.balace .activate_success .card_number{
+    color: #333;
+    font-size: 22px;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 40px;
+}
+.card_info .activate_success .go_use,.balace .activate_success .go_use{
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #FF3B3B;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #FEFEFE;
+    margin: 45px auto;
+}
+/*购物卡详情-e*/
+
+
+/*购物卡赠送给他人-s*/
+.give_friends .my_card .title {
+    color: #333;
+    font-size: 24px;
+    margin: 26px 0 18px 6px;
+}
+.give_friends .give_card{
+    margin-left: 15px;
+    height: 230px;
+}
+.give_friends .give_card:before{
+    content: "";
+    display: inline-block;
+    clear: both;
+}
+.give_friends .card_img,.give_friends .card_img img{
+    width: 230px;
+    height: 230px;
+}
+.give_friends .give_card>div{
+    float: left;
+    color: #333;
+}
+.give_friends .card_information{
+    margin-left: 60px;
+    margin-top: 15px;
+}
+.give_friends .card_information .name{
+    font-size: 20px;
+}
+.give_friends .card_information .detailed{
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 30px;
+}
+.give_friends .leave_word{
+    margin-top: 45px;
+    height: 100px;
+    color: #333;
+    font-size: 20px;
+}
+.give_friends .leave_word textarea{
+    width: 570px;
+    height: 70px;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    float: left;
+    padding: 15px;
+}
+.give_friends .leave_word textarea::-webkit-input-placeholder{
+    color: #999;
+    font-size: 14px;
+}
+.give_friends .nickname input::-webkit-input-placeholder{
+    color: #999;
+    font-size: 14px;
+}
+.give_friends .leave_word span{
+    float: left;
+    height: 102px;
+    line-height: 102px;
+    padding: 0 80px 0 40px;
+}
+.give_friends .anonymous{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
+    font-size: 20px;
+    color: #333;
+}
+.give_friends .anonymous .tit{
+    padding: 0 40px;
+}
+.give_friends .choose{
+    display: flex;
+    font-size: 16px;
+}
+.give_friends .choose input{
+    display: none;
+}
+.give_friends .choose .choose_t{
+    display: flex;
+    align-items: center;
+    margin-right: 46px;
+}
+.give_friends .choose .choose_t span{
+    display: inline-block;
+    height: 19px;
+    line-height: 19px;
+}
+.give_friends .choose label{
+    width:16px;
+    height:17px;
+    border:1px solid #333;
+    border-radius:50%;
+    display: inline-block;
+    margin-right: 13px;
+}
+.give_friends .check{
+    color:#FF3B3B;
+}
+.give_friends .check label{
+    width: 18px;
+    height: 19px;
+    background: url(/template/pc/rainbow/static/images/choose.png) no-repeat;
+    background-size: 100% 100%!important;
+    border: none !important;
+}
+.give_friends .nickname{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #333;
+    margin-top: 60px;
+}
+.give_friends .nickname input{
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    padding: 0 15px;
+}
+.give_friends .nickname span{
+    padding: 0 40px;
+}
+.give_friends .button{
+    width:250px;
+    height:60px;
+    line-height: 60px;
+    text-align: center;
+    background:#FF3B3B;
+    border-radius:5px;
+    color: #FEFEFE;
+    font-size: 18px;
+    margin: 116px auto;
+}
+/*购物卡赠送给他人-e*/
+
+
+/*购物卡生成二维码-s*/
+.create_code .message{
+    padding-left: 15px;
+    margin-top: 50px;
+}
+.create_code .message textarea::-webkit-input-placeholder{
+    color: #999;
+    font-size: 14px;
+}
+.create_code .message .content{
+    width:924px;
+    height:86px;
+    background:#FFFFFF;
+    border:1px solid #E6E6E6;
+    border-radius:5px;
+    margin-top: 20px;
+    padding: 17px 24px;
+}
+.create_code .message .writer{
+    color: #666;
+    font-size: 14px;
+    text-align: right;
+    padding-right: 15px;
+    margin-top: 20px;
+}
+.create_code .menumain {
+    position: relative;
+}
+.create_code .code{
+    display: none;
+    position: absolute;
+    top: 250px;
+    left: 237px;
+    width: 558px;
+    background: #fff;
+}
+.create_code .code img{
+    width: 558px;
+    height: 400px;
+}
+.create_code .button{
+    font-size: 24px;
+    margin: 75px auto;
+}
+.create_code .code_handle div{
+    width:150px;
+    height:40px;
+    line-height: 40px;
+    text-align: center;
+    background:#F3F3F3;
+    border-radius:5px;
+    color: #060001;
+    font-size: 16px;
+}
+.create_code .code_handle{
+    display: flex;
+    justify-content: space-between;
+    width: 330px;
+    margin: 15px 114px 35px;
+    position: absolute;
+    bottom: -5px;
+}
+.create_code .code_handle .save{
+    background: #FF3B3B;
+    color: #fff;
+}
+/*购物卡生成二维码-e*/
+
+
+
+/*购物卡-购物余额-e*/
+.balace .my_card .title {
+    color: #333;
+    font-size: 24px;
+    margin: 26px 0 18px 6px;
+}
+.balace .give_card{
+    margin: 33px 0 0 23px;
+    display: flex;
+    align-items: center;
+}
+.balace .card_img,.balace .card_img img{
+    width:267px;
+    height:267px;
+}
+.balace .card_information{
+    margin-left: 68px;
+    margin-right: 196px;
+    color: #333;
+    font-size: 18px;
+    line-height: 40px;
+}
+.balace .card_information .name{
+    font-size: 20px;
+}
+.balace .record{
+    width:100px;
+    height:40px;
+    line-height: 40px;
+    text-align: center;
+    background:#FF3B3B;
+    border-radius:5px;
+    color: #fff;
+    font-size: 18px;
+}
+.balace .denomination{
+    margin: 56px 0 0 23px;
+    color: #333;
+    display: flex;
+}
+.balace .money_title{
+    font-size: 20px;
+    width: 155px;
+}
+.balace .denomination .b_price li{
+    width:90px;
+    height:32px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 14px;
+    background:#fff;
+    border:1px solid #999;
+    border-radius:5px;
+    display: inline-block;
+    margin-right: 60px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.balace .denomination .money-choose{
+    margin-left: 70px;
+    width: 700px;
+}
+.balace .denomination .custom{
+    width:80px;
+    height:32px;
+    line-height: 32px;
+    border:1px solid #999;
+    border-radius:5px;
+    padding-left: 10px;
+    display: inline-block;
+    margin-bottom: 32px;
+}
+/* 谷歌 (去掉input的+，-)*/
+.custom::-webkit-outer-spin-button,
+.custom::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+/* 火狐 */
+.custom{
+    -moz-appearance:textfield;
+}
+.custom::-webkit-input-placeholder{
+    color: #333;
+}
+.balace .denomination .discounts{
+    font-size: 16px;
+}
+.balace .denomination .b_price  .check{
+    border: 1px solid #FF3B3B;
+    color: #FF3B3B;
+}
+.balace .b_price .check_img{
+    display: none;
+    position: absolute;
+    transform: rotate(-4deg);
+    bottom: -24px;
+    right: -26px;
+}
+.balace .b_price .check .check_img{
+    display: inline-block;
+}
+.balace .b_recharge{
+    width:150px;
+    height:48px;
+    line-height: 48px;
+    text-align: center;
+    background:#FF3B3B;
+    border-radius:5px;
+    font-size: 18px;
+    color: #fff;
+    margin: 35px auto 55px;
+}
+.balace .b_item{
+    display: flex;
+    justify-content: space-between;
+    height: 55px;
+    border-bottom: 1px solid #F5F5F5;
+    line-height: 80px;
+    font-size: 16px;
+    color: #333;
+    width: 720px;
+    padding-right: 280px;
+    padding-left: 23px;
+}
+.balace .b_time {
+    width: 200px;
+}
+.balace .b_money {
+    width: 150px;
+}
+.balace .b_number {
+    width: 100px;
+}
+.balace .b_note {
+    width: 150px;
+    text-align: right;
+    padding-right: 15px;
+}
+.balace .menumain {
+    position: relative;
+}
+.balace .card_number .tit{
+    font-size: 20px;
+}
+.balace .card_number .car_money span:nth-child(1){
+    font-size: 16px;
+}
+.balace .card_number .car_money span:nth-child(2){
+    color: #FF3B3B;
+    font-size: 24px;
+}
+.balace .card_number{
+    line-height: 40px !important;
+    margin-top: 24px !important;
+}
+.balace .go_use{
+    margin: 35px auto !important;
+}
+/*充值-s*/
+.topup-money {
+    background-color: #ffffff;
+    padding: 15px;
+}
+.usermoney {
+    border: 1px solid #dedede;
+    overflow: hidden;
+}
+.userdown-top {
+    width:100%;
+}
+.userdown-top span{
+    display:inline-block;
+    cursor: pointer;
+    width: 120px;
+    height:36px;
+    line-height:36px;
+    text-align: center;
+    border: 1px solid #dedede;
+    border-bottom:1px solid #fff;
+    color:#333;
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing:3px;
+}
+.choicetu {
+    overflow: hidden;
+    padding: 10px;
+    margin-top: 16px;
+}
+.fop-main {
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+
+.m-tagbox {
+    margin-top:20px;
+    overflow:hidden;
+}
+.m-tagbox .tag-define, .m-tagbox .tag-item {
+    float: left;
+    width: 98px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #e0e0e0;
+    margin-right: 20px;
+    text-align: center;
+    color: #333;
+}
+.m-tagbox .tag-item {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.m-tagbox .t-check {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    background-position: -40px 0;
+}
+.m-tagbox .tptig {
+    display: inline-block;
+    background-image: url(/template/pc/rainbow/static/images/sprite-operate.png);
+    background-repeat: no-repeat;
+}
+.orde-sjyy {
+    font-family: 'Tahoma','\5FAE\8F6F\96C5\9ED1';
+}
+.titls {
+    font-size: 14px;
+    border-left: 3px solid #e5e5e5;
+    padding-left: 6px;
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+.bsjy-g dl {
+    border: 1px solid #dedede;
+    border-bottom: 0 none;
+}
+/*充值-e*/
+/*购物卡-购物余额-e*/
+
+
+
+/*购物卡首页-s*/
+.card_index{
+    background: #F3F3F3;
+}
+/*热销卡-s*/
+.hot_card{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.hot_card .hot_title{
+    border-left: 6px solid #FF3B3B;
+    height: 24px;
+    line-height: 24px;
+    padding-left: 20px;
+}
+.hot_card .hot_title span:nth-child(1){
+    font-size: 24px;
+    color: #333;
+}
+.hot_card .hot_title span:nth-child(2){
+    color: #666;
+    font-size: 16px;
+    margin-left: 5px;
+}
+.hot_card .hot_more{
+    color: #999;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 31px;
+}
+.hot_card .hot_more img{
+    width: 9px;
+    height: 13px;
+    margin-left: 3px;
+}
+#hot_card .hot_content .hot_item{
+    width: 280px;
+    height: 418px;
+    background: #fff;
+    border: 1px solid #F2F2F2;
+}
+#hot_card .hot_content .hot_item{
+    margin-right: 28px;
+    margin-bottom: 25px;
+    display: inline-block;
+}
+#hot_card .hot_content .hot_item:hover{
+    box-shadow:0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+}
+#hot_card .hot_content .hot_item:nth-child(4n+4){
+    margin-right: 0;
+}
+#hot_card .hot_content .hot_img,#hot_card .hot_content .hot_img img{
+    width: 280px;
+    height: 280px;
+}
+#hot_card .hot_content .hot_bottom{
+    height: 98px;
+    padding: 20px 15px;
+    position: relative;
+}
+#hot_card .hot_content .hot_bottom p{
+    color: #999;
+    font-size: 14px;
+    line-height: 25px;
+}
+#hot_card .hot_content .hot_name{
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#hot_card .hot_content .hot_bar{
+    position: absolute;
+    bottom: 20px;
+    width:140px;
+    height:8px;
+}
+#hot_card .hot_content .hot_bar .one{
+    width:140px;
+    height:8px;
+    background:#E6E6E6;
+    border-radius:4px;
+}
+#hot_card .hot_content .hot_bar .two{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:8px;
+    background:linear-gradient(90deg,#FF733D 0%,#FF3B3B 100%);
+    border-radius:4px;
+}
+#hot_card .hot_content .purchase{
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+    width:80px;
+    height:32px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    background:#FF3B3B;
+    border-radius:5px;
+}
+/*热销卡-e*/
+.card_index .balance_card .hot_card {
+    margin-top: 34px;
+}
+.card_index .balance_content{
+    overflow: hidden;
+}
+.card_index .balance_item{
+    width: 244px;
+    height: 346px;
+    background: #fff;
+    float: left;
+    border-right: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
+}
+.card_index .balance_item:nth-child(5n+5) {
+    border-right: 0;
+}
+.card_index .balance_item:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+}
+.card_index .balance_item .balance_img,.card_index .balance_item .balance_img img{
+    width: 240px;
+    height: 240px;
+}
+.card_index .balance_item .balance_bottom{
+    height: 74px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.card_index .balance_item .balance_name{
+    color: #333;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card_index .balance_item .s_price{
+    color: #666;
+    font-size: 16px;
+}
+.card_index .balance_item .min{
+    color: #FF3B3B;
+    font-size: 18px;
+    font-weight: 600;
+}
+.card_index .balance_item .min.two{
+    font-size: 20px;
+}
+.card_index .balance_item .max{
+    color: #FF3B3B;
+    font-size: 24px;
+    font-weight: 600;
+}
+/*购物卡首页-e*/
+/*购物卡商品详情-s*/
+.sr-bdimgshare{
+    display: none !important;
+}
+.product-gallery .product-photo{
+    height: auto;
+}
+.card_notice{
+    width:400px;
+    font-size:14px;
+    color:#999;
+    line-height:24px;
+    padding: 0 10px;
+    margin-top: 30px;
+}
+/*购物卡商品详情-e*/
+
+/*兑换购物卡-s*/
+#exchange .navitem select{
+    -webkit-appearance: menulist;
+    height: 22px;
+}
+#exchange .navitem{
+    position: relative;
+    margin-top: 40px;
+}
+#exchange .navitem .tpye{
+    position: absolute;
+    top: 8px;
+    right: 0;
+}
+#exchange .ri-menu .tit{
+    color: #333;
+    font-size: 24px;
+    margin: 26px 0 43px 6px;
+}
+#exchange .convert .exchange_button{
+    width:100px;
+    height:36px;
+    line-height: 36px;
+    color: #fff;
+    text-align: center;
+    background:#FF3B3B;
+    border-radius:5px;
+    font-size: 14px;
+    margin-left: 43px;
+}
+#exchange .convert .card_num{
+    display: flex;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+}
+#exchange .convert{
+    padding: 0 13px;
+    display: flex;
+    justify-content: space-between;
+}
+#exchange .convert .card_num{
+    margin-bottom: 24px;
+}
+#exchange .convert .card_num input{
+    width:288px;
+    height:36px;
+    padding: 0 16px;
+    border:1px solid #E6E6E6;
+    margin: 0 10px 0 2px;
+}
+#exchange .card_num input::-webkit-input-placeholder{
+    color: #999;
+    font-size: 12px;
+}
+#exchange .error_message{
+    color: #FF3B3B;
+    font-size: 12px;
+}
+#exchange .convert .sweep{
+    height: 200px;
+    border-left: 1px solid #E6E6E6;
+    color: #999;
+    font-size: 14px;
+    padding: 0 52px 0 80px;
+    margin-top: -20px;
+}
+/*兑换购物卡-e*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+

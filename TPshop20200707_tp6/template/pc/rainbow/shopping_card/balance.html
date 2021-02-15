@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡-购物余额</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/jh.css" />
+</head>
+
+<body class="bg-f5">
+<include file="user/header"/>
+<div class="home-index-middle balace">
+    <div class="w1224">
+        <div class="g-crumbs">
+            <a href="{:url('Home/User/index')}">我的商城</a>
+            <i class="litt-xyb"></i>
+            <span>我的订单</span>
+        </div>
+        <div class="home-main">
+            <include file="user/menu"/>
+            <div class="ri-menu fr">
+                <div class="menumain p">
+                    <div class="my_card">
+                        <p class="title">我的购物卡</p>
+                        <div class="wrap-line" <if condition="$Request.param.type eq 'WAITPAY'">style="width: 130px; left: 140px;"<elseif condition="$Request.param.type eq 'PAYED'"/>style="width: 130px; left: 270px;"<elseif condition="$Request.param.type eq 'FINISH'"/>style="width: 130px; left: 400px;"<else/>style="width: 130px; left: 10px;"</if> >
+                        <span style="left:15px;"></span>
+                    </div>
+                    <div class="give_card">
+                        <div class="card_img">
+                            <img src="{$card.shopping_card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                        </div>
+                        <div class="card_information">
+                            <div class="name">{$card.shopping_card.name}</div>
+                            <div class="detailed">
+                                <p>购物卡类型：购物余额卡</p>
+                                <p>卡号：{$card.sn}</p>
+                                <p>面值：￥{$card.shopping_card.face_value}</p>
+                            </div>
+                        </div>
+                        <a href="{:url('Home/ShoppingCard/recharge_record',array('id'=>$card.id))}">
+                            <div class="record">充值记录</div>
+                        </a>
+                    </div>
+                    <div class="denomination">
+                        <div class="money_title">请选择充值面额</div>
+                        <div class="money-choose">
+                            <div class="b_price">
+                                <ul>
+                                    <volist name="$card.discount_datil.discount" id="vo">
+                                        <li class="" data-id="{$vo.id}" data-selling="{$vo.targer_money}">
+                                            ￥{$vo.targer_money}
+                                            <img class="check_img" src="__STATIC__/images/check.png" alt="">
+                                        </li>
+                                    </volist>
+
+                                </ul>
+                            </div>
+                            <input class="custom" placeholder="自定义充值" type="number" <if condition="$card.shopping_card.custom eq 0">style="display:none"</if>>
+                            <volist name="$card.discount_datil.reduced" id="vo">
+                                <p class="discounts" id="discount{$vo.id}" style="display: none">{$vo.datil}</p>
+                            </volist>
+                        </div>
+                    </div>
+
+                    <div onclick="mywalletstopup()" class="b_recharge">充值金额</div>
+                </div>
+                <!--充值-s-->
+                <div class="aboutmoney addmon" style="display:none">
+                    <div class="usermoney topup-money">
+                        <div class="userdown-top"><span>充值</span></div>
+                        <hr style="height: 1px; background: #dedede; border: none; margin-top: -1px;" />
+                        <div class="choicetu">
+                            <form method="post"  id="recharge_form" action="{:url('home/user/recharge')}">
+                                <div class="monettu">
+                                    <div class="fop-choice">
+                                        <div class="orde-sjyy">
+                                            <h3 class="titls">选择支付方式</h3>
+                                            <div class="bsjy-g">
+                                                <dl>
+                                                    <dd>
+                                                        <div class="order-payment-area">
+                                                            <div class="po-re dsfzf-ee">
+                                                                <ul>
+                                                                    <foreach name="paymentList" item="v"  key="k">
+                                                                        <li>
+                                                                            <div class="payment-area">
+                                                                                <input type="radio"  value="pay_code={$v['code']}" class="radio vam" name="pay_radio" <if condition="$k eq $alipay">checked</if>>
+                                                                                <label for="">
+                                                                                    <img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="68" height="68" onClick="change_pay(this);" />
+                                                                                </label>
+                                                                            </div>
+                                                                        </li>
+                                                                    </foreach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <!--第三方网银支付 start-->
+                                                        <foreach name="bankCodeList" item="v"  key="k">
+                                                            <div class="order-payment-area">
+                                                                <div class="dsfzfpte">
+                                                                    <b>{$paymentList[$k]['name']}</b>
+                                                                    <em>网银支付</em>
+                                                                </div>
+                                                                <div class="po-re dsfzf-ee">
+                                                                    <ul>
+                                                                        <foreach name="v" item="v2"  key="k2">
+                                                                            <li>
+                                                                                <div class="payment-area">
+                                                                                    <input type="radio" name="pay_radio" class="radio vam" value="pay_code={$k}&bank_code={$v2}" id="input-ALIPAY-1">
+                                                                                    <label for="">
+                                                                                        <img src="__STATIC__/images/images-out/{$bank_img[$k2]}" width="120" height="40" onClick="change_pay(this);"/>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </li>
+                                                                        </foreach>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </foreach>
+
+                                                        <!--第三方网银支付 end -->
+                                                    </dd>
+                                                </dl>
+                                                <input type="hidden" name="shopping_card_discount_id" value="">
+                                                <input type="hidden" name="account" id="add_money" value="">
+                                                <input type="hidden" name="card_id" value="{$card.id}">
+                                                <div class="order-payment-action-area">
+                                                    <a href="javascript:void(0);" class="return-wallet" onclick="mywalletsa();">取消并返回</a>
+                                                    <a class="button-style-5 button-confirm-payment" href="javascript:void(0);" onclick="recharge_submit();">立即支付</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--充值-e-->
+                <div class="info_mask"></div>
+                <div class="activate_success">
+
+                    <div class="successful">
+                        <img class="successful_img" src="__STATIC__/images/activate_success.png" alt="">
+                        <div class="card_number">
+                            <p class="tit">卡片{$card.sn}，已充值成功</p>
+                            <p class="car_money">
+                                <span>当前余额：</span>
+                                <span>￥100</span>
+                            </p>
+                        </div>
+                        <div class="go_use">查看卡明细</div>
+                    </div>
+                </div>
+                <!--无购物卡-s-->
+                <div style="display: none" class="order-alone-li lastset_cm">
+                    <empty name="lists">
+                        <div class="car-none-pl">
+                            <i class="account-acco1"></i>您还没有购物卡，<a href="/">快去逛逛吧~</a>
+                        </div>
+                        <else/>
+                    </empty>
+                </div>
+                <!--无购物卡-e-->
+            </div>
+            <!--页码-s-->
+
+            <!--页码-e-->
+        </div>
+    </div>
+</div>
+</div>
+<!--footer-s-->
+<include file="user/footer" />
+<!--footer-e-->
+<script type="text/javascript">
+    //    充值
+//    $(".b_recharge").click(function(){
+//        $(".info_mask").show();
+//        $(".activate_success").show();
+//    })
+    $(".info_mask").click(function(){
+        $(".info_mask").hide();
+        $(".activate_success").hide();
+    })
+//    选择充值面额
+    $(".b_price li").click(function(){
+        $(this).siblings().removeClass("check");
+        $(this).addClass("check");
+        $('.discounts').hide()
+        var css='#discount'+$(this).attr('data-id');
+        $(css).show();
+        $('#add_money').val($(this).attr('data-selling'));
+        $("input[name='shopping_card_discount_id']").val($(this).attr('data-id'));
+    })
+    $('.custom').click(function(){
+        $("input[name='shopping_card_discount_id']").val(0);
+    })
+//    充值操作页面
+    //切换充值记录，消费记录
+    $(function(){
+        $('.time-sala ul li').click(function(){
+            $(this).addClass('red').siblings().removeClass('red');
+        })
+        //选择充值金额
+        $('.m-multi-tag a').click(function(){
+            $('#input_val').val($(this).attr('rel'));
+            show_delete_btn();
+            $("#input_val").focus();
+        })
+    })
+
+    $(document).ready(function() {
+        $(document).on('click','.tag-item',function(){
+            $(this).find('.t-check').addClass('tptig').parent().siblings().find('.t-check').removeClass('tptig');
+            $('#add_money').val($(this).attr('rel'));
+        });
+    });
+    // 点充值时
+    function mywalletstopup() {
+        $(".my_card").hide();
+        $('.addmon').show();
+        $('.mywallets').hide();
+        $('#bottom').hide()
+        $("#input_val").focus();
+        var input_val = Number($('#input_val').val());
+        if (input_val > 0){
+            show_delete_btn();
+        }
+    }
+    //返回我的钱包
+    function mywalletsa() {
+        $(".my_card").show();
+        $('.mywallets').show();
+        $('#bottom').show();
+        $('.addmon').hide();
+    }
+    function recharge_submit(){
+        var account=$('.custom').val();
+        //$("input[name='account']").val(account);
+
+        // 直接判断输入金额
+        var discount_id= $("input[name='shopping_card_discount_id']").val();
+        if(!discount_id){
+            if ( account == ''){
+                layer.alert('充值金额不能为空',{icon:2});
+                return false;
+            }
+
+            if(isNaN(account) || Number(account) <= 0){
+                layer.alert('请输入正确的充值金额',{icon:2});
+                return false;
+            }else{
+                $('#add_money').val(Number(account));
+            }
+
+        }
+
+        $('#recharge_form').submit();
+    }
+    //选择支付方式
+    function change_pay(obj)
+    {
+        $(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+    }
+
+    // 输入金额时：显示（￥ + 输入的金额 + 光标 + 清除）
+    $("#input_val").keydown(function(){
+        show_delete_btn();
+        $('.t-check').removeClass('tptig');
+    });
+    $("#input_val").keyup(function(){
+        if ($('#input_val').val()=="") {
+            $(".tag-define i").hide();
+        }else{
+            show_delete_btn();
+        }
+    });
+    function show_delete_btn(){
+        $(".tag-define i").show();
+        $(".tag-define i").unbind('click');
+        $(".tag-define i").click(function(){
+            $('#input_val').val('').focus();
+            $(".tag-define i").hide();
+            $('.t-check').removeClass('tptig');
+
+        })
+    }
+</script>
+</body>
+</html>

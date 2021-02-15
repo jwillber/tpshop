@@ -1,0 +1,98 @@
+.content{
+    background-color: #fff;
+    border-bottom: 0.02133rem solid #f3f3f3;
+}
+.ddmoney{
+    width: 14.59rem;
+    margin: 0 0.73rem;
+    border-bottom: 0.02rem solid #e3e5e9;
+}
+.ddmoney span.fl{
+    font-size: 0.64rem;
+    font-weight: bold;
+}
+.ddmoney .fr{
+    font-size: 0.77rem;
+    font-family: 'DIN';
+}
+.otherpay .order .fl span{
+    font-size: 0.64rem;
+    font-weight: bold;
+}
+.otherpay .order{
+    height: 1.98rem;
+    line-height: 1.98rem;
+}
+.pay-list-4{
+    padding: 0;
+}
+.pay-list-4 ul li{
+    padding: 0;
+    padding-top: 0.5rem;
+    border: none;
+}
+.radio i{
+    background-image: url(/template/mobile/rainbow/static/images/check.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 1.838rem;
+    background-position: 0;
+}
+
+.balance{
+    font-size: 0.54rem;
+    color: #999;
+}
+.password{
+    background-color: white;
+    bottom: 0px;
+    position: fixed;
+    height: 9rem;
+    width: 100%;
+}
+.password-input{
+    position: absolute;
+    width: 15.1467rem;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    height: 1.7777rem;
+    font-size: 0.68888rem;
+    border: 0.02133rem solid #f3f3f3;
+    background: none;
+    padding: 0 0.4267rem;
+    box-sizing: border-box;
+    border-radius: .21333rem;
+    letter-spacing: 2.55rem;
+    z-index: 10;
+    outline: none;
+}
+.password .text{
+    text-align: center;
+    font-size: .77777rem;
+    margin-top: 40px;
+}
+.password .close{
+    float: right;
+    margin-right: 0.4267rem;
+    margin-top: 0.2133rem;
+    font-size: .8rem;
+}
+.pay-list-4 ul li .pay-list-font{
+    margin-top: 1rem;
+}
+.paiton .soon {
+    height: 1.87733rem;
+    width: auto;
+    display: block;
+    text-align: center;
+    line-height: 1.87733rem;
+    background-color: #ff3b3b;
+    font-size: .68267rem;
+    color: white;
+    border-radius: .21333rem;
+    margin: 0 0.2133rem;
+}
+.maleri30 {
+    margin: 0 .4267rem;
+}

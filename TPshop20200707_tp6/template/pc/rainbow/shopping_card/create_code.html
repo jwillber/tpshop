@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡(赠送给他人)-生成二维码</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+</head>
+
+<body class="bg-f5">
+<include file="user/header"/>
+<div class="home-index-middle give_friends create_code">
+    <div class="w1224">
+        <div class="g-crumbs">
+            <a href="{:url('Home/User/index')}">我的商城</a>
+            <i class="litt-xyb"></i>
+            <span>我的订单</span>
+        </div>
+        <div class="home-main">
+            <include file="user/menu"/>
+            <if class="ri-menu fr">
+                <div class="menumain p">
+                    <div class="my_card">
+                        <p class="title">我的购物卡</p>
+                        <div class="wrap-line" <if condition="$Request.param.type eq 'WAITPAY'">style="width: 130px; left: 140px;"<elseif condition="$Request.param.type eq 'PAYED'"/>style="width: 130px; left: 270px;"<elseif condition="$Request.param.type eq 'FINISH'"/>style="width: 130px; left: 400px;"<else/>style="width: 130px; left: 10px;"</if> >
+                        <span style="left:15px;"></span>
+                    </div>
+                    <div class="give_card">
+                        <div class="card_img">
+                            <img src="{$card.shopping_card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                        </div>
+                        <div class="card_information">
+                            <div class="name">{$card.name}</div>
+                            <div class="detailed">
+                                <p>购物卡类型：{$sort[$card.shopping_card.sort]}</p>
+                                <p>卡号：{$card.sn}</p>
+                                <p>面值：￥{$card.shopping_card.face_value}</p>
+                                <p>适用范围：{$card.use_type}</p>
+                                <if condition="$card.end_time eq 0">
+                                    <p>有效期：永久有效</p>
+                                    <else/>
+                                    <p>有效期：{$card.end_time|date="Y-m-d H:i:s"}</p>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <p>赠语</p>
+                        <textarea placeholder="写下您对他/她的祝福:" class="content" name="" id="" cols="30" rows="10">{$Request.param.text}</textarea>
+                        <div class="writer">
+                            <p>{$name}</p>
+                            <p>{$now|date="Y/m/d"}</p>
+                        </div>
+                    </div>
+                    <div class="info_mask"></div>
+                    <div class="code">
+                        <img src="{:url('home/shopping_card/getPhoto',array('id'=>$Request.param.id,'name'=>$name,'remark'=>$Request.param.text))}" class="img-photo" alt="">
+                        <div class="code_handle">
+                            <div class="cancel">取消</div>
+                            <div class="save">保存图片至本地</div>
+                        </div>
+                    </div>
+                    <div class="button">生成二维码</div>
+                </div>
+                <!--无购物卡-s-->
+                <div style="<if condition="$card">display: none"</if> class="order-alone-li lastset_cm">
+                    <empty name="lists">
+                        <div class="car-none-pl">
+                            <i class="account-acco1"></i>您没有这张购物卡，<a href="{:url('home/shopping_card/index')}">快去逛逛吧~</a>
+                        </div>
+                        <else/>
+                    </empty>
+                </div>
+                <!--无购物卡-e-->
+            </div>
+            <!--页码-s-->
+            <!--页码-e-->
+        </div>
+    </div>
+</div>
+</div>
+<!--footer-s-->
+<include file="user/footer" />
+<!--footer-e-->
+<script type="text/javascript">
+    //    生成二维码
+    $(".create_code .button").click(function(){
+        $(".info_mask").show();
+        $(".create_code .code").show();
+    })
+    $(".info_mask").click(function(){
+        $(".info_mask").hide();
+        $(".create_code .code").hide();
+    })
+    $(".cancel").click(function(){
+        $(".info_mask").hide();
+        $(".create_code .code").hide();
+    })
+    // $('.save').click(function(){
+    //         var a = document.createElement('a')
+    //         a.download = $('.img-photo').attr('src')|| 'pic'
+    //         a.href = './boy.png'
+    //         a.click();
+    //     })
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<include file="public/header" title="赠送记录"/>
+<include file="public/card_nav" title="赠送记录" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/giving_record.css">
+<div class="containter">
+    <div class="nav" onclick>
+        <div <if condition="$Request.param.sort eq 0">class="check"</if> data-sort='0'>我赠予的</div>
+        <div <if condition="$Request.param.sort eq 1">class="check"</if> data-sort='1'>我收到的</div>
+    </div>
+    <div class="card_list">
+        <div class="card_item card_all choose">
+
+        </div>
+<!--        <div class="card_item">-->
+<!--            <div class="item">-->
+<!--                <div class="name">-->
+<!--                    <p class="card_name">中秋好礼无限购卡</p>-->
+<!--                    <p class="card_number">卡号：986543512</p>-->
+<!--                </div>-->
+<!--                <div class="receive">-->
+<!--                    <div class="top">-->
+<!--                        <p>赠送人：张三</p>-->
+<!--                        <p>2019-09-28 15:45:36</p>-->
+<!--                    </div>-->
+<!--                    <div class="details">赠语：祝你生日快乐，一点小小心意！</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+<script>
+    // //    头部导航
+    $(".nav div").click(function(){
+        var sort=$(this).attr('data-sort')
+        window.location.href="{:url('Mobile/ShoppingCard/giving_record')}?sort="+sort
+    })
+    ajax_get_list()
+    function ajax_get_list(){
+        $.ajax({
+            type: "get",
+            url: "{:url('Mobile/ShoppingCard/ajax_giving_record')}",
+            data: {p: page,sort:{$Request.param.sort|default=0}},
+            dataType: 'json',
+            success: function (data) {
+                if(data.status==1){
+                    var html ='';
+                    for(var i=0;i<data.logs.length;i++){
+                        html +="<div class=\"item\">\n" +
+                            "                <div class=\"name\">\n" +
+                            "                    <p class=\"card_name\">"+data.logs[i]['name']+"</p>\n" +
+                            "                    <p class=\"card_number\">卡号："+data.logs[i]['sn']+"</p>\n" +
+                            "                </div>\n" +
+                            "                <div class=\"receive\">\n" +
+                            "                    <div class=\"top\">\n" +
+                            "                        <p>{$Request.param.sort==0?"接受者":"赠送者"}："+data.logs[i]['nickname']+"</p>\n" +
+                            "                        <p>"+data.logs[i]['time']+"</p>\n" +
+                            "                    </div>\n" +
+                            "                    <div class=\"details\">赠语："+data.logs[i]["remark"]+"</div>\n" +
+                            "                </div>\n" +
+                            "            </div>"
+                    }
+
+                    $('.card_item.card_all.choose').append(html);
+                }
+                request_status=1;
+            }
+        })
+    }
+    var page=1;
+    var request_status=1;
+    $(window).scroll(function(){
+        // scroll at bottom
+        if(($(document).height() - ($(window).scrollTop() + $(window).height())) < 50){
+            if(request_status){
+                request_status=0
+                page++
+                ajax_get_list()
+            }
+        }
+    });
+
+</script>

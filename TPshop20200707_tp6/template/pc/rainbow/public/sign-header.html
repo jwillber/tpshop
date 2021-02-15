@@ -1,0 +1,55 @@
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css" />
+<div class="top-hander" moduleid="1539923">
+    <div class="w1224 clearfix">
+      <div class="fl">
+          <div class="ls-dlzc fl nologin">
+              <a href="{:url('Home/user/login')}">Hi,请登录</a>
+              <a class="red" href="{:url('Home/user/reg')}">免费注册</a>
+          </div>
+          <div class="ls-dlzc fl islogin">
+              <a class="red userinfo" href="{:url('Home/user/index')}"></a>
+              <a href="{:url('Home/user/logout')}">退出</a>
+          </div>
+          <script>
+              $(function (){
+                      var uname = getCookie('uname');
+                      if (uname == '') {
+                          $('.islogin').remove();
+                          $('.nologin').show();
+                      } else {
+                          $('.nologin').remove();
+                          $('.islogin').show();
+                          $('.userinfo').html(decodeURIComponent(uname).substring(0,11));
+                      }
+              })
+
+          </script>
+      </div>
+      <ul class="top-ri-header fr clearfix">
+          <li><a target="_blank" href="{:url('Home/Order/order_list')}">我的订单</a></li>
+          <li class="spacer"></li>
+          <li><a target="_blank" href="{:url('Home/User/visit_log')}">我的浏览</a></li>
+          <li class="spacer"></li>
+          <li><a target="_blank" href="{:url('Home/User/goods_collect')}">我的收藏</a></li>
+          <li class="spacer"></li>
+          <li class="hover-ba-navdh">
+            <div class="nav-dh">
+              <span>网站导航</span>
+              <i class="share-a_a1"></i>
+            </div>
+            <ul class="conta-hv-nav clearfix">
+                <li>
+                    <a href="{:url('Home/Activity/promoteList')}">优惠活动</a>
+                </li>
+                <li>
+                    <a href="{:url('Home/Activity/pre_sell_list')}">预售活动</a>
+                </li>
+                <li>
+                    <a href="{:url('Home/Goods/integralMall')}">兑换中心</a>
+                </li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+</div>
+

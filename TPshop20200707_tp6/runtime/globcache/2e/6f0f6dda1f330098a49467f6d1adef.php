@@ -1,0 +1,4 @@
+<?php
+//000000000001
+ exit();?>
+a:5:{i:0;a:3:{s:8:"goods_id";i:1;s:10:"goods_name";s:59:"TPshop vivoX21 6GB+128GB 4G全网通 全面屏 拍照手机";s:10:"shop_price";s:7:"2999.00";}i:1;a:3:{s:8:"goods_id";i:7;s:10:"goods_name";s:113:"TPshop 哥弟女装2018春季新款口袋趣味图案贴标连帽针织长开衫A400065 连帽设计 实穿美观";s:10:"shop_price";s:6:"480.00";}i:2;a:3:{s:8:"goods_id";i:12;s:10:"goods_name";s:52:"TPshop 所有失去的都会以另一种方式归来";s:10:"shop_price";s:5:"20.00";}i:3;a:3:{s:8:"goods_id";i:8;s:10:"goods_name";s:71:"TPshop 迪芙斯（D:FUSE）女鞋 牛皮革细跟露趾性感高跟鞋";s:10:"shop_price";s:6:"179.00";}i:4;a:3:{s:8:"goods_id";i:9;s:10:"goods_name";s:115:"TPshop 东方泥土 陶瓷艺术品招财摆件 客厅办公室/烈焰釉大貔貅D69-39 D69-39 大貔貅 烈焰釉";s:10:"shop_price";s:7:"1580.00";}}

@@ -1,0 +1,4 @@
+<?php
+//000000000000
+ exit();?>
+a:19:{s:6:"switch";s:1:"1";s:9:"condition";s:1:"0";s:4:"name";s:15:"我的分销商";s:7:"pattern";s:1:"0";s:10:"order_rate";s:2:"20";s:10:"first_name";s:12:"一级分销";s:10:"first_rate";s:2:"70";s:11:"second_name";s:12:"二级分销";s:11:"second_rate";s:2:"20";s:10:"third_name";s:12:"三级分销";s:10:"third_rate";s:2:"10";s:4:"date";s:1:"1";s:11:"form_submit";s:2:"ok";s:16:"qrcode_menu_word";s:16:"distribut_qrcode";s:17:"qrcode_input_word";s:15:"我的二维码";s:7:"qr_back";s:69:"/public/upload/weixin/2018/12-05/8e1afa326bc9de3cab8d3aa0f1bace92.png";s:11:"qr_big_back";s:69:"/public/upload/weixin/2018/12-05/92619d091857f00eefbda9eeb8263933.png";s:8:"own_rate";s:2:"10";s:7:"regrade";s:1:"1";}

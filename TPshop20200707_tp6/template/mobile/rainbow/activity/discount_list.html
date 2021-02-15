@@ -1,0 +1,94 @@
+<include file="public/header" title="活动商品列表" body=""/>
+<include file="public/header_nav" title="活动商品列表"  href="javascript:history.back(-1)"/>
+<style>
+    body{
+        background: #f5f5f5;
+   }
+    .orderlistshpop:last-child .sc_list {
+        margin: 0.4267rem 0.4267rem 0 0.4267rem;
+        border-radius: 0.2133rem;
+    }
+    .prelist_1{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        left: 0;
+        bottom: 0.2133rem;
+        width: 100%;
+    }
+    .sc_list .deleshow .prices {
+        overflow: hidden;
+        margin-top: 0;
+        width: auto;
+    }
+    .se_sclist .deleshow .prices .sc_pri{
+        padding-left: 0.4267rem;
+    }
+    .se_sclist .deleshow {
+        padding: 0.4267rem 0.427rem 0 0.427rem !important;
+    }
+    .se_sclist .deleshow .deletes .similar-product-text {
+        width: auto;
+        text-align: justify;
+        margin-top: 0;
+    }
+    .sc_list .deleshow .weight {
+        padding-right: .4267rem;
+    }
+</style>
+<!--商品详情s-->
+<div id="goods_list">
+    <empty name="prom_list">
+        <p class="goods_title" id="goods_title" style="line-height: 100px;text-align: center;margin-top: 30px;">抱歉暂时没有相关结果！</p>
+    <else />
+        <foreach name="prom_list" item="good">
+            <div class="orderlistshpop p">
+                <a href="{:url('Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}" class="item">
+                    <div class="sc_list se_sclist">
+                        <div class="shopimg fl">
+                            <img src="{$good.goods_id|goods_thum_images=400,400}">
+                        </div>
+                        <div class="deleshow fr">
+                            <div class="deletes">
+                                <span class="similar-product-text fl">{$good.goods_name|getSubstr=0,20}</span>
+                            </div>
+                            <div class="prelist_1">
+                                <div class="prices">
+                                    <p class="sc_pri fl"><span>￥</span><span>{$good['shop_price']}元</span></p>
+                                </div>
+                                <p class="weight"><span>{$good['comment_count']}</span><span>条评价</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </foreach>
+    </empty>
+</div>
+<!--商品详情e-->
+
+<script type="text/javascript">
+    /**
+     * ajax加载更多商品
+     */
+	 var  page = 1;
+    function ajax_sourch_submit()
+    {
+        ++page;
+        $.ajax({
+            type : "GET",
+            url:"/index.php?m=Mobile&c=Activity&a=discount_list&is_ajax=1&id="+{:input('id')}+"&p="+page,
+            success: function(data){
+                 if ($.trim(data) == '') {
+                    $('#getmore').hide();
+					return false;
+                } else {
+                    $("#goods_list").append(data);
+                }
+            }
+        });
+    }
+</script>
+	</body>
+</html>

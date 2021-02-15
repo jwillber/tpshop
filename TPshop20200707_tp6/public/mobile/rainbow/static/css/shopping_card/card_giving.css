@@ -1,0 +1,109 @@
+.containter{
+    margin: 0 .427rem;
+}
+.card_photo{
+    width: 16rem;
+    height: 16rem;
+    margin-left: -.427rem;
+}
+.card_photo img{
+    width: 16rem;
+    height: 16rem;
+}.name .card_name{
+    font-size:.64rem;
+    font-weight: 600;
+    color:#333;
+    margin-top: .8rem;
+    margin-bottom: .6rem;
+    line-height: 0.853rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.containter .balance{
+    font-size: .64rem;
+    color: #333;
+    margin-bottom: .64rem;
+}
+.containter .balance p{
+    display: inline-block;
+    font-weight: 600;
+    color: #FF3B3B;
+    font-size: .768rem;
+}
+.containter .balance span{
+    font-size: .64rem;
+}
+.containter .card_number{
+    color: #666;
+    font-size: .512rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .85rem;
+}
+.containter .border{
+    width:16rem;
+    margin-left: -.427rem;
+    height:.213rem;
+    background:#F5F5F5;
+}
+.list{
+    width:16rem;
+    margin-left: -.427rem;
+}
+.list>div{
+    padding: 0 .427rem;
+}
+.list div{
+    height: 1.92rem;
+    color: #666;
+    font-size: .6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.list .input{
+    margin-left: .427rem;
+    border: none;
+    outline: none;
+    display: inline-block;
+    width: 12rem;
+    color: #333;
+}
+.next_step{
+    margin: 2rem .427rem .427rem;
+    width:15.15rem;
+    height:1.92rem;
+    line-height: 1.92rem;
+    background:#FF3B3B;
+    border-radius:1rem;
+    text-align: center;
+    font-size: .768rem;
+    color: #fff;
+}
+.giving_language{
+    width: 16rem;
+    height: 3.41rem;
+    background: #F5F5F5;
+    padding: .427rem;
+    color: #333;
+    font-size: .64rem;
+    position: relative;
+}
+.giving_language textarea{
+    outline: none;
+    border: none;
+    position: absolute;
+    top: .35rem;
+    background: #F5F5F5;
+    width: 13rem;
+    height: 3rem;
+    font-size: .6rem;
+    line-height: .768rem;
+}
+textarea::-webkit-input-placeholder{
+    color: #666;
+    font-size: .6rem;
+}

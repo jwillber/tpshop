@@ -1,0 +1,32 @@
+/* 个人中心-设置 */
+.list7 .myorder .fr i{
+  margin-top: .73rem !important;
+}
+.my .content {
+  background: #f5f5f5;
+  margin: 0.4267rem 0.4267rem 0 0.4267rem;
+}
+.classreturn{
+  background: #fff;
+  border-bottom: unset;
+}
+.setting .close {
+  margin: 0.64rem 0 0.4267rem 0;
+}
+.setting .content .list7{
+  border-radius: 0.2133rem;
+  overflow: hidden;
+}
+.setting .l_1_an{
+  border-radius: 0.2133rem;
+  overflow: hidden;
+}
+.ma-to-20 {
+  border-radius: 0.2133rem;
+}
+.myorder .order{
+  border: unset;
+}
+.setting .myorder{
+  border-bottom: 0.02133rem solid #f3f3f3;
+}

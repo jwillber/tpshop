@@ -1,0 +1,259 @@
+<include file="public/header" title="我的订单" body="g4"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/order_list.css"/>
+<include file="public/header_nav" title="我的订单" href="javascript:history.back(-1);"/>
+<div class="tit-flash-sale p mytit_flash">
+    <div class="maleri30">
+        <ul class="">
+            <li >
+                <a href="{:url('/Mobile/Order/order_list')}" class="tab_head <if condition="$Request.param.type eq ''">red</if>">全部订单</a>
+            </li>
+            <li id="WAITPAY" >
+                <a href="{:url('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}" class="tab_head <if condition="$Request.param.type eq 'WAITPAY'">red</if>" >待付款</a>
+            </li>
+            <li id="WAITSEND" >
+                <a href="{:url('/Mobile/Order/order_list',array('type'=>'WAITSEND'))}"  class="tab_head <if condition="$Request.param.type eq 'WAITSEND'">red</if>">待发货</a>
+            </li>
+            <!--<li id="WAITRECEIVE"><a href="{:url('/Mobile/User/order_list',array('type'=>'WAITRECEIVE'))}"  class="tab_head <if condition="$Request.param.type eq 'WAITRECEIVE'">on</if>">待收货</a></li>-->
+            <li id="WAITCCOMMENT"  >
+                <a href="{:url('/Mobile/Order/order_list',array('type'=>'FINISH'))}" class="tab_head <if condition="$Request.param.type eq 'FINISH'">red</if>">已完成</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--订单列表-s-->
+<div class="ajax_return">
+    <if condition="count($order_list) eq 0">
+        <!--没有内容时-s--->
+        <div class="comment_con p">
+            <div class="none">
+                <img src="__STATIC__/images/none2.png">
+                <br><br>
+                抱歉未查到数据！
+                <div class="paiton">
+                    <div class="maleri30">
+                        <a class="soon" href="/"><span>去逛逛</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--没有内容时-e--->
+    </if>
+    <volist name="order_list" id="order">
+        <div class="mypackeg ma-to-20 getmore">
+            <div class="packeg p">
+                <div>
+                    <div class="fl">
+                        <h1><span></span><span class="bgnum"></span></h1>
+                        <p class="bgnum"><img src="__STATIC__/images/shop_1.png" alt=""><span>订单编号:</span><span>{$order.order_sn}</span></p>
+                    </div>                        
+                    <div class="fr">
+                        <span>{$order['order_status_detail']}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-mfive p">
+                <div class="maleri30">
+                    <if condition="$order.prom_type eq 10">
+                        <div class="sc_list se_sclist paycloseto">
+                            <a href="{:url('/Mobile/Order/order_detail',array('id'=>$order['order_id']))}">
+                                <div class="des_flex_3">
+                                    <div class="shopimg fl">
+                                        <notempty name="order.card['back_img']">
+                                            <img src="{$order.card['back_img']}">
+                                            <else />
+                                            <img src="">
+                                        </notempty>
+                                    </div>
+                                    <div class="deleshow fr">
+                                        <div>
+                                            <div class="deletes">
+                                                <span class="similar-product-text">{$order.card['name']|getSubstr=0,20}</span>
+                                            </div>
+                                            <div class="deletes">
+                                                <span class="similar-product-text mt-spt"></span>
+                                            </div>
+                                        </div>
+                                        <div class="qxatten  wiconfine">
+                                            <div class="prices  wiconfine">
+                                                <p class="sc_pri"><span>￥</span><span id="">{$order.card.targer_money}</span></p>
+                                            </div>
+                                            <p class="weight"><span>x</span><span>{$order.card.num}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- 实际价格 -->
+                            <div class="list_1yan">
+                                <span class="price-alln">
+                                    <span class="threel" id="goodsnum">共1件商品</span>
+                                    <span>实付款：</span>
+                                    <span class="red">￥{$order['total_amount']}</span>
+                                </span>
+                            </div>
+                        </div>
+                    <else/>
+                    <volist name="order.order_goods" id="goods">
+                        <div class="sc_list se_sclist paycloseto">
+                            <a href="{:url('/Mobile/Order/order_detail',array('id'=>$order['order_id']))}">
+                                <div class="des_flex_3">
+                                    <div class="shopimg fl">
+                                        <notempty name="goods['img']">
+                                            <img src="{$goods['img']}">
+                                            <else />
+                                            <img src="{$goods['goods_id']|goods_thum_images=200,200,$goods.item_id}">
+                                        </notempty>
+                                    </div>
+                                    <div class="deleshow fr">
+                                        <div>
+                                            <div class="deletes">
+                                                <span class="similar-product-text">{$goods['goods_name']|getSubstr=0,20}</span>
+                                            </div>
+                                            <div class="deletes">
+                                                <span class="similar-product-text mt-spt">{$goods.spec_key_name}</span>
+                                            </div>
+                                        </div>
+                                        <div class="qxatten  wiconfine">
+                                            <div class="prices  wiconfine">
+                                                <p class="sc_pri"><span>￥</span><span id="mgp_{$goods['goods_id']}">{$goods['member_goods_price']}</span></p>
+                                            </div>
+                                             <notempty name="goods['return_goods']">
+                                                <div class="buttondde">
+                                                    <a class="applyafts">已申请售后</a>
+                                                </div>
+                                                <else />
+                                                <if condition="($order.return_btn eq 1)">
+                                                    <div class="buttondde">
+                                                    <a class="afas" href="{:url('Mobile/Order/return_goods',['rec_id'=>$goods['rec_id']])}">申请售后</a>
+                                                    </div>
+                                                </if>
+                                            </notempty>
+                                            <p class="weight"><span>x</span><span>{$goods['goods_num']}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- 实际价格 -->
+                            <div class="list_1yan">
+                                <span class="price-alln">
+                                    <span class="threel" id="goodsnum">共{$order.count_goods_num}件商品</span>
+                                    <span>实付款：</span>
+                                    <span class="red">￥{$order['total_amount']}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </volist>
+                    </if>
+                </div>
+            </div>
+            <if condition="$order.order_goods || ($order.return_btn eq 1) || $order.pay_btn eq 1 || $order.cancel_btn eq 1 || $order.receive_btn eq 1 || $order.comment_btn eq 1 || $order.shipping_btn eq 1">
+                <div class="shop-rebuy-price p" <if condition="$order.order_status eq 3">style="display:none"</if>>
+            <else/>
+                <div class="shop-rebuy-price p" style="display:none">
+            </if>
+                <div class="maleri30">
+                    <!-- 修改已取消订单为再次下单 -->
+					<?php if(!$order['order_goods']->isEmpty()){ ?>                    
+                        <a href="javascript:void(0)" class="shop-rebuy paysoon" onclick="again_buy(this)" goods_id="{$order.order_goods[0]['goods_id']}" >再次下单</a>                    
+					<?php }?>
+<!--                             <a class="shop-rebuy paysoon" href="">再次下单</a>-->
+<!--                            <a class="applyafts">已申请售后</a>-->
+                    <!--<if condition="($order.return_btn eq 1)">
+                        <a class="shop-rebuy" href="{:url('Mobile/Order/return_goods',['rec_id'=>$goods['rec_id']])}">申请售后</a>
+                    </if>-->
+                    <if condition="$order.pay_btn eq 1">
+                        <a class="shop-rebuy paysoon" href="{:url('Mobile/Cart/cart4',array('order_id'=>$order['order_id']))}">立即付款</a>
+                    </if>
+                    <if condition="$order.cancel_btn eq 1">
+                        <if condition="$order.pay_status eq 0">
+                            <a class="shop-rebuy " onClick="cancel_order({$order.order_id})">取消订单</a>
+                        </if>
+                        <if condition="$order.pay_status eq 1 and $order.prom_type neq 10">
+                            <a class="shop-rebuy" href="{:url('Order/refund_order', ['order_id'=>$order['order_id']])}">取消订单</a>
+                        </if>
+                    </if>
+                    <if condition="$order.receive_btn eq 1 and $order.prom_type neq 10">
+                        <a class="shop-rebuy paysoon" onclick="orderConfirm({$order.order_id})">确认收货</a>
+                    </if>
+                    <if condition="$order.comment_btn eq 1 and $order.prom_type neq 10">
+                        <a class="shop-rebuy" href="{:url('/Mobile/Order/comment')}">评价</a>
+                    </if>
+                    <if condition="$order.shipping_btn eq 1 and $order.prom_type neq 10">
+                        <a class="shop-rebuy" href="{:url('Mobile/Order/express',array('order_id'=>$order['order_id']))}">查看物流</a>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </volist>
+</div>
+<!--订单列表-e-->
+<script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
+<script type="text/javascript">
+    
+    /**
+     * 取消订单
+     */
+
+    function cancel_order(id){
+        if(!confirm("确定取消订单?"))
+            return false;
+        $.ajax({
+            type: 'GET',
+            dataType:'JSON',
+            url:"/index.php?m=Mobile&c=Order&a=cancel_order&id="+id,
+            success:function(data){
+                if(data.code == 1){
+                    layer.open({content:data.msg,time:1});
+                    location.href = "/index.php?m=Mobile&c=Order&a=order_list";
+                }else{
+                    layer.open({content:data.msg,time:2});
+                    location.href = "/index.php?m=Mobile&c=Order&a=order_list";
+                    return false;
+                }
+            },
+            error:function(){
+                layer.open({content:'网络异常，请稍后重试',time:3});
+            },
+        });
+    }
+
+    /**
+     * 确定收货
+     */
+    function orderConfirm(id){
+        if(!confirm("确定收到该订单商品吗?"))
+            return false;
+        location.href = "/index.php?m=Mobile&c=Order&a=order_confirm&id="+id;
+    }
+
+    var  page = 1;
+    /**
+     *加载更多
+     */
+    function ajax_sourch_submit()
+    {
+        page += 1;
+        $.ajax({
+            type : "GET",
+            url:"/index.php?m=Mobile&c=Order&a=order_list&type={$Request.param.type}&is_ajax=1&p="+page,//+tab,
+            success: function(data)
+            {
+                if(data == '')
+                    $('#getmore').hide();
+                else
+                {
+                    $(".ajax_return").append(data);
+                    $(".m_loading").hide();
+                }
+            }
+        });
+    }
+
+    function again_buy(o){
+        var id = $(o).attr('goods_id')
+        location.href = '/index.php/Mobile/Goods/goodsInfo/id/'+id;
+    }
+
+</script>
+</body>
+</html>

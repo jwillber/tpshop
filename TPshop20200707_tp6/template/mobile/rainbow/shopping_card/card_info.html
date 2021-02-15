@@ -1,0 +1,140 @@
+<include file="public/header" title="购物卡详情"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/card_info.css">
+<div class="containter">
+    <div class="card_photo">
+        <img src="{$card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">{$card.name}</div>
+    </div>
+    <div class="price">
+        <p class="left"><span>￥</span>{$card.price[0]}</p>
+        <p class="right">{$card.valid}</p>
+    </div>
+    <!--购物余额卡才显示-s-->
+    <div class="car_balance">
+        <div class="balance">购物卡余额：<span>￥{$card.balance[0]}</span></div>
+        <if condition="$card.give eq '0' && $card.sort eq '0'">
+            <div class="giving">购物卡购买即赠送{$card.discount[0]['give_num']}元</div>
+        </if>
+        <if condition="$card.give eq '0' && $card.sort eq '1'">
+            <div class="giving">购物卡充值{$card.discount[1]['targer_money']}即赠送{$card.discount[1]['give_num']}元</div>
+        </if>
+    </div>
+    <!--购物余额卡才显示-e-->
+    <div class="border"></div>
+    <div class="notice">
+        <p class="title">购买须知</p>
+        <div class="content">
+            <ul>
+                <li>{$card.user_rank}</li>
+            </ul>
+        </div>
+        <div class="query">
+            <div class="left">有其他疑问？</div>
+            <div class="right">
+                <img src="__STATIC__/images/shopping_card/service.png" alt="">
+                联系客服
+            </div>
+        </div>
+    </div>
+    <!--<div style="height: 3rem;opacity: 0;" class="containter_bottom"></div>-->
+</div>
+<div class="buy_number">
+    <img class="close_img" src="__STATIC__/images/shopping_card/close_gray.png" alt="" >
+    <div class="top">
+        <div class="car_img">
+            <img src="{$card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+        </div>
+        <div class="car_name">
+            <p class="name">{$card.name}</p>
+            <div class="price">
+                <p><span>￥</span>{$card.price[0]}</p>
+                <div class="number"><if condition="$card.repertory eq 0">无限制<else/>剩余{$card.residue}件</if></div>
+            </div>
+        </div>
+    </div>
+    <!--购物余额卡才显示-s-->
+    <if condition="$card.give eq '0' && $card.sort==0">
+        <div class="car_balance">
+            <div class="giving">购物卡购买即赠送{$card.discount[0]['give_num']}元</div>
+        </div>
+    </if>
+    <if condition="$card.give eq '0' && $card.sort eq '1'">
+        <div class="car_balance">
+        <div class="giving">购物卡充值{$card.discount[1]['targer_money']}即赠送{$card.discount[1]['give_num']}元</div>
+        </div>
+    </if>
+
+    <!--购物余额卡才显示-e-->
+    <div class="middle">
+        <div class="left">购买数量</div>
+        <div class="right">
+            <span onclick="change(-1)" class="minus">-</span>
+            <span class="right_number">
+                <input class="value" value="{$Request.param.num|default=1}" type="text">
+            </span>
+            <span onclick="change(1)" class="add">+</span>
+        </div>
+    </div>
+    <a class="go_order"><!-- href="/index.php/mobile/shopping_card/order.html">-->
+        <div class="buy" onclick="buy()">立即购买</div>
+    </a>
+</div>
+<div class="buy buy_show">立即购买</div>
+<!--弹窗-->
+<div class="mask-filter-div" style="display: none;"></div>
+<div class="phone">
+    <div class="service_phone">客服电话：{$tpshop_config['shop_info_phone']}</div>
+    <div class="call"><a href="tel:{$tpshop_config['shop_info_phone']}" style="color:#fff">立即拨打</a></div>
+</div>
+<div class="close">
+    <img class="close_img" src="__STATIC__/images/shopping_card/close.png" alt="">
+</div>
+<form action="{:url('ShoppingCard/order')}" id="form" style="display: none" method="post">
+    <input name="num" type="hidden" value="1">
+    <input name="id" type="hidden" value="{$card.discount[0]["id"]}">
+</form>
+<script>
+//    联系客服
+    $(".query .right").click(function(){
+        $(".mask-filter-div").show();
+        $(".phone").show();
+        $(".close").show();
+    })
+    $(".close .close_img").click(function(){
+        $(".mask-filter-div").hide();
+        $(".phone").hide();
+        $(".close").hide();
+    })
+//    立即购买
+    $(".buy_show").click(function(){
+        $(".mask-filter-div").show();
+        $(".buy_number").show();
+    })
+    $(".close_img").click(function(){
+        $(".mask-filter-div").hide();
+        $(".buy_number").hide();
+    })
+//    改变购物数量
+    function change(e){
+        var val=parseInt($(".value").val());
+        if(val==1 && e==-1){
+            $(".minus").css({background:"#F5F5F5"});
+            return false;
+        }
+        $(".minus").css({background:"#fff"});
+        val+=e;
+        $(".value").val(val);
+        $("input[name='num']").attr('value',val)
+    }
+
+    function buy(){
+        var val=$(".value").val();
+        $("input[name='num']").attr('value',val)
+        var form = document.getElementById('form');
+        form.submit();
+    }
+</script>

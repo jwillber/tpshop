@@ -1,0 +1,215 @@
+header {
+  height: 1.17333333rem;
+  width: 100%;
+}
+header h1 {
+  padding-left: 1.22666667rem;
+  padding-right: 1.22666667rem;
+  font-size: 0.48rem;
+  color: #333;
+  text-align: center;
+  height: 1.17333333rem;
+  line-height: 1.17333333rem;
+}
+.account_info {
+  height: 4.5rem;
+  background-image: linear-gradient(0deg,
+  #f62f2f 0%,
+  #f7542e 100%),
+  linear-gradient(
+          #f84444,
+          #f84444);
+  background-blend-mode: normal,
+  normal;
+  overflow: hidden;
+  color: #fff;
+  position: relative;
+}
+.account_info .header_image {
+  height: 1.6rem;
+  margin: .64rem;
+  overflow: hidden;
+  position: relative;
+}
+.account_info .header_image p{
+  position: absolute;
+  font-size: .5rem;
+  top: .4rem;
+  left: 2.2rem;
+  color: #fff;
+  z-index: 999;
+  width: 3rem;
+}
+.header_image .add{
+  position: absolute;
+  font-size: .3rem;
+  width: 1.8rem;
+  height: .7rem;
+  border-radius: .49rem;
+  border: solid 1px #ffffff;
+  top: 0;
+  right: 0rem;
+  line-height: .6rem;
+  text-align: center;
+}
+.account_info .header_image img {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+}
+.account_info h3 {
+  font-size: 0.4rem;
+  margin-top: 0.24rem;
+  margin-bottom: 0.08rem;
+  text-align: center;
+}
+.account_info .info_data ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: .3rem;
+  width: 33.33%;
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+}
+.info_data ul{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0rem;
+  width: 100%;
+}
+.account_info .info_data ul li:last-child {
+  border-right: 0;
+}
+.account_info .info_data ul li:last-child em{
+  font-size: .46rem;
+}
+.account_info .info_data ul li em {
+  display: block;
+  margin-top: -0.22666667rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  font-size: .575rem;
+  margin-bottom: 0.06666667rem;
+}
+.product_info {
+  margin-top: 0.26667rem;
+}
+.product_info .product_list li {
+  float: left;
+  width: 46%;
+  margin-bottom: 0.2133rem;
+  height: 7.36rem;
+  background: #fff;
+  margin-left: 0.26667rem;
+  border-radius: 0.26667rem;
+  overflow: hidden;
+  position: relative;
+}
+.product_info .product_list li .product_image {
+  width: 100%;
+  height: 4.6rem;
+  position: relative;
+  overflow: hidden;
+}
+.product_info .product_list li .product_image h2 {
+  color: #fff;
+  font-size: 0.8rem;
+  margin-top: 1.54666667rem;
+  text-align: center;
+}
+.product_info .product_list li .product_image div {
+  text-align: center;
+  margin-top: 0.06666667rem;
+  font-size: 0.48rem;
+  color: #fff;
+  letter-spacing: 0.06666667rem;
+}
+.product_info .product_list li .product_image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.product_info .product_list li h3 {
+  font-size: 0.34666667rem;
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.2133rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.product_info .product_list li .activities {
+  padding: 0 0.2133rem;
+}
+.product_info .product_list li .activities span {
+  float: left;
+  padding: 0 0.04rem;
+  height: 0.48rem;
+  line-height: 0.4rem;
+  border: 1px solid #ff3535;
+  font-size: 0.26666667rem;
+  color: #ff3535;
+  margin-right: 0.13333333rem;
+  border-radius: 0.04rem;
+}
+.product_info .product_list li .product_data {
+  position: absolute;
+  bottom: 0.2133rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0.2133rem;
+}
+.product_info .product_list li .product_data .price {
+  font-size: 0.29333333rem;
+  color: #ff3535;
+  font-weight: bold;
+  float: left;
+}
+.product_info .product_list li .product_data .price span {
+  font-size: 0.4rem;
+}
+.product_info .product_list li .product_data .amount {
+  float: right;
+  color: #999;
+  font-size: 0.29333333rem;
+  position: relative;
+  top: 0.03rem;
+}
+footer {
+  position: fixed;
+  width: 100%;
+  height: 1.33333333rem;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+footer a {
+  margin-top: 0.2rem;
+  float: left;
+  width: 20%;
+  padding: 0 3%;
+  text-align: center;
+}
+footer a img {
+  display: block;
+  width: auto;
+  height: 0.56rem;
+  margin: 0 auto;
+}
+footer a span {
+  font-size: 0.29333333rem;
+}
+footer a span.active {
+  color: #fe4646;
+}
+/*# sourceMappingURL=account.css.map */

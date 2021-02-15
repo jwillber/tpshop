@@ -1,0 +1,45 @@
+<include file="public/header" title="购物卡-赠送"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/card_giving.css">
+<div class="containter">
+    <div class="card_photo">
+        <img src="http://demo5.tp-shop.cn/public/upload/goods/2019/04-16/416e0041ccc983ae79940630ebf4a621.jpg" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">{$card.shopping_card.name}</div>
+    </div>
+    <div class="car_balance">
+        <div class="balance">卡内余额：<p><span>￥</span>{$card.balance}</p></div>
+    </div>
+    <div class="card_number">
+        <p>卡号：{$card.sn}</p>
+        <p>{$card.indate}</p>
+    </div>
+    <div class="border"></div>
+    <div class="list">
+        <div>
+            设置昵称
+            <input class="input" type="text" id="nickname">
+        </div>
+    </div>
+</div>
+<div class="giving_language">
+    赠语：<textarea name="" id="" cols="30" rows="10" placeholder="请输入对ta的祝福"></textarea>
+</div>
+
+    <div class="next_step" onclick="donate()">下一步</div>
+
+<form style="display: none" id="donate" action="{:url('ShoppingCard/confirm_giving')}" method="post">
+    <input type="hidden" name="id" id="id" value="{$card.id}">
+    <input type="hidden" name="name" id="name">
+    <input type="hidden" name="text" id="text">
+</form>
+<script>
+    function donate(){
+
+        $('#name').val($('#nickname').val())
+        $('#text').val($('textarea').val())
+        $('#donate').submit()
+    }
+</script>

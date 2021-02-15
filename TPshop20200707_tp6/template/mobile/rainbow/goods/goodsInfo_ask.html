@@ -1,0 +1,151 @@
+<include file="public/header" title="问大家" body=""/>
+<include file="public/header_nav" title="问大家" href="javascript:history.back(-1);"/>
+<link rel="stylesheet" href="__STATIC__/css/shopdes.css">
+<style>
+    body{
+        background: #F8F8F8;
+    }
+    .classreturn{
+        position: fixed;
+    }
+</style>
+<div class="asktop">
+<!--    <p>关于{$good_name}</p>-->
+<!--    <p>的{$question_num}个问题</p>-->
+</div>
+<!--占位-->
+<input type="hidden" name="gid" value="{$goods_id}">
+<div style="height: 3.87733rem;"></div>
+<div class="asklist">
+<!--    <ul class="ul">-->
+<!--        <a href="{:url('mobile/goods/goodsInfo_askinfo')}">-->
+<!--            <li>-->
+<!--                <div class="left">-->
+<!--                    <span>问</span>-->
+<!--                    <p>能用在防盗门上吗能用在防盗门上吗能用在防盗门上吗能用在防盗门上吗</p>-->
+<!--                </div>-->
+<!--                <div class="left right"><span>答</span>能用在防盗门上吗</div>-->
+<!--                <div class="number">-->
+<!--                    <span>全部3个回答</span>-->
+<!--                    <span>更新于13小时前</span>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </a>-->
+<!--        <a href="{:url('mobile/goods/goodsInfo_askinfo')}">-->
+<!--            <li>-->
+<!--                <div class="left">-->
+<!--                    <span>问</span>-->
+<!--                    <p>能用在防盗门上吗能用在防盗门上吗能用在防盗门上吗能用在防盗门上吗</p>-->
+<!--                </div>-->
+<!--                <div class="left right"><span>答</span>能用在防盗门上吗</div>-->
+<!--                <div class="number">-->
+<!--                    <span>全部3个回答</span>-->
+<!--                    <span>更新于2019-8-14</span>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </a>-->
+<!--    </ul>-->
+</div>
+<div class="askbottom">
+    <textarea placeholder="向已买过的人提问" name="" id="ask_content" cols="32" rows="10"></textarea>
+    <div onclick="ask()">提问</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var gid = $('input[name*=gid]').val();
+        askall_brief(gid);
+        // askall_brief(1);
+    });
+    function askall_brief(id){
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=api&c=user&a=ask_all",
+            data: {id:id,type:"brief"},
+            success: function(data){
+                var result  = data['result'];
+                var question_total = data['question_total'];
+                var good_name = data['good']['goods_name'];
+                var asklist = '';
+                var asktop =
+                    '    <p>关于'+good_name+'</p>' +
+                    '    <p>的'+question_total+'个问题</p>';
+                var question = '';
+
+                $.each(result,function (i, o) {
+                    var answer = '';
+                    if (o['comment']) {
+                        // console.log(o['comment']);
+                        $.each(o['comment'], function (i2, o2) {
+                            answer +=
+                                '                <div class="left right"><span>答</span>' + o2['content'] + '</div>' +
+                                '                <div class="number">' +
+                                '                    <span>全部' + o['comment_total'] + '个回答</span>' +
+                                '                    <span>更新于' + timestampToTime(o2['createtime']) + '</span>' +
+                                '                </div>';
+                        });
+                        // console.log(answer);
+                    }else{
+                        answer +=
+                            '                <div class="number">' +
+                            '                    <span>全部0个回答</span>' +
+                            '                    <span>更新于' + timestampToTime(o['question']['createtime']) + '</span>' +
+                            '                </div>';
+                    }
+                    question+=
+                        '        <a href="/mobile/goods/goodsInfo_askinfo/gid/'+id+'/qid/'+o['question']['qid']+'.html">' +
+                        '            <li>' +
+                        '                <div class="left">' +
+                        '                    <span>问</span>' +
+                        '                    <p>'+o['question']['content']+'</p>' +
+                        '                </div>' +
+                                answer +
+                        '            </li>' +
+                        '        </a>';
+                });
+                // console.log(question);
+                asklist+=
+                    '    <ul class="ul">' +
+                        question +
+                    '    </ul>';
+                $('.asklist').html(asklist);
+                $('.asktop').html(asktop);
+            }
+        });
+    }
+    function ask(){
+        var content = $("#ask_content").val();
+        if (!content){
+            layer.open({content:'请填写问题！', time:2});
+            return false;
+        }
+        var gid = $('input[name*=gid]').val();
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=api&c=user&a=askall_ask",
+            data: {goods_id:gid,content:content},
+            success: function(data){
+                if (data["status"]==1){
+                    layer.open({content:data.msg, time:3});
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+                }else{
+                    layer.open({content:data.msg, time:3});
+                }
+            }
+        });
+    }
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = date.getDate() < 10 ?  '0'+date.getDate()+ ' ' : date.getDate()+ ' ';
+        var h = date.getHours() < 10 ? '0'+date.getHours()+ ':' : date.getHours()+ ':';
+        var m = date.getMinutes() < 10 ? '0'+date.getMinutes()+ ':' : date.getMinutes()+ ':';
+        var s = date.getSeconds()< 10 ? '0'+date.getSeconds() : date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+</script>

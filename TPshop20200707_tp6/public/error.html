@@ -1,0 +1,924 @@
+如果出现错误,请联系 TPshop 官方购买正版, 正版没有错误问题. <br/><br/>请求方式 GET 请求地址 /index.php?m=Admin&c=Distribut&a=tree<br/><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>系统发生错误</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <style>
+        /* Base */
+        body {
+            color: #333;
+            font: 16px Verdana, "Helvetica Neue", helvetica, Arial, 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0 20px 20px;
+        }
+        h1{
+            margin: 10px 0 0;
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 32px;
+        }
+        h2{
+            color: #4288ce;
+            font-weight: 400;
+            padding: 6px 0;
+            margin: 6px 0 0;
+            font-size: 18px;
+            border-bottom: 1px solid #eee;
+        }
+        h3{
+            margin: 12px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        abbr{
+            cursor: help;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+        a{
+            color: #868686;
+            cursor: pointer;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+        .line-error{
+            background: #f8cbcb;
+        }
+
+        .echo table {
+            width: 100%;
+        }
+
+        .echo pre {
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.45;
+            background-color: #f7f7f7;
+            border: 0;
+            border-radius: 3px;
+            font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        .echo pre > pre {
+            padding: 0;
+            margin: 0;
+        }
+    
+        /* Exception Info */
+        .exception {
+            margin-top: 20px;
+        }
+        .exception .message{
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-bottom: 0 none;
+            line-height: 18px;
+            font-size:16px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑";
+        }
+
+        .exception .code{
+            float: left;
+            text-align: center;
+            color: #fff;
+            margin-right: 12px;
+            padding: 16px;
+            border-radius: 4px;
+            background: #999;
+        }
+        .exception .source-code{
+            padding: 6px;
+            border: 1px solid #ddd;
+
+            background: #f9f9f9;
+            overflow-x: auto;
+
+        }
+        .exception .source-code pre{
+            margin: 0;
+        }
+        .exception .source-code pre ol{
+            margin: 0;
+            color: #4288ce;
+            display: inline-block;
+            min-width: 100%;
+            box-sizing: border-box;
+        font-size:14px;
+            font-family: "Century Gothic",Consolas,"Liberation Mono",Courier,Verdana;
+            padding-left: 56px;
+        }
+        .exception .source-code pre li{
+            border-left: 1px solid #ddd;
+            height: 18px;
+            line-height: 18px;
+        }
+        .exception .source-code pre code{
+            color: #333;
+            height: 100%;
+            display: inline-block;
+            border-left: 1px solid #fff;
+        font-size:14px;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑";
+        }
+        .exception .trace{
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-top: 0 none;
+            line-height: 16px;
+        font-size:14px;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑";
+        }
+        .exception .trace ol{
+            margin: 12px;
+        }
+        .exception .trace ol li{
+            padding: 2px 4px;
+        }
+        .exception div:last-child{
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Exception Variables */
+        .exception-var table{
+            width: 100%;
+            margin: 12px 0;
+            box-sizing: border-box;
+            table-layout:fixed;
+            word-wrap:break-word;            
+        }
+        .exception-var table caption{
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 6px 0;
+        }
+        .exception-var table caption small{
+            font-weight: 300;
+            display: inline-block;
+            margin-left: 10px;
+            color: #ccc;
+        }
+        .exception-var table tbody{
+            font-size: 13px;
+            font-family: Consolas,"Liberation Mono",Courier,"微软雅黑";
+        }
+        .exception-var table td{
+            padding: 0 6px;
+            vertical-align: top;
+            word-break: break-all;
+        }
+        .exception-var table td:first-child{
+            width: 28%;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .exception-var table td pre{
+            margin: 0;
+        }
+
+        /* Copyright Info */
+        .copyright{
+            margin-top: 24px;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* SPAN elements with the classes below are added by prettyprint. */
+        pre.prettyprint .pln { color: #000 }  /* plain text */
+        pre.prettyprint .str { color: #080 }  /* string content */
+        pre.prettyprint .kwd { color: #008 }  /* a keyword */
+        pre.prettyprint .com { color: #800 }  /* a comment */
+        pre.prettyprint .typ { color: #606 }  /* a type name */
+        pre.prettyprint .lit { color: #066 }  /* a literal value */
+        /* punctuation, lisp open bracket, lisp close bracket */
+        pre.prettyprint .pun, pre.prettyprint .opn, pre.prettyprint .clo { color: #660 }
+        pre.prettyprint .tag { color: #008 }  /* a markup tag name */
+        pre.prettyprint .atn { color: #606 }  /* a markup attribute name */
+        pre.prettyprint .atv { color: #080 }  /* a markup attribute value */
+        pre.prettyprint .dec, pre.prettyprint .var { color: #606 }  /* a declaration; a variable name */
+        pre.prettyprint .fun { color: red }  /* a function name */
+    </style>
+</head>
+<body>
+        <div class="exception">
+    <div class="message">
+        
+            <div class="info">
+                <div>
+                    <h2>[0]&nbsp;<abbr title="think\exception\HttpException">HttpException</abbr> in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\route\dispatch\Controller.php line 102">Z:\demo\vendor\topthink\framework\src\think\route\dispatch\Controller.php</a> line 102</h2>
+                </div>
+                <div><h1>控制器不存在:app\admin\controller\Distribut</h1></div>
+            </div>
+        
+    </div>
+	        <div class="source-code">
+            <pre class="prettyprint lang-php"><ol start="93"><li class="line-93"><code>        if(MODULE_NAME == 'admin' &amp;&amp; !IS_AJAX &amp;&amp; IS_GET) orderExresperMent();        
+</code></li><li class="line-94"><code>    }
+</code></li><li class="line-95"><code>
+</code></li><li class="line-96"><code>    public function exec()
+</code></li><li class="line-97"><code>    {
+</code></li><li class="line-98"><code>        try {
+</code></li><li class="line-99"><code>            // 实例化控制器
+</code></li><li class="line-100"><code>            $instance = $this-&gt;controller($this-&gt;controller);
+</code></li><li class="line-101"><code>        } catch (ClassNotFoundException $e) {
+</code></li><li class="line-102"><code>            throw new HttpException(404, 'controller not exists:' . $e-&gt;getClass());
+</code></li><li class="line-103"><code>        }
+</code></li><li class="line-104"><code>
+</code></li><li class="line-105"><code>        // 注册控制器中间件
+</code></li><li class="line-106"><code>        $this-&gt;registerControllerMiddleware($instance);
+</code></li><li class="line-107"><code>
+</code></li><li class="line-108"><code>        return $this-&gt;app-&gt;middleware-&gt;pipeline('controller')
+</code></li><li class="line-109"><code>            -&gt;send($this-&gt;request)
+</code></li><li class="line-110"><code>            -&gt;then(function () use ($instance) {
+</code></li><li class="line-111"><code>                // 获取当前操作名
+</code></li></ol></pre>
+        </div>
+	        <div class="trace">
+            <h2>Call Stack</h2>
+            <ol>
+                <li>in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\route\dispatch\Controller.php line 102">Z:\demo\vendor\topthink\framework\src\think\route\dispatch\Controller.php</a> line 102</li>
+                                <li>
+                at <abbr title="think\route\dispatch\Controller">Controller</abbr>->exec() in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\route\Dispatch.php line 96">Z:\demo\vendor\topthink\framework\src\think\route\Dispatch.php</a> line 96                </li>
+                                <li>
+                at <abbr title="think\route\Dispatch">Dispatch</abbr>->run() in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Route.php line 747">Z:\demo\vendor\topthink\framework\src\think\Route.php</a> line 747                </li>
+                                <li>
+                at <abbr title="think\Route">Route</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 59">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 59                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 65">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 65                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Route.php line 748">Z:\demo\vendor\topthink\framework\src\think\Route.php</a> line 748                </li>
+                                <li>
+                at <abbr title="think\Route">Route</abbr>->dispatch(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Http.php line 213">Z:\demo\vendor\topthink\framework\src\think\Http.php</a> line 213                </li>
+                                <li>
+                at <abbr title="think\Http">Http</abbr>->dispatchToRoute(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Http.php line 203">Z:\demo\vendor\topthink\framework\src\think\Http.php</a> line 203                </li>
+                                <li>
+                at <abbr title="think\Http">Http</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 59">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 59                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\middleware\SessionInit.php line 67">Z:\demo\vendor\topthink\framework\src\think\middleware\SessionInit.php</a> line 67                </li>
+                                <li>
+                at <abbr title="think\middleware\SessionInit">SessionInit</abbr>->handle(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>)                </li>
+                                <li>
+                at call_user_func([<em>object</em>(<abbr title="think\middleware\SessionInit">SessionInit</abbr>), 'handle'], <em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Middleware.php line 142">Z:\demo\vendor\topthink\framework\src\think\Middleware.php</a> line 142                </li>
+                                <li>
+                at <abbr title="think\Middleware">Middleware</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 84">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 84                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\think-trace\src\TraceDebug.php line 71">Z:\demo\vendor\topthink\think-trace\src\TraceDebug.php</a> line 71                </li>
+                                <li>
+                at <abbr title="think\trace\TraceDebug">TraceDebug</abbr>->handle(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>)                </li>
+                                <li>
+                at call_user_func([<em>object</em>(<abbr title="think\trace\TraceDebug">TraceDebug</abbr>), 'handle'], <em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Middleware.php line 142">Z:\demo\vendor\topthink\framework\src\think\Middleware.php</a> line 142                </li>
+                                <li>
+                at <abbr title="think\Middleware">Middleware</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 84">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 84                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\think-multi-app\src\MultiApp.php line 71">Z:\demo\vendor\topthink\think-multi-app\src\MultiApp.php</a> line 71                </li>
+                                <li>
+                at <abbr title="think\app\MultiApp">MultiApp</abbr>->think\app\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 59">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 59                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 65">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 65                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\think-multi-app\src\MultiApp.php line 72">Z:\demo\vendor\topthink\think-multi-app\src\MultiApp.php</a> line 72                </li>
+                                <li>
+                at <abbr title="think\app\MultiApp">MultiApp</abbr>->handle(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>)                </li>
+                                <li>
+                at call_user_func([<em>object</em>(<abbr title="think\app\MultiApp">MultiApp</abbr>), 'handle'], <em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>), <em>null</em>) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Middleware.php line 142">Z:\demo\vendor\topthink\framework\src\think\Middleware.php</a> line 142                </li>
+                                <li>
+                at <abbr title="think\Middleware">Middleware</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 84">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 84                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->think\{closure}(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Pipeline.php line 65">Z:\demo\vendor\topthink\framework\src\think\Pipeline.php</a> line 65                </li>
+                                <li>
+                at <abbr title="think\Pipeline">Pipeline</abbr>->then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Http.php line 204">Z:\demo\vendor\topthink\framework\src\think\Http.php</a> line 204                </li>
+                                <li>
+                at <abbr title="think\Http">Http</abbr>->runWithRequest(<em>object</em>(<abbr title="app\Request">Request</abbr>)) in <a class="toggle" title="Z:\demo\vendor\topthink\framework\src\think\Http.php line 162">Z:\demo\vendor\topthink\framework\src\think\Http.php</a> line 162                </li>
+                                <li>
+                at <abbr title="think\Http">Http</abbr>->run() in <a class="toggle" title="Z:\demo\public\index.php line 62">Z:\demo\public\index.php</a> line 62                </li>
+                            </ol>
+        </div>
+    </div>
+        
+    
+        <div class="exception-var">
+        <h2>Environment Variables</h2>
+                <table>
+                        <caption>GET Data</caption>
+            <tbody>
+                                <tr>
+                    <td>m</td>
+                    <td>
+                        Admin                    </td>
+                </tr>
+                                <tr>
+                    <td>c</td>
+                    <td>
+                        Distribut                    </td>
+                </tr>
+                                <tr>
+                    <td>a</td>
+                    <td>
+                        tree                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+                <table>
+                        <caption>POST Data<small>empty</small></caption>
+                    </table>
+                <table>
+                        <caption>Files<small>empty</small></caption>
+                    </table>
+                <table>
+                        <caption>Cookies</caption>
+            <tbody>
+                                <tr>
+                    <td>admin_type</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>CNZZDATA009</td>
+                    <td>
+                        30037667-1536735                    </td>
+                </tr>
+                                <tr>
+                    <td>PHPSESSID</td>
+                    <td>
+                        a43368c1ae01cda64946fe312475519d                    </td>
+                </tr>
+                                <tr>
+                    <td>province_id</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>city_id</td>
+                    <td>
+                        72                    </td>
+                </tr>
+                                <tr>
+                    <td>district_id</td>
+                    <td>
+                        2799                    </td>
+                </tr>
+                                <tr>
+                    <td>parent_region</td>
+                    <td>
+                        [{&amp;quot;id&amp;quot;:2799,&amp;quot;name&amp;quot;:&amp;quot;%u4E09%u73AF%u4EE5%u5185&amp;quot;},{&amp;quot;id&amp;quot;:2819,&amp;quot;name&amp;quot;:&amp;quot;%u4E09%u73AF%u5230%u56DB%u73AF%u4E4B%u95F4&amp;quot;},{&amp;quot;id&amp;quot;:2839,&amp;quot;name&amp;quot;:&amp;quot;%u56DB%u73AF%u5230%u4E94%u73AF%u4E4B%u95F4&amp;quot;},{&amp;quot;id&amp;quot;:2840,&amp;quot;name&amp;quot;:&amp;quot;%u4E94%u73AF%u5230%u516D%u73AF%u4E4B%u95F4&amp;quot;},{&amp;quot;id&amp;quot;:4137,&amp;quot;name&amp;quot;:&amp;quot;%u7BA1%u5E84%u5730%u533A&amp;quot;},{&amp;quot;id&amp;quot;:4139,&amp;quot;name&amp;quot;:&amp;quot;%u5317%u82D1&amp;quot;},{&amp;quot;id&amp;quot;:4211,&amp;quot;name&amp;quot;:&amp;quot;%u5B9A%u798F%u5E84&amp;quot;},{&amp;quot;id&amp;quot;:55651,&amp;quot;name&amp;quot;:&amp;quot;%u5B89%u8D1E%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55652,&amp;quot;name&amp;quot;:&amp;quot;%u5965%u8FD0%u6751%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55653,&amp;quot;name&amp;quot;:&amp;quot;%u516B%u91CC%u5E84%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55654,&amp;quot;name&amp;quot;:&amp;quot;%u5E38%u8425%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55655,&amp;quot;name&amp;quot;:&amp;quot;%u671D%u5916%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55656,&amp;quot;name&amp;quot;:&amp;quot;%u5D14%u5404%u5E84%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55657,&amp;quot;name&amp;quot;:&amp;quot;%u5927%u5C6F%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55658,&amp;quot;name&amp;quot;:&amp;quot;%u4E1C%u575D%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55659,&amp;quot;name&amp;quot;:&amp;quot;%u4E1C%u98CE%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55660,&amp;quot;name&amp;quot;:&amp;quot;%u4E1C%u6E56%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55661,&amp;quot;name&amp;quot;:&amp;quot;%u8C46%u5404%u5E84%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55662,&amp;quot;name&amp;quot;:&amp;quot;%u57A1%u5934%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55663,&amp;quot;name&amp;quot;:&amp;quot;%u9AD8%u7891%u5E97%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55664,&amp;quot;name&amp;quot;:&amp;quot;%u548C%u5E73%u8857%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55665,&amp;quot;name&amp;quot;:&amp;quot;%u9ED1%u5E84%u6237%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55666,&amp;quot;name&amp;quot;:&amp;quot;%u547C%u5BB6%u697C%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55667,&amp;quot;name&amp;quot;:&amp;quot;%u5EFA%u5916%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55668,&amp;quot;name&amp;quot;:&amp;quot;%u5C06%u53F0%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55669,&amp;quot;name&amp;quot;:&amp;quot;%u91D1%u76CF%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55670,&amp;quot;name&amp;quot;:&amp;quot;%u52B2%u677E%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55671,&amp;quot;name&amp;quot;:&amp;quot;%u9152%u4ED9%u6865%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55672,&amp;quot;name&amp;quot;:&amp;quot;%u6765%u5E7F%u8425%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55673,&amp;quot;name&amp;quot;:&amp;quot;%u516D%u91CC%u5C6F%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55674,&amp;quot;name&amp;quot;:&amp;quot;%u9EA6%u5B50%u5E97%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55675,&amp;quot;name&amp;quot;:&amp;quot;%u5357%u78E8%u623F%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55676,&amp;quot;name&amp;quot;:&amp;quot;%u6F58%u5BB6%u56ED%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55677,&amp;quot;name&amp;quot;:&amp;quot;%u5E73%u623F%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55678,&amp;quot;name&amp;quot;:&amp;quot;%u4E09%u95F4%u623F%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55679,&amp;quot;name&amp;quot;:&amp;quot;%u4E09%u91CC%u5C6F%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55680,&amp;quot;name&amp;quot;:&amp;quot;%u5341%u516B%u91CC%u5E97%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55681,&amp;quot;name&amp;quot;:&amp;quot;%u9996%u90FD%u673A%u573A%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55682,&amp;quot;name&amp;quot;:&amp;quot;%u53CC%u4E95%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55683,&amp;quot;name&amp;quot;:&amp;quot;%u5B59%u6CB3%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55684,&amp;quot;name&amp;quot;:&amp;quot;%u592A%u9633%u5BAB%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55685,&amp;quot;name&amp;quot;:&amp;quot;%u56E2%u7ED3%u6E56%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55686,&amp;quot;name&amp;quot;:&amp;quot;%u738B%u56DB%u8425%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55687,&amp;quot;name&amp;quot;:&amp;quot;%u671B%u4EAC%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55688,&amp;quot;name&amp;quot;:&amp;quot;%u9999%u6CB3%u56ED%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55689,&amp;quot;name&amp;quot;:&amp;quot;%u5C0F%u5173%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55690,&amp;quot;name&amp;quot;:&amp;quot;%u5C0F%u7EA2%u95E8%u4E61&amp;quot;},{&amp;quot;id&amp;quot;:55691,&amp;quot;name&amp;quot;:&amp;quot;%u4E9A%u8FD0%u6751%u8857%u9053&amp;quot;},{&amp;quot;id&amp;quot;:55692,&amp;quot;name&amp;quot;:&amp;quot;%u5DE6%u5BB6%u5E84%u8857%u9053&amp;quot;}]                    </td>
+                </tr>
+                                <tr>
+                    <td>thinkphp_show_page_trace</td>
+                    <td>
+                        0|0                    </td>
+                </tr>
+                                <tr>
+                    <td>cn</td>
+                    <td>
+                        0                    </td>
+                </tr>
+                                <tr>
+                    <td>workspaceParam</td>
+                    <td>
+                        tree|Distribut                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+                <table>
+                        <caption>Session</caption>
+            <tbody>
+                                <tr>
+                    <td>exresperMent</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>isset_push</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>act_list</td>
+                    <td>
+                        all                    </td>
+                </tr>
+                                <tr>
+                    <td>admin_id</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>last_login_time</td>
+                    <td>
+                        1593669409                    </td>
+                </tr>
+                                <tr>
+                    <td>last_login_ip</td>
+                    <td>
+                        127.0.0.1                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+                <table>
+                        <caption>Server/Request Data</caption>
+            <tbody>
+                                <tr>
+                    <td>PATH</td>
+                    <td>
+                        D:\Program Files (x86)\NetSarang\Xftp 6\;D:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\Common Files\NetSarang;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Program Files\TortoiseSVN\bin;D:\wamp\bin\php\php5.4.3;C:\Program Files (x86)\AMD\ATI.ACE\Core-Static;C:\AMD\ATI.ACE\Core-Static;D:\wamp\bin\mysql\mysql5.5.24\bin;D:\phpstudy_pro\Extensions\php\php7.3.4nts;d:\composer;C:\Users\admin\AppData\Roaming\Composer\vendor\bin                    </td>
+                </tr>
+                                <tr>
+                    <td>SYSTEMROOT</td>
+                    <td>
+                        C:\Windows                    </td>
+                </tr>
+                                <tr>
+                    <td>COMSPEC</td>
+                    <td>
+                        C:\Windows\system32\cmd.exe                    </td>
+                </tr>
+                                <tr>
+                    <td>PATHEXT</td>
+                    <td>
+                        .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC                    </td>
+                </tr>
+                                <tr>
+                    <td>WINDIR</td>
+                    <td>
+                        C:\Windows                    </td>
+                </tr>
+                                <tr>
+                    <td>PHPRC</td>
+                    <td>
+                        D:/phpstudy_pro/Extensions/php/php7.3.4nts                    </td>
+                </tr>
+                                <tr>
+                    <td>_FCGI_SHUTDOWN_EVENT_</td>
+                    <td>
+                        8720                    </td>
+                </tr>
+                                <tr>
+                    <td>SCRIPT_NAME</td>
+                    <td>
+                        /index.php                    </td>
+                </tr>
+                                <tr>
+                    <td>REQUEST_URI</td>
+                    <td>
+                        /index.php?m=Admin&amp;c=Distribut&amp;a=tree                    </td>
+                </tr>
+                                <tr>
+                    <td>QUERY_STRING</td>
+                    <td>
+                        m=Admin&amp;c=Distribut&amp;a=tree                    </td>
+                </tr>
+                                <tr>
+                    <td>REQUEST_METHOD</td>
+                    <td>
+                        GET                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_PROTOCOL</td>
+                    <td>
+                        HTTP/1.1                    </td>
+                </tr>
+                                <tr>
+                    <td>GATEWAY_INTERFACE</td>
+                    <td>
+                        CGI/1.1                    </td>
+                </tr>
+                                <tr>
+                    <td>REMOTE_PORT</td>
+                    <td>
+                        52328                    </td>
+                </tr>
+                                <tr>
+                    <td>SCRIPT_FILENAME</td>
+                    <td>
+                        Z:/demo/public/index.php                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_ADMIN</td>
+                    <td>
+                        admin@example.com                    </td>
+                </tr>
+                                <tr>
+                    <td>CONTEXT_DOCUMENT_ROOT</td>
+                    <td>
+                        Z:/demo/public                    </td>
+                </tr>
+                                <tr>
+                    <td>CONTEXT_PREFIX</td>
+                    <td>
+                                            </td>
+                </tr>
+                                <tr>
+                    <td>REQUEST_SCHEME</td>
+                    <td>
+                        http                    </td>
+                </tr>
+                                <tr>
+                    <td>DOCUMENT_ROOT</td>
+                    <td>
+                        Z:/demo/public                    </td>
+                </tr>
+                                <tr>
+                    <td>REMOTE_ADDR</td>
+                    <td>
+                        127.0.0.1                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_PORT</td>
+                    <td>
+                        80                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_ADDR</td>
+                    <td>
+                        127.0.0.1                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_NAME</td>
+                    <td>
+                        demo.tpshop3.com                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_SOFTWARE</td>
+                    <td>
+                        Apache/2.4.39 (Win64) OpenSSL/1.1.1b mod_fcgid/2.3.9a                    </td>
+                </tr>
+                                <tr>
+                    <td>SERVER_SIGNATURE</td>
+                    <td>
+                                            </td>
+                </tr>
+                                <tr>
+                    <td>SystemRoot</td>
+                    <td>
+                        C:\Windows                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_COOKIE</td>
+                    <td>
+                        admin_type=1; CNZZDATA009=30037667-1536735; PHPSESSID=a43368c1ae01cda64946fe312475519d; province_id=1; city_id=72; district_id=2799; parent_region=%5B%7B%22id%22%3A2799%2C%22name%22%3A%22%u4E09%u73AF%u4EE5%u5185%22%7D%2C%7B%22id%22%3A2819%2C%22name%22%3A%22%u4E09%u73AF%u5230%u56DB%u73AF%u4E4B%u95F4%22%7D%2C%7B%22id%22%3A2839%2C%22name%22%3A%22%u56DB%u73AF%u5230%u4E94%u73AF%u4E4B%u95F4%22%7D%2C%7B%22id%22%3A2840%2C%22name%22%3A%22%u4E94%u73AF%u5230%u516D%u73AF%u4E4B%u95F4%22%7D%2C%7B%22id%22%3A4137%2C%22name%22%3A%22%u7BA1%u5E84%u5730%u533A%22%7D%2C%7B%22id%22%3A4139%2C%22name%22%3A%22%u5317%u82D1%22%7D%2C%7B%22id%22%3A4211%2C%22name%22%3A%22%u5B9A%u798F%u5E84%22%7D%2C%7B%22id%22%3A55651%2C%22name%22%3A%22%u5B89%u8D1E%u8857%u9053%22%7D%2C%7B%22id%22%3A55652%2C%22name%22%3A%22%u5965%u8FD0%u6751%u8857%u9053%22%7D%2C%7B%22id%22%3A55653%2C%22name%22%3A%22%u516B%u91CC%u5E84%u8857%u9053%22%7D%2C%7B%22id%22%3A55654%2C%22name%22%3A%22%u5E38%u8425%u4E61%22%7D%2C%7B%22id%22%3A55655%2C%22name%22%3A%22%u671D%u5916%u8857%u9053%22%7D%2C%7B%22id%22%3A55656%2C%22name%22%3A%22%u5D14%u5404%u5E84%u4E61%22%7D%2C%7B%22id%22%3A55657%2C%22name%22%3A%22%u5927%u5C6F%u8857%u9053%22%7D%2C%7B%22id%22%3A55658%2C%22name%22%3A%22%u4E1C%u575D%u4E61%22%7D%2C%7B%22id%22%3A55659%2C%22name%22%3A%22%u4E1C%u98CE%u4E61%22%7D%2C%7B%22id%22%3A55660%2C%22name%22%3A%22%u4E1C%u6E56%u8857%u9053%22%7D%2C%7B%22id%22%3A55661%2C%22name%22%3A%22%u8C46%u5404%u5E84%u4E61%22%7D%2C%7B%22id%22%3A55662%2C%22name%22%3A%22%u57A1%u5934%u8857%u9053%22%7D%2C%7B%22id%22%3A55663%2C%22name%22%3A%22%u9AD8%u7891%u5E97%u4E61%22%7D%2C%7B%22id%22%3A55664%2C%22name%22%3A%22%u548C%u5E73%u8857%u8857%u9053%22%7D%2C%7B%22id%22%3A55665%2C%22name%22%3A%22%u9ED1%u5E84%u6237%u4E61%22%7D%2C%7B%22id%22%3A55666%2C%22name%22%3A%22%u547C%u5BB6%u697C%u8857%u9053%22%7D%2C%7B%22id%22%3A55667%2C%22name%22%3A%22%u5EFA%u5916%u8857%u9053%22%7D%2C%7B%22id%22%3A55668%2C%22name%22%3A%22%u5C06%u53F0%u4E61%22%7D%2C%7B%22id%22%3A55669%2C%22name%22%3A%22%u91D1%u76CF%u4E61%22%7D%2C%7B%22id%22%3A55670%2C%22name%22%3A%22%u52B2%u677E%u8857%u9053%22%7D%2C%7B%22id%22%3A55671%2C%22name%22%3A%22%u9152%u4ED9%u6865%u8857%u9053%22%7D%2C%7B%22id%22%3A55672%2C%22name%22%3A%22%u6765%u5E7F%u8425%u4E61%22%7D%2C%7B%22id%22%3A55673%2C%22name%22%3A%22%u516D%u91CC%u5C6F%u8857%u9053%22%7D%2C%7B%22id%22%3A55674%2C%22name%22%3A%22%u9EA6%u5B50%u5E97%u8857%u9053%22%7D%2C%7B%22id%22%3A55675%2C%22name%22%3A%22%u5357%u78E8%u623F%u4E61%22%7D%2C%7B%22id%22%3A55676%2C%22name%22%3A%22%u6F58%u5BB6%u56ED%u8857%u9053%22%7D%2C%7B%22id%22%3A55677%2C%22name%22%3A%22%u5E73%u623F%u4E61%22%7D%2C%7B%22id%22%3A55678%2C%22name%22%3A%22%u4E09%u95F4%u623F%u4E61%22%7D%2C%7B%22id%22%3A55679%2C%22name%22%3A%22%u4E09%u91CC%u5C6F%u8857%u9053%22%7D%2C%7B%22id%22%3A55680%2C%22name%22%3A%22%u5341%u516B%u91CC%u5E97%u4E61%22%7D%2C%7B%22id%22%3A55681%2C%22name%22%3A%22%u9996%u90FD%u673A%u573A%u8857%u9053%22%7D%2C%7B%22id%22%3A55682%2C%22name%22%3A%22%u53CC%u4E95%u8857%u9053%22%7D%2C%7B%22id%22%3A55683%2C%22name%22%3A%22%u5B59%u6CB3%u4E61%22%7D%2C%7B%22id%22%3A55684%2C%22name%22%3A%22%u592A%u9633%u5BAB%u4E61%22%7D%2C%7B%22id%22%3A55685%2C%22name%22%3A%22%u56E2%u7ED3%u6E56%u8857%u9053%22%7D%2C%7B%22id%22%3A55686%2C%22name%22%3A%22%u738B%u56DB%u8425%u4E61%22%7D%2C%7B%22id%22%3A55687%2C%22name%22%3A%22%u671B%u4EAC%u8857%u9053%22%7D%2C%7B%22id%22%3A55688%2C%22name%22%3A%22%u9999%u6CB3%u56ED%u8857%u9053%22%7D%2C%7B%22id%22%3A55689%2C%22name%22%3A%22%u5C0F%u5173%u8857%u9053%22%7D%2C%7B%22id%22%3A55690%2C%22name%22%3A%22%u5C0F%u7EA2%u95E8%u4E61%22%7D%2C%7B%22id%22%3A55691%2C%22name%22%3A%22%u4E9A%u8FD0%u6751%u8857%u9053%22%7D%2C%7B%22id%22%3A55692%2C%22name%22%3A%22%u5DE6%u5BB6%u5E84%u8857%u9053%22%7D%5D; thinkphp_show_page_trace=0|0; cn=0; workspaceParam=tree%7CDistribut                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_ACCEPT_LANGUAGE</td>
+                    <td>
+                        zh-CN,zh;q=0.9,en;q=0.8,fi;q=0.7                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_ACCEPT_ENCODING</td>
+                    <td>
+                        gzip, deflate                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_REFERER</td>
+                    <td>
+                        http://demo.tpshop3.com/index.php/Admin/Index/index                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_ACCEPT</td>
+                    <td>
+                        text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_USER_AGENT</td>
+                    <td>
+                        Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_UPGRADE_INSECURE_REQUESTS</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_CONNECTION</td>
+                    <td>
+                        close                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP_HOST</td>
+                    <td>
+                        demo.tpshop3.com                    </td>
+                </tr>
+                                <tr>
+                    <td>FCGI_ROLE</td>
+                    <td>
+                        RESPONDER                    </td>
+                </tr>
+                                <tr>
+                    <td>PHP_SELF</td>
+                    <td>
+                        /index.php                    </td>
+                </tr>
+                                <tr>
+                    <td>REQUEST_TIME_FLOAT</td>
+                    <td>
+                        1593669447.507                    </td>
+                </tr>
+                                <tr>
+                    <td>REQUEST_TIME</td>
+                    <td>
+                        1593669447                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+                <table>
+                        <caption>Environment Variables</caption>
+            <tbody>
+                                <tr>
+                    <td>APP_DEBUG</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>APP_DEFAULT_TIMEZONE</td>
+                    <td>
+                        Asia/Shanghai                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_TYPE</td>
+                    <td>
+                        mysql                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_HOSTNAME</td>
+                    <td>
+                        127.0.0.1                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_DATABASE</td>
+                    <td>
+                        tpshop6.0444444                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_USERNAME</td>
+                    <td>
+                        root                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_PASSWORD</td>
+                    <td>
+                        root                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_HOSTPORT</td>
+                    <td>
+                        3306                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_CHARSET</td>
+                    <td>
+                        utf8                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_DEBUG</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>DATABASE_PREFIX</td>
+                    <td>
+                        tp_                    </td>
+                </tr>
+                                <tr>
+                    <td>LANG_DEFAULT_LANG</td>
+                    <td>
+                        zh-cn                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+                <table>
+                        <caption>ThinkPHP Constants</caption>
+            <tbody>
+                                <tr>
+                    <td>PLUGIN_PATH</td>
+                    <td>
+                        Z:\demo/plugins/                    </td>
+                </tr>
+                                <tr>
+                    <td>UPLOAD_PATH</td>
+                    <td>
+                        public/upload/                    </td>
+                </tr>
+                                <tr>
+                    <td>TPSHOP_CACHE_TIME</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>SITE_URL</td>
+                    <td>
+                        http://demo.tpshop3.com                    </td>
+                </tr>
+                                <tr>
+                    <td>HTTP</td>
+                    <td>
+                        http                    </td>
+                </tr>
+                                <tr>
+                    <td>INSTALL_DATE</td>
+                    <td>
+                        1463741583                    </td>
+                </tr>
+                                <tr>
+                    <td>SERIALNUMBER</td>
+                    <td>
+                        20160520065303oCWIoa                    </td>
+                </tr>
+                                <tr>
+                    <td>NOW_TIME</td>
+                    <td>
+                        1593669447                    </td>
+                </tr>
+                                <tr>
+                    <td>IS_SAAS</td>
+                    <td>
+                        0                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_MODULE</td>
+                    <td>
+                        1                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_ANDROID</td>
+                    <td>
+                        2                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_IOS</td>
+                    <td>
+                        3                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_ENTRUST</td>
+                    <td>
+                        4                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_MINIAPP</td>
+                    <td>
+                        5                    </td>
+                </tr>
+                                <tr>
+                    <td>EXTEND_H5</td>
+                    <td>
+                        6                    </td>
+                </tr>
+                                <tr>
+                    <td>TIME_MOUTH</td>
+                    <td>
+                        4                    </td>
+                </tr>
+                                <tr>
+                    <td>IS_AJAX</td>
+                    <td>
+                        false                    </td>
+                </tr>
+                                <tr>
+                    <td>IS_GET</td>
+                    <td>
+                        true                    </td>
+                </tr>
+                                <tr>
+                    <td>IS_POST</td>
+                    <td>
+                        false                    </td>
+                </tr>
+                                <tr>
+                    <td>MODULE_NAME</td>
+                    <td>
+                        admin                    </td>
+                </tr>
+                                <tr>
+                    <td>CONTROLLER_NAME</td>
+                    <td>
+                        Distribut                    </td>
+                </tr>
+                                <tr>
+                    <td>ACTION_NAME</td>
+                    <td>
+                        tree                    </td>
+                </tr>
+                                <tr>
+                    <td>PREFIX</td>
+                    <td>
+                        tp_                    </td>
+                </tr>
+                                <tr>
+                    <td>RUNTIME_PATH</td>
+                    <td>
+                        Z:\demo\runtime                    </td>
+                </tr>
+                                <tr>
+                    <td>APP_PATH</td>
+                    <td>
+                        Z:\demo\app\                    </td>
+                </tr>
+                                <tr>
+                    <td>ROOT_PATH</td>
+                    <td>
+                        Z:\demo\                    </td>
+                </tr>
+                            </tbody>
+                    </table>
+            </div>
+    
+    <div class="copyright">
+        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
+        <span>V6.0.0</span> 
+        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
+        <span>- <a title="官方手册" href="https://www.kancloud.cn/manual/thinkphp6_0/">官方手册</a></span>
+    </div>
+        <script>
+        var LINE = 102;
+
+        function $(selector, node){
+            var elements;
+
+            node = node || document;
+            if(document.querySelectorAll){
+                elements = node.querySelectorAll(selector);
+            } else {
+                switch(selector.substr(0, 1)){
+                    case '#':
+                        elements = [node.getElementById(selector.substr(1))];
+                        break;
+                    case '.':
+                        if(document.getElementsByClassName){
+                            elements = node.getElementsByClassName(selector.substr(1));
+                        } else {
+                            elements = get_elements_by_class(selector.substr(1), node);
+                        }
+                        break;
+                    default:
+                        elements = node.getElementsByTagName();
+                }
+            }
+            return elements;
+
+            function get_elements_by_class(search_class, node, tag) {
+                var elements = [], eles, 
+                    pattern  = new RegExp('(^|\\s)' + search_class + '(\\s|$)');
+
+                node = node || document;
+                tag  = tag  || '*';
+
+                eles = node.getElementsByTagName(tag);
+                for(var i = 0; i < eles.length; i++) {
+                    if(pattern.test(eles[i].className)) {
+                        elements.push(eles[i])
+                    }
+                }
+
+                return elements;
+            }
+        }
+
+        $.getScript = function(src, func){
+            var script = document.createElement('script');
+            
+            script.async  = 'async';
+            script.src    = src;
+            script.onload = func || function(){};
+            
+            $('head')[0].appendChild(script);
+        }
+
+        ;(function(){
+            var files = $('.toggle');
+            var ol    = $('ol', $('.prettyprint')[0]);
+            var li    = $('li', ol[0]);   
+
+            // 短路径和长路径变换
+            for(var i = 0; i < files.length; i++){
+                files[i].ondblclick = function(){
+                    var title = this.title;
+
+                    this.title = this.innerHTML;
+                    this.innerHTML = title;
+                }
+            }
+
+            // 设置出错行
+            var err_line = $('.line-' + LINE, ol[0])[0];
+            err_line.className = err_line.className + ' line-error';
+
+            $.getScript('//cdn.bootcss.com/prettify/r298/prettify.min.js', function(){
+                prettyPrint();
+
+                // 解决Firefox浏览器一个很诡异的问题
+                // 当代码高亮后，ol的行号莫名其妙的错位
+                // 但是只要刷新li里面的html重新渲染就没有问题了
+                if(window.navigator.userAgent.indexOf('Firefox') >= 0){
+                    ol[0].innerHTML = ol[0].innerHTML;
+                }
+            });
+
+        })();
+    </script>
+    </body>
+</html>

@@ -1,0 +1,86 @@
+<include file="public/header" title="购物卡激活"/>
+<include file="public/card_nav" title="购物卡" href="javascript:history.back(-1);" back="backs"/>
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/public.css">
+<link rel="stylesheet" href="__STATIC__/css/shopping_card/card_activate.css">
+<div class="containter">
+    <div class="card_photo">
+        <img src="http://demo5.tp-shop.cn/public/upload/goods/2019/04-16/416e0041ccc983ae79940630ebf4a621.jpg" alt="">
+    </div>
+    <div class="name">
+        <div class="card_name">TPshop品牌礼品卡-七夕情人节限定</div>
+    </div>
+    <div class="car_balance">
+        <div class="balance">卡内余额：<p><span>￥</span>130<span>.00</span></p></div>
+    </div>
+    <div class="card_number">
+        <p>卡号：998877986523</p>
+        <p>有效期至2020年9月15日</p>
+    </div>
+    <div class="border"></div>
+    <div class="list">
+        <div>
+            <div>使用须知</div>
+            <img class="right_img" src="__STATIC__/images/shopping_card/arrow_right.png" alt="">
+        </div>
+        <div>
+            <div>联系客服</div>
+            <div class="right">
+                <img class="right_img" src="__STATIC__/images/shopping_card/card_phone.png" alt="">
+                <p>0755-5858654</p>
+            </div>
+        </div>
+        <div>
+            <div>使用范围</div>
+            <div class="right">全店商品可用</div>
+        </div>
+    </div>
+</div>
+<!--激活成功是显示-s-->
+<div class="choose_goods">选购商品</div>
+<!--激活成功是显示-e-->
+<div class="bottom">
+    <div class="activate">激活购物卡</div>
+    <div>赠给好友</div>
+</div>
+<!--弹窗-->
+<div class="mask-filter-div">
+    <div class="activate_prompt">
+        <img src="__STATIC__/images/shopping_card/activate_prompt.png" alt="">
+        <div class="order_information">
+            <p>您正在激活卡</p>
+            <p>卡号：9568874321</p>
+            <p>确定要继续么？</p>
+        </div>
+        <div class="prompt_button">
+            <div class="button cancel">取消</div>
+            <div class="button ensure">确定</div>
+        </div>
+    </div>
+    <div class="activate_prompt succeed">
+        <img src="__STATIC__/images/shopping_card/activate_prompt.png" alt="">
+        <div class="order_information">
+            <p>激活成功!</p>
+            <p>卡号：9568874321</p>
+        </div>
+        <div class="prompt_button">查看卡详情</div>
+        <img class="succeed_close" src="__STATIC__/images/shopping_card/close.png" alt="">
+    </div>
+</div>
+<script>
+    //    激活卡
+    $(".activate").click(function(){
+        $(".mask-filter-div").show();
+    })
+    $(".cancel").click(function(){
+        $(".mask-filter-div").hide();
+    })
+    $(".ensure").click(function(){
+        $(".activate_prompt").hide();
+        $(".succeed").show();
+    })
+    $(".succeed_close").click(function(){
+        $(".mask-filter-div").hide();
+        $(".choose_goods").show();
+        $(".bottom").hide();
+    })
+</script>

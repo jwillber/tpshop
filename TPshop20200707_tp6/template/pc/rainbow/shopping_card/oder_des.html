@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物车结算-{$tpshop_config['shop_info_store_title']}</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/jh.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/jquery.datetimepicker.css"/>
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/jquery.datetimepicker.full.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/layer/layer.js"></script>
+    <script src="__PUBLIC__/js/global.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/md5.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={$tpshop_config.basic_bd_ak}"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+</head>
+<body>
+<include file="user/header"/>
+<!--顶部广告-s-->
+<adv pid="1" limit="1" item="v">
+    <div class="topic-banner" style="background: #f37c1e;">
+        <div class="w1224">
+            <a href="{$v.ad_link}">
+                <img src="{$v['ad_code']}"/>
+            </a>
+            <i onclick="$('.topic-banner').hide();"></i>
+        </div>
+    </div>
+</adv>
+<!--顶部广告-e-->
+<!--header-s-->
+<div class="sett_hander p">
+    <include file="public/sign-header"/>
+    <div class="nav-middan-z p">
+        <div class="header w1224">
+            <div class="ecsc-logo fon_gwcshcar">
+                <a href="/" class="logo"> <img src="{$tpshop_config['shop_info_store_logo']|default='__PUBLIC__/static/images/logo/pc_home_logo_default.png'}" style="width: 161px;height: 58px;"></a>
+                <span></span>
+            </div>
+            <div class="liucsell">
+                <div class="line-flowpath">
+                    <span class="green"><i class="las-flo"></i><em>1、购物卡</em></span>
+                    <span class="green now"><i class="las-flo2"></i><em>2、填写核对订单信息</em></span>
+                    <span><i class="las-flo3"></i><em>3、成功提交订单</em></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--header-e-->
+<form name="cart2_form" id="cart2_form" method="post" autocomplete="off">
+    <input type="hidden" name="id" value="{$Request.param.id}">
+    <input type="hidden" name="num" value="{$Request.param.num}">
+    <input type="hidden" name="is_virtual" value="{$cartList['0']['goods']['is_virtual']?$cartList['0']['goods']['is_virtual']:0}">
+    <input type="hidden" id="order_invoice_title" name="invoice_title" value="">
+    <input type="hidden" id="order_taxpayer" name="taxpayer" value="">
+    <input type="hidden" id="address_id" name="address_id" value="">
+    <input type="hidden" name="pay_points" value="">
+    <input type="hidden" name="user_money" value="">
+    <!--立即购买才会用到-s-->
+    <input type="hidden" name="action" value="{$Request.param.action}">
+    <input type="hidden" name="goods_id" value="{$Request.param.goods_id}">
+    <input type="hidden" name="item_id" value="{$Request.param.item_id}">
+    <input type="hidden" name="goods_num" value="{$Request.param.goods_num}">
+    <input type="hidden" name="auth_code" value="{$Think.config.AUTH_CODE}"/>
+    <!--立即购买才会用到-e-->
+    <input type="hidden" name="pay_pwd" value="">
+    <input type="hidden" name="user_note" value="">
+    <input type="hidden" name="consignee" value="">
+    <input type="hidden" name="mobile" value="">
+    <input type="hidden" name="shop_id" value="">
+    <input type="hidden" name="take_time" value="">
+</form>
+
+<!--编辑地址弹窗-e--->
+<div class="ui-mask" id="address_dialog_mask"></div>
+<!--上门自提和快速配送切换 s-->
+
+<!--更改自提点 e-->
+<div class="sendgoodslist z-parkage-cont">
+    <div class="w1224">
+        <div class="phone" style="display: none">
+            请输入手机号码<input placeholder="用于付款成功后提醒绑定购物卡" type="text">
+            <div class="text">
+                <p>备注</p>
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="cardinfo">
+            <p class="p">购物卡信息</p>
+            <div class="card_title">
+                <div class="card_top">
+                    <div class="card_l">服务信息</div>
+                    <div class="card_r">
+                        <p>单价</p>
+                        <p>数量</p>
+                        <p>小计</p>
+                    </div>
+                </div>
+                <ul class="card_ul">
+                    <li>
+                        <div class="one">
+                            <div>
+                                <div class="card_img">
+                                    <img src="{$card.shopping_card.back_img|default="/public/images/icon_goods_thumb_empty_300.png"}" alt="">
+                                </div>
+                                <div class="car_name">{$card.shopping_card.name}</div>
+                            </div>
+                            <div>{$card.shopping_card.user_rank}</div>
+                        </div>
+                        <div class="two standard">
+                            <div>¥{$card.shopping_card.face_value}</div>
+                            <div class="minus-plus">
+                                <a class="mins" href="javascript:void(0);" onclick="altergoodsnum(-1)">-</a>
+                                <input class="buyNum" id="number" type="text" name="goods_num" value="{$Request.param.num}" onblur="altergoodsnum(0)" max="98">
+                                <a class="add" href="javascript:void(0);" onclick="altergoodsnum(1)">+</a>
+                            </div>
+                            <div class="sum">¥{$card.shopping_card.face_value*$Request.param.num}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--商品列表-e-->
+    </div>
+</div>
+
+
+<div class="order-summary p">
+    <div class="w1224">
+        <div class="statistic fr">
+            <div class="list">
+                <span><em class="ftx-01">{$Request.param.num}</em> 件商品，总商品金额：</span>
+                <em class="price sum">￥{$card['targer_money']*$Request.param.num}</em>
+            </div>
+            <div class="list">
+                <span>优惠：</span>
+                <em class="price" id="discounts"> -￥0.00</em>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="trade-foot p">
+    <div class="w1224">
+        <div class="trade-foot-detail-com">
+            <div class="fc-price-info">
+                <span class="price-tit">应付总额：</span>
+                <span class="price-num" id="payables">￥0.00</span>
+            </div>
+            <div class="fc-consignee-info shipping_div">
+                <span class="mr20">寄送至： <span id="address_info"></span></span>
+                <span id="sendMobile">收货人：<span id="address_user"></span></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="submitorder_carpay p">
+    <div class="w1224">
+        <button type="submit" id="submit_order" class="checkout-submit" onclick="submit_order();">
+            提交订单
+        </button>
+    </div>
+</div>
+
+<!--footer-s-->
+<img class="rabbit" src="/public/images/qw.gif" alt="">
+
+<div class="mask-filter-div"></div>
+<include file="public/footer"/>
+<!--footer-e-->
+<script type="text/javascript">
+    //购物卡购买数量加减
+    function altergoodsnum(n) {
+        var num = parseInt($('#number').val());
+        if(isNaN(num)){
+            num = 1;
+        }
+        num += n;
+        num <= 0 ? num = 1 : num;
+        $('#number').val(num);
+        $("input[name='num']").val(num);
+        ajax_order_price();
+    }
+    var last_select_address_arr,is_shipping_able = true,shop_list_data = [];
+    $(document).ready(function () {
+        $('.shipping_div').hide();
+        $('.no_shipping_div').show();
+        ajax_order_price();
+
+    });
+    ;
+    (function ($) {
+        $.fn.extend({
+            donetyping: function (callback, timeout) {
+                timeout = timeout || 1e3;
+                var timeoutReference,
+                    doneTyping = function (el) {
+                        if (!timeoutReference)
+                            return;
+                        timeoutReference = null;
+                        callback.call(el);
+                    };
+                return this.each(function (i, el) {
+                    var $el = $(el);
+                    $el.is(':input') && $el.on('keyup keypress', function (e) {
+                        if (e.type == 'keyup' && e.keyCode != 8)
+                            return;
+                        if (timeoutReference)
+                            clearTimeout(timeoutReference);
+                        timeoutReference = setTimeout(function () {
+                            doneTyping(el);
+                        }, timeout);
+                    }).on('blur', function () {
+                        doneTyping(el);
+                    });
+                });
+            }
+        });
+    })(jQuery);
+
+    //支付方式更多
+    $(function () {
+        $('.lastist').click(function () {
+            if ($(this).hasClass('addlastist')) {
+                $(this).removeClass('addlastist');
+                $(this).find('span').text('更多');
+                $(this).parents('.payment-list').find('.solwpah').removeClass('moreshow');
+            } else {
+                $(this).addClass('addlastist');
+                $(this).find('span').text('收起');
+                $(this).parents('.payment-list').find('.solwpah').addClass('moreshow');
+            }
+        })
+    })
+
+    //对应商品
+    $(function () {
+        $(document).on('click', '.hover-y', function () {
+            if ($(this).find('.pairgoods').is(":hidden")) {
+                $(this).find('.pairgoods').show();
+            } else {
+                $(this).find('.pairgoods').hide();
+            }
+
+        });
+    })
+
+
+    /**
+     * 获取订单价格
+     */
+    function ajax_order_price() {
+        //var remark = $('input[name=remark]').val();
+        //console.log(remark);
+        $.ajax({
+            type: "POST",
+            url: "{:url('Home/ShoppingCard/addOrder')}",
+            dataType: 'json',
+            data: $('#cart2_form').serialize(),
+            success: function(data) {
+                is_shipping_able = true;
+                if(data.hasOwnProperty('code') && data.code == 301){
+                    is_shipping_able = false;
+                }
+
+
+                $('.goods_shipping_img').hide();
+                $("#payables").text('￥' + data.data.order_amount);// 应付
+                $("#discounts").text('￥'+data.data.order_prom_amount);
+                $(".ftx-01").text(data.data.num);
+
+                $('.sum').text('￥'+data.data.order_amount);
+               // $('.price').text('￥'+data.data.order_amount);
+            }
+        });
+    }
+
+    function submit_order() {
+        $('#submit_order').attr('disabled','disabled');
+        $('.user_note_txt').each(function () {
+            $("input[name='user_note']").attr('value', $(this).val());
+        })
+        var invoice_desc = $("#invoice_desc").val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('Home/ShoppingCard/addOrder')}", //+tab,
+            data: $('#cart2_form').serialize() + "&act=submit_order", //
+            dataType: "json",
+            success: function (data) {
+                // 当前人数过多 排队中
+                if (data.status == -99) {
+                    $('.mask-filter-div').show();
+                    $('.rabbit').show();
+                    setTimeout("submit_order()", 5000);
+                    return false;
+                } else {
+                    // 隐藏排队
+                    $('.mask-filter-div').hide();
+                    $('.rabbit').hide();
+                }
+
+                if (data.status != 1) {
+                    $('#submit_order').attr('disabled',false);
+                    layer.msg(data.msg, {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                    // 登录超时
+                    if (data.status == -100) {
+                        location.href = "{:url('Home/User/login')}";
+                    }
+                    return false;
+                }
+                layer.msg('订单提交成功!', {
+                    icon: 1, // 成功图标
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () { // 关闭后执行的函数
+                    location.href = "/index.php?m=Home&c=Cart&a=cart4&order_sn=" + data.order_sn; // 跳转到结算页
+                });
+            }
+        });
+    }
+    //设置商品有货无货
+    function goods_shipping(goods_id, is_have) {
+        if (is_have == true) {
+            $('#goods_shipping_img_' + goods_id).hide();
+            $('goods_shipping_title_' + goods_id).removeClass('red').text('有货');
+        } else {
+            $('#goods_shipping_img_' + goods_id).show();
+            $('#goods_shipping_title_' + goods_id).addClass('red').text('无货');
+        }
+    }
+
+</script>
+</body>
+</html>

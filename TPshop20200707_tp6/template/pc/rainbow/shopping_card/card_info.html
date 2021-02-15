@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购物卡详情</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/myaccount.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/shopping_card.css" />
+    <script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+</head>
+
+<body class="bg-f5">
+<include file="user/header"/>
+<div class="home-index-middle card_info give_friends">
+    <div class="w1224">
+        <div class="g-crumbs">
+            <a href="{:url('Home/User/index')}">我的商城</a>
+            <i class="litt-xyb"></i>
+            <span>我的订单</span>
+        </div>
+        <div class="home-main">
+            <include file="user/menu"/>
+            <div class="ri-menu fr">
+                <div class="my_card">
+                    <p class="title">我的购物卡</p>
+                    <div class="wrap-line" <if condition="$Request.param.type eq 'WAITPAY'">style="width: 130px; left: 140px;"<elseif condition="$Request.param.type eq 'PAYED'"/>style="width: 130px; left: 270px;"<elseif condition="$Request.param.type eq 'FINISH'"/>style="width: 130px; left: 400px;"<else/>style="width: 130px; left: 10px;"</if> >
+                    <span style="left:15px;"></span>
+                </div>
+                <div class="give_card">
+                    <div class="card_img">
+                        <img src="{$card.shopping_card.back_img|default="__PUBLIC__/images/icon_goods_thumb_empty_300.png"}" alt="">
+                    </div>
+                    <div class="card_information">
+                        <div class="name">{$card.shopping_card.name}</div>
+                        <div class="detailed">
+                            <p>购物卡类型：{$sort[$card.shopping_card.sort]}</p>
+                            <p>卡号：{$card.sn}</p>
+                            <p>面值：￥{$card.shopping_card.face_value}</p>
+                            <p>适用范围：{$card.use_type}</p>
+                            <if condition="$card.end_time eq 0">
+                                <p>有效期：永久有效</p>
+                                <else/>
+                                <p>有效期：{$card.end_time|date="Y-m-d H:i:s"}</p>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+                <if condition="$card.activate eq 0">
+                    <div class="info_button">
+                        <p class="activate_card">激活卡片</p>
+                        <a href="{:url('Home/ShoppingCard/give_friends',array('id'=>$card.id))}">
+                            <p class="give_friends">赠送好友</p>
+                        </a>
+                    </div>
+                <else/>
+                    <div class="info_button">
+                        <if condition="$card.shopping_card.use_type eq 0">
+                            <p class=""><a href="{:url('home/index/index')}">选购商品</a></p>
+                        <elseif condition="$card.shopping_card.use_type eq 2"/>
+                            <p class=""><a href="{:url('home/Goods/goodsList',array('id'=>$card.shopping_card.category_id))}">选购商品</a></p>
+                        <elseif condition="$card.shopping_card.use_type eq 1"/>
+                            <p class=""><a href="{:url('home/Goods/search',array('shopping_card_id'=>$card.shopping_card.id))}">选购商品</a></p>
+                        </if>
+                    </div>
+                </if>
+                <div class="info_mask"></div>
+                <div class="activate_success">
+                    <div class="successful">
+                        <img class="successful_img" src="__STATIC__/images/activate_success.png" alt="">
+                        <div class="card_number">
+                            <p>您的卡片：{$card.sn}</p>
+                            <p>已经激活成功</p>
+                        </div>
+                        <div class="go_use"><a href="{:url('home/index/index')}">去使用</a></div>
+                    </div>
+                </div>
+                <!--无购物卡-s-->
+                <div style="display: none" class="order-alone-li lastset_cm">
+                    <empty name="lists">
+                        <div class="car-none-pl">
+                            <i class="account-acco1"></i>您还没有购物卡，<a href="/">快去逛逛吧~</a>
+                        </div>
+                        <else/>
+                    </empty>
+                </div>
+                <!--无购物卡-e-->
+            </div>
+            <!--页码-s-->
+            <div class="operating fixed" id="bottom">
+                <div class="fn_page clearfix">
+                </div>
+            </div>
+            <!--页码-e-->
+        </div>
+    </div>
+</div>
+</div>
+<!--footer-s-->
+<include file="user/footer" />
+<!--footer-e-->
+<script type="text/javascript">
+//    激活卡片
+$(".activate_card").click(function(){
+    $.ajax({
+        type: "POST",
+        url: "{:url('home/Shopping_card/activate')}",
+        data: {id: {$card.id|default=0}},
+        dataType:'json',
+        success: function (data) {
+            if(data.status==1){
+                $(".info_mask").show();
+                $(".activate_success").show();
+            }else{
+                layer.msg(data.msg, {
+                    icon: 2,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+            }
+        }
+    });
+})
+$(".info_mask").click(function(){
+    $(".info_mask").hide();
+    $(".activate_success").hide();
+    window.location.href=<if condition="$card.shopping_card.sort eq 0">"__ROOT__"<else/>"{:url('home/ShoppingCard/balance',array('id'=>$card.id))}"</if>
+})
+
+</script>
+</body>
+</html>
