@@ -32,4 +32,4 @@ TPshop 商城系统安装顺序：
 2、在网店系统系统设置面板设置好系统参数后就可以添加商品分类和商品了
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0215/225311_3c5e68e8_2049869.png "QQ浏览器截图20210215225232.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0215/225322_02c7ca2c_2049869.png "QQ浏览器截图20210215225249.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0215/225333_3029f9ad_2049869.png "QQ浏览器截图20210215224100.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0215/225411_c4a5a2f9_2049869.png "QQ浏览器截图20210215225140.png")
